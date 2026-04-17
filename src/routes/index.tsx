@@ -9,13 +9,24 @@ export const Route = createFileRoute('/')({
     token: search.token,
     preview: search['x-craft-live-preview'],
   }),
-  loader: ({ deps }) =>
-    fetchCraft({
+  loader: async ({ deps }) => {
+    const data = await fetchCraft({
       data: {
         query: HOME_QUERY,
         previewToken: deps.token,
       },
-    }),
+    })
+    return { ...data, _isPreview: !!deps.token }
+  },
+  headers: ({ loaderData }) => {
+    if (loaderData._isPreview) {
+      return { 'Cache-Control': 'private, no-store' }
+    }
+    return {
+      'Netlify-CDN-Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+      'Cache-Control': 'public, max-age=0, must-revalidate',
+    }
+  },
   component: HomePage,
 })
 

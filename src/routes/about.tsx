@@ -1,6 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/about')({
+  headers: () => ({
+    'Netlify-CDN-Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+    'Cache-Control': 'public, max-age=0, must-revalidate',
+  }),
   component: About,
 })
 
