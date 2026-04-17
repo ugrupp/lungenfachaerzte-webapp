@@ -1,10 +1,11 @@
-import { QueryClient } from '@tanstack/react-query'
+/* eslint-disable unicorn/filename-case */
+import { QueryClient } from "@tanstack/react-query";
 
 export function getContext() {
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient();
 
   return {
     queryClient,
-  }
+  };
 }
 export default function TanstackQueryProvider() {}

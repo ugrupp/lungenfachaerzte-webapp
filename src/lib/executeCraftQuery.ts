@@ -24,6 +24,7 @@ export const executeCraftQuery = (input: {
   ResultAsync.fromPromise(
     ky
       .post("api", {
+        baseUrl: process.env.CRAFT_URL?.replace(/\/$/, ""),
         json: {
           query: input.query,
           variables: input.variables ?? {},
@@ -36,7 +37,6 @@ export const executeCraftQuery = (input: {
             "X-Craft-Token": input.previewToken,
           }),
         },
-        prefix: process.env.CRAFT_URL?.replace(/\/$/, ""),
       })
       .json(),
     (error) => {

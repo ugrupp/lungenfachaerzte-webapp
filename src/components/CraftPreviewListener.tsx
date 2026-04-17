@@ -67,7 +67,7 @@ export function CraftPreviewListener() {
       // Re-run all active loaders so the updated draft content is fetched.
       // Loaders that pass the `token` search param will query Craft with
       // X-Craft-Token set, returning the latest draft data.
-      router.invalidate();
+      void router.invalidate();
     }
 
     window.addEventListener("message", handleMessage);

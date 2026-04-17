@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
     const entry = await getHomePageServerFn({
       data: { previewToken: deps.token },
     });
-    return { ...(entry ?? {}), _isPreview: !!deps.token };
+    return { ...entry, _isPreview: !!deps.token };
   },
   headers: ({ loaderData }): Record<string, string> => {
     if (loaderData?._isPreview) {
@@ -39,6 +39,7 @@ function HomePage() {
         {text?.html && (
           <div
             className="prose max-w-2xl text-[var(--sea-ink-soft)]"
+            // eslint-disable-next-line @eslint-react/dom-no-dangerously-set-innerhtml
             dangerouslySetInnerHTML={{ __html: text.html }}
           />
         )}

@@ -22,8 +22,3 @@ export const craftPreviewSearchSchema = z.object({
 });
 
 export type CraftPreviewSearch = z.infer<typeof craftPreviewSearchSchema>;
-
-/** Returns true when a set of parsed search params is a Craft preview request. */
-export function isCraftPreview(search: CraftPreviewSearch): boolean {
-  return Boolean(search.token && search["x-craft-live-preview"]);
-}

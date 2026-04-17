@@ -1,41 +1,42 @@
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import type { QueryClient } from "@tanstack/react-query";
 import {
   HeadContent,
   Scripts,
   createRootRouteWithContext,
-} from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
-import Footer from '../components/Footer'
-import Header from '../components/Header'
-import { CraftPreviewListener } from '../components/CraftPreviewListener'
+} from "@tanstack/react-router";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import type { ReactNode } from "react";
 
-import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
+import { CraftPreviewListener } from "../components/CraftPreviewListener";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 
-import appCss from '../styles.css?url'
+import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 
-import type { QueryClient } from '@tanstack/react-query'
+import appCss from "../styles.css?url";
 
-interface MyRouterContext {
-  queryClient: QueryClient
-}
+type MyRouterContext = {
+  queryClient: QueryClient;
+};
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   head: () => ({
     meta: [
       {
-        charSet: 'utf-8',
+        charSet: "utf8",
       },
       {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
       },
       {
-        title: 'TanStack Start Starter',
+        title: "TanStack Start Starter",
       },
     ],
     links: [
       {
-        rel: 'stylesheet',
+        rel: "stylesheet",
         href: appCss,
       },
     ],
@@ -46,9 +47,9 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       <h1 className="text-2xl font-bold">404 — Page not found</h1>
     </main>
   ),
-})
+});
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">
       <head>
@@ -57,15 +58,18 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
         <CraftPreviewListener />
         <Header />
+
         {children}
+
         <Footer />
+
         <TanStackDevtools
           config={{
-            position: 'bottom-right',
+            position: "bottom-right",
           }}
           plugins={[
             {
-              name: 'Tanstack Router',
+              name: "Tanstack Router",
               render: <TanStackRouterDevtoolsPanel />,
             },
             TanStackQueryDevtools,
@@ -74,5 +78,5 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  )
+  );
 }
