@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { useRouter } from '@tanstack/react-router'
+import { useRouter } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 /**
  * CraftPreviewListener — hot-reload support for Craft CMS Live Preview.
@@ -22,9 +22,8 @@ import { useRouter } from '@tanstack/react-router'
  * them as loader dependencies so the loader re-runs when they change:
  *
  * ```ts
- * import { craftPreviewSearchSchema } from '#/lib/craft'
- * import { fetchCraft } from '#/lib/craft.rpc'
- * import { MY_QUERY } from '#/queries/craft'
+ * import { craftPreviewSearchSchema } from '#/lib/craftPreview'
+ * import { getMyPageServerFn } from '#/serverFunctions/getMyPageServerFn'
  *
  * export const Route = createFileRoute('/my-path')({
  *   validateSearch: craftPreviewSearchSchema,
@@ -33,10 +32,9 @@ import { useRouter } from '@tanstack/react-router'
  *     preview: search['x-craft-live-preview'],
  *   }),
  *   loader: ({ params, deps }) =>
- *     fetchCraft({
+ *     getMyPageServerFn({
  *       data: {
- *         query: MY_QUERY,
- *         variables: { slug: params.slug },
+ *         slug: params.slug,
  *         previewToken: deps.token,
  *       },
  *     }),
@@ -54,28 +52,28 @@ import { useRouter } from '@tanstack/react-router'
  *   <CraftPreviewListener />
  */
 export function CraftPreviewListener() {
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     // Only activate inside a Craft live-preview iframe
     const isPreview =
-      typeof window !== 'undefined' &&
-      new URLSearchParams(window.location.search).has('x-craft-live-preview')
+      typeof window !== "undefined" &&
+      new URLSearchParams(window.location.search).has("x-craft-live-preview");
 
-    if (!isPreview) return
+    if (!isPreview) return;
 
     function handleMessage(event: MessageEvent) {
-      if (event.data !== 'craft:live-preview:update') return
+      if (event.data !== "craft:live-preview:update") return;
       // Re-run all active loaders so the updated draft content is fetched.
       // Loaders that pass the `token` search param will query Craft with
       // X-Craft-Token set, returning the latest draft data.
-      router.invalidate()
+      router.invalidate();
     }
 
-    window.addEventListener('message', handleMessage)
-    return () => window.removeEventListener('message', handleMessage)
-  }, [router])
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [router]);
 
   // Renders nothing — side-effect only
-  return null
+  return null;
 }

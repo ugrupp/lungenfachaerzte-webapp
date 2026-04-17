@@ -1,24 +1,4 @@
-import { z } from 'zod'
-
-// ---------------------------------------------------------------------------
-// Craft CMS shared types
-// ---------------------------------------------------------------------------
-
-export interface CraftImage {
-  alt: string | null
-  url: string
-  width: number
-  height: number
-}
-
-export interface CraftEntry {
-  id: string
-  uri: string | null
-  slug: string
-  title: string
-  sectionHandle: string
-  typeHandle: string
-}
+import { z } from "zod";
 
 // ---------------------------------------------------------------------------
 // Live-preview search-param schema
@@ -38,12 +18,12 @@ export const craftPreviewSearchSchema = z.object({
    * running inside the live-preview iframe.
    * Format: ?x-craft-live-preview=1
    */
-  'x-craft-live-preview': z.string().optional(),
-})
+  "x-craft-live-preview": z.string().optional(),
+});
 
-export type CraftPreviewSearch = z.infer<typeof craftPreviewSearchSchema>
+export type CraftPreviewSearch = z.infer<typeof craftPreviewSearchSchema>;
 
 /** Returns true when a set of parsed search params is a Craft preview request. */
 export function isCraftPreview(search: CraftPreviewSearch): boolean {
-  return Boolean(search.token && search['x-craft-live-preview'])
+  return Boolean(search.token && search["x-craft-live-preview"]);
 }
