@@ -17,6 +17,8 @@
     "lint:inspect": "eslint --inspect-config"
   },
   "dependencies": {
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@svgr/plugin-svgo": "^8.1.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "latest",
     "@tanstack/react-query": "latest",
@@ -34,6 +36,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.18",
+    "vite-plugin-svgr": "^5.2.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
