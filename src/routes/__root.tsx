@@ -43,8 +43,8 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   }),
   shellComponent: RootDocument,
   notFoundComponent: () => (
-    <main className="page-wrap px-4 pb-8 pt-14">
-      <h1 className="text-2xl font-bold">404 — Page not found</h1>
+    <main>
+      <h1>404 — Page not found</h1>
     </main>
   ),
 });
