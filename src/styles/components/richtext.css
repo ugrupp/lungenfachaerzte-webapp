@@ -1,0 +1,63 @@
+/* @import "./richtext-spacing.css";
+@import "./richtext-list.css"; */
+
+.richtext {
+  --text-color: theme("colors.ci-dark");
+  color: var(--text-color);
+
+  @apply text-16;
+
+  & strong {
+    @apply font-bold;
+  }
+
+  & a {
+    overflow-wrap: anywhere;
+    color: var(--text-color);
+
+    &:hover,
+    &:focus-visible {
+      @apply underline;
+    }
+  }
+
+  & abbr {
+    text-decoration: none;
+    border-bottom: 1px dashed currentColor;
+    cursor: help;
+  }
+
+  & hr {
+    @apply bg-ci-dark h-0.5;
+    border: 0 none;
+  }
+
+  & blockquote {
+    @apply border-l-4 pl-4 py-1;
+    border-color: var(--text-color);
+  }
+
+  /* Headlines */
+  & h1,
+  & .headline--h1 {
+    @apply headline--1;
+  }
+
+  & h2,
+  & .headline--h2 {
+    @apply headline--2;
+  }
+
+  /* Links in headlines */
+  & :is(h1, .headline--h1, h2, .headline--h2, ) a {
+    @apply text-current;
+  }
+}
+
+.richtext--on-dark {
+  --text-color: theme("colors.ci-light");
+
+  ::selection {
+    @apply bg-white text-ci-dark;
+  }
+}

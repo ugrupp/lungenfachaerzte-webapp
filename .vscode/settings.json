@@ -11,5 +11,6 @@
   },
   "files.readonlyInclude": {
     "**/routeTree.gen.ts": true
-  }
+  },
+  "tailwindCSS.experimental.configFile": "./src/styles/main.css"
 }

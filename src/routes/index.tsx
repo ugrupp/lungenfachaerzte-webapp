@@ -37,11 +37,7 @@ function HomePage() {
         <h1 className="display-title mb-5 max-w-3xl text-4xl leading-[1.02] font-bold tracking-tight text-[var(--sea-ink)] sm:text-6xl">
           {title}
         </h1>
-        {text?.html && (
-          <div className="prose max-w-2xl text-[var(--sea-ink-soft)]">
-            {parse(text.html)}
-          </div>
-        )}
+        {text?.html && <div className="richtext">{parse(text.html)}</div>}
       </section>
     </main>
   );

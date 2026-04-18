@@ -1,0 +1,67 @@
+/* Denton */
+@font-face {
+  font-family: "Denton";
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local(""),
+    url("/fonts/Denton-Regular.woff2") format("woff2"),
+    url("/fonts/Denton-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Denton";
+  font-style: italic;
+  font-weight: 400;
+  src:
+    local(""),
+    url("/fonts/Denton-Italic.woff2") format("woff2"),
+    url("/fonts/Denton-Italic.woff") format("woff");
+}
+
+/* DIN 2014 */
+@font-face {
+  font-family: "DIN 2014";
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local(""),
+    url("/fonts/DIN-2014-Regular.woff2") format("woff2"),
+    url("/fonts/DIN-2014-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "DIN 2014";
+  font-style: normal;
+  font-weight: 700;
+  src:
+    local(""),
+    url("/fonts/DIN-2014-Bold.woff2") format("woff2"),
+    url("/fonts/DIN-2014-Bold.woff") format("woff");
+}
+
+@theme {
+  --font-*: initial;
+  --font-serif: "Denton", serif;
+  --font-sans: "DIN 2014", sans-serif;
+
+  --font-weight-*: initial;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  --text-*: initial;
+  --text-14: 0.875rem;
+  --text-16: 1rem;
+  --text-18: 1.125rem;
+  --text-19: 1.1875rem;
+  --text-27: 1.6875rem;
+  --text-30: 1.875rem;
+
+  --leading-*: initial;
+  --leading-tight: 1.133;
+  --leading-snug: 1.375;
+
+  --tracking-*: initial;
+  --tracking-wide: 0.01em;
+  --tracking-wider: 0.015em;
+}

@@ -1,0 +1,12 @@
+@theme {
+  --container-*: initial;
+  --container-960: 63.75rem;
+
+  --breakpoint-*: initial;
+  --breakpoint-xs: 32rem;
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 56rem;
+  --breakpoint-xl: 62rem;
+  --breakpoint-2xl: 70rem;
+}

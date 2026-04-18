@@ -1,0 +1,7 @@
+@utility headline--1 {
+  @apply font-serif font-normal leading-tight tracking-wider text-30;
+}
+
+@utility headline--2 {
+  @apply font-sans font-normal leading-tight tracking-wide text-27;
+}

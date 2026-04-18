@@ -1,0 +1,27 @@
+@layer base {
+  html,
+  body {
+    @apply text-16 leading-snug bg-white text-ci-dark font-sans font-normal antialiased;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    overflow-y: scroll;
+  }
+
+  ::selection {
+    @apply bg-ci-dark text-white;
+  }
+
+  [x-cloak] {
+    display: none !important;
+  }
+
+  [x-cloak="visibility"] {
+    visibility: hidden !important;
+  }
+
+  address {
+    @apply block not-italic;
+  }
+}

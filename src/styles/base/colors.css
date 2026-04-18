@@ -1,0 +1,7 @@
+@theme {
+  --color-*: initial;
+  --color-white: #fff;
+  --color-off-white: #f8f7f7;
+  --color-ci-dark: #204d52;
+  --color-ci-light: #9eccc7;
+}
