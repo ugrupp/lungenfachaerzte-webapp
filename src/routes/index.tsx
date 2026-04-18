@@ -1,6 +1,7 @@
 import { craftPreviewSearchSchema } from "#/lib/craftPreview";
 import { getHomePageServerFn } from "#/serverFunctions/getHomePageServerFn";
 import { createFileRoute } from "@tanstack/react-router";
+import parse from "html-react-parser";
 
 export const Route = createFileRoute("/")({
   validateSearch: craftPreviewSearchSchema,
@@ -37,11 +38,9 @@ function HomePage() {
           {title}
         </h1>
         {text?.html && (
-          <div
-            className="prose max-w-2xl text-[var(--sea-ink-soft)]"
-            // eslint-disable-next-line @eslint-react/dom-no-dangerously-set-innerhtml
-            dangerouslySetInnerHTML={{ __html: text.html }}
-          />
+          <div className="prose max-w-2xl text-[var(--sea-ink-soft)]">
+            {parse(text.html)}
+          </div>
         )}
       </section>
     </main>
