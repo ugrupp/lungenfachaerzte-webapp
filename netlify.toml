@@ -1,7 +1,14 @@
 [build]
   command = "vite build"
   dir = "dist/client"
+
 [dev]
   command = "pnpm dev"
   targetPort = 3000
   port = 8888
+
+[[redirects]]
+  from = "/sitemap*"
+  to = "$CRAFT_URL/sitemap:splat"
+  status = 200
+  force = true
