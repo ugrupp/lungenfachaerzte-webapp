@@ -1,11 +1,13 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   HeadContent,
   Scripts,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import parse from "html-react-parser";
 import type { ReactNode } from "react";
 
 import { CraftPreviewListener } from "../components/CraftPreviewListener";
@@ -13,6 +15,8 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
+
+import { getErrorPageServerFn } from "../serverFunctions/getErrorPageServerFn";
 
 import appCss from "../styles/main.css?url";
 
@@ -42,11 +46,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     ],
   }),
   shellComponent: RootDocument,
-  notFoundComponent: () => (
-    <main>
-      <h1>404 — Page not found</h1>
-    </main>
-  ),
+  notFoundComponent: NotFoundPage,
 });
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
@@ -78,5 +78,23 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <Scripts />
       </body>
     </html>
+  );
+}
+
+function NotFoundPage() {
+  const { data } = useSuspenseQuery({
+    queryKey: ["errorpage"],
+    queryFn: () => getErrorPageServerFn(),
+    staleTime: 1000 * 60 * 60,
+  });
+
+  return (
+    <main>
+      {data?.text?.html ? (
+        <div className="richtext">{parse(data.text.html)}</div>
+      ) : (
+        <h1>404 — Seite nicht gefunden</h1>
+      )}
+    </main>
   );
 }
