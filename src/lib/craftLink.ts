@@ -55,3 +55,20 @@ export const LinkSchema = z
   });
 
 export type CraftLink = z.infer<typeof LinkSchema>;
+
+/** Build a plain CraftLink from just the required fields. */
+export function makeCraftLink(
+  href: string,
+  overrides?: Partial<Omit<CraftLink, "href">>,
+): CraftLink {
+  return {
+    id: null,
+    type: "url",
+    label: null,
+    defaultLabel: href,
+    target: undefined,
+    isExternal: href.startsWith("http") || href.startsWith("mailto:"),
+    ...overrides,
+    href,
+  };
+}

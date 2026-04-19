@@ -3,14 +3,11 @@ import type { LinkProps } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import type { AnchorHTMLAttributes } from "react";
 
-type ControlledProps = "to" | "href" | "target" | "rel" | "children";
-
 // Intersect LinkProps with AnchorHTMLAttributes so className, onClick, style,
 // data-* etc. are all available, as are TanStack-specific props.
 type CraftLinkProps = {
   link: CraftLink;
-  children: React.ReactNode;
-} & Omit<LinkProps & AnchorHTMLAttributes<HTMLAnchorElement>, ControlledProps>;
+} & Omit<LinkProps & AnchorHTMLAttributes<HTMLAnchorElement>, "to">;
 
 /**
  * Renders a TanStack `<Link>` for internal Craft links (entries, assets, …)

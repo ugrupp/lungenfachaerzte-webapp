@@ -44,6 +44,9 @@ importers:
       '@tanstack/zod-adapter':
         specifier: ^1.166.9
         version: 1.166.9(@tanstack/react-router@1.168.19(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(zod@4.3.6)
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       html-react-parser:
         specifier: ^6.0.1
         version: 6.0.1(@types/react@19.2.14)(react@19.2.5)
