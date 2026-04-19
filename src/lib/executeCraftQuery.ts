@@ -1,5 +1,5 @@
 import ky from "ky";
-import { ResultAsync } from "neverthrow";
+import { err, ok, ResultAsync } from "neverthrow";
 import { createCustomError } from "./createCustomError";
 
 export type CraftVariables = Record<
@@ -40,10 +40,20 @@ export const executeCraftQuery = (input: {
       })
       .json(),
     (error) => {
-      console.error("Failed to fetch Craft API", error);
       return new ExecuteCraftQueryError({
-        message: "Failed to fetch Craft API.",
+        message: "Failed to fetch Craft GraphQL API.",
         cause: error,
       });
     },
-  );
+  ).andThen((response) => {
+    const res = response as Record<string, unknown>;
+    if ("errors" in res) {
+      return err(
+        new ExecuteCraftQueryError({
+          message: "Craft GraphQL API returned errors.",
+          cause: res.errors,
+        }),
+      );
+    }
+    return ok(response);
+  });

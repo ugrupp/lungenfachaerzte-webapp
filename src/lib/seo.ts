@@ -18,7 +18,7 @@ export const SeoSchema = z.object({
   title: z.string(),
   description: z.string(),
   advanced: z.object({
-    canonical: z.string(),
+    canonical: z.string().nullable(),
     robots: z.array(z.string()),
   }),
 });
