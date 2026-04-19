@@ -1,3 +1,4 @@
+import { Image } from "#/components/Image";
 import { craftPreviewSearchSchema } from "#/lib/craftPreview";
 import { getHomePageServerFn } from "#/serverFunctions/getHomePageServerFn";
 import { createFileRoute } from "@tanstack/react-router";
@@ -32,12 +33,20 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const { text } = Route.useLoaderData();
+  const { text, image } = Route.useLoaderData();
 
   return (
     <main>
       <section>
         {!!text?.html && <div className="richtext">{parse(text.html)}</div>}
+        {image && (
+          <Image
+            src={image.url}
+            srcSet={image.srcset}
+            sizes="100vw"
+            alt={image.alt ?? ""}
+          />
+        )}
       </section>
     </main>
   );

@@ -1,6 +1,10 @@
+import { imageFragment, imageSchema } from "#/lib/image";
 import { z } from "zod";
 
+const HOME_IMAGE_WIDTHS = [400, 800, 1200] as const;
+
 const HOME_QUERY = /* GraphQL */ `
+  ${imageFragment(HOME_IMAGE_WIDTHS, "HomeImage")}
   query Home {
     entry(section: "home") {
       id
@@ -9,6 +13,9 @@ const HOME_QUERY = /* GraphQL */ `
       ... on home_Entry {
         text {
           html
+        }
+        image {
+          ...HomeImage
         }
       }
     }
@@ -23,7 +30,15 @@ const HomeQuerySchema = z
           id: z.string(),
           title: z.string(),
           uri: z.string(),
-          text: z.object({ html: z.string() }).nullish(),
+          text: z
+            .object({
+              html: z.string(),
+            })
+            .nullable(),
+          image: z
+            .array(imageSchema(HOME_IMAGE_WIDTHS))
+            .transform((arr) => arr[0] ?? null)
+            .nullable(),
         })
         .nullable(),
     }),
