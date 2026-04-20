@@ -1,0 +1,20 @@
+@layer components {
+  .container-grid {
+    --padding: 2rem; /* 32px */
+    --columns: 16;
+    --half-columns: 8;
+    --center-columns-size: calc(var(--container) / var(--columns));
+
+    @apply grid;
+    grid-template-columns:
+      [full-start]
+      minmax(var(--padding), 1fr)
+      [content-start]
+      repeat(var(--half-columns), minmax(0, var(--center-columns-size)))
+      [center]
+      repeat(var(--half-columns), minmax(0, var(--center-columns-size)))
+      [content-end]
+      minmax(var(--padding), 1fr)
+      [full-end];
+  }
+}

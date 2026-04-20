@@ -2,8 +2,10 @@ import CraftLink from "#/components/CraftLink";
 import { getGlobalsServerFn } from "#/serverFunctions/getGlobalsServerFn";
 import Ellipsis from "#/svg/ellipsis.svg?react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import type { ComponentPropsWithoutRef } from "react";
 
-export default function Navigation() {
+type Props = ComponentPropsWithoutRef<"nav">;
+export default function Navigation(props: Props) {
   const {
     data: { navigation: navItems },
   } = useSuspenseQuery({
@@ -13,7 +15,10 @@ export default function Navigation() {
   });
 
   return (
-    <nav className="bg-off-white rounded-full overflow-hidden">
+    <nav
+      {...props}
+      className={`bg-off-white rounded-full overflow-hidden ${props.className ?? ""}`}
+    >
       <ul className="flex items-center justify-center">
         {navItems.map(({ id, link }, index) => {
           return (
@@ -29,7 +34,7 @@ export default function Navigation() {
                 {index < navItems.length - 1 && (
                   <Ellipsis
                     aria-hidden="true"
-                    className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 h-2.75 pointer-events-none"
+                    className="absolute left-full top-1/2 -translate-x-1/2 -translate-y-1/2 h-2.75 pointer-events-none text-ci-light"
                   />
                 )}
               </CraftLink>

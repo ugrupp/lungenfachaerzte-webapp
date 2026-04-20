@@ -22,7 +22,7 @@ export default function Button({
     <CraftLink
       link={link}
       className={clsx(
-        "inline-flex rounded-br-[15px] overflow-hidden",
+        "inline-flex whitespace-nowrap rounded-br-[15px] overflow-hidden",
         className,
       )}
       {...rest}
