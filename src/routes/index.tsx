@@ -1,4 +1,4 @@
-import { Image } from "#/components/Image";
+import SubHeader from "#/components/SubHeader";
 import { craftPreviewSearchSchema } from "#/lib/craftPreview";
 import { routeCacheHeaders } from "#/lib/routeCacheHeaders";
 import { seoToHead } from "#/lib/seo";
@@ -25,21 +25,24 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const { text, image } = Route.useLoaderData();
+  const { introHead } = Route.useLoaderData();
 
   return (
-    <main>
-      <section>
-        {!!text?.html && <div className="richtext">{parse(text.html)}</div>}
-        {image && (
-          <Image
-            src={image.url}
-            srcSet={image.srcset}
-            sizes="100vw"
-            alt={image.alt ?? ""}
-          />
-        )}
-      </section>
-    </main>
+    <>
+      <SubHeader />
+
+      {!!introHead?.html && (
+        <div className="richtext">{parse(introHead.html)}</div>
+      )}
+
+      {/* {heroImage && (
+        <Image
+          src={heroImage.url}
+          srcSet={heroImage.srcset}
+          sizes="100vw"
+          alt={heroImage.alt ?? ""}
+        />
+      )} */}
+    </>
   );
 }

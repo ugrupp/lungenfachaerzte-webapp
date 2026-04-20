@@ -1,12 +1,14 @@
+import { TEXT_FRAGMENT, TextSchema } from "#/lib/text";
 import { z } from "zod";
 
 export const ERRORPAGE_QUERY = /* GraphQL */ `
+  ${TEXT_FRAGMENT}
   query Errorpage {
     globalSet(handle: "errorpage") {
       id
       ... on errorpage_GlobalSet {
         text {
-          html
+          ...TextFields
         }
       }
     }
@@ -19,11 +21,7 @@ export const ErrorpageQuerySchema = z
       globalSet: z
         .object({
           id: z.string(),
-          text: z
-            .object({
-              html: z.string(),
-            })
-            .nullable(),
+          text: TextSchema.nullable(),
         })
         .nullable(),
     }),

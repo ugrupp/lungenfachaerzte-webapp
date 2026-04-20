@@ -57,9 +57,19 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       </head>
       <body>
         <CraftPreviewListener />
+
+        <a href="#start" className="sr-only">
+          Zum Content springen
+        </a>
+        <a href="#navigation" className="sr-only">
+          Zur Navigation springen
+        </a>
+
         <Header />
 
-        {children}
+        <main id="start" className="relative">
+          {children}
+        </main>
 
         <Footer />
 

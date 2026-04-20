@@ -23,7 +23,7 @@ export const SeoSchema = z.object({
   }),
 });
 
-export type SeoResult = z.infer<typeof SeoSchema>;
+export type Seo = z.infer<typeof SeoSchema>;
 
 /**
  * Converts a Craft SEO field value into the meta/links shape
@@ -31,7 +31,7 @@ export type SeoResult = z.infer<typeof SeoSchema>;
  *
  * Social tags are intentionally omitted.
  */
-export function seoToHead(seo: SeoResult | null | undefined) {
+export function seoToHead(seo: Seo | null | undefined) {
   if (!seo) return { meta: [], links: [] };
 
   const meta: AnyRouteMatch["meta"] = [];

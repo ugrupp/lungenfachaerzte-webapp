@@ -1,8 +1,10 @@
 import { SEO_FRAGMENT, SeoSchema } from "#/lib/seo";
+import { TEXT_FRAGMENT, TextSchema } from "#/lib/text";
 import { z } from "zod";
 
 const TEAM_QUERY = /* GraphQL */ `
   ${SEO_FRAGMENT}
+  ${TEXT_FRAGMENT}
   query Team {
     entry(section: "team") {
       id
@@ -13,7 +15,7 @@ const TEAM_QUERY = /* GraphQL */ `
           ...SeoFields
         }
         text {
-          html
+          ...TextFields
         }
       }
     }
@@ -29,11 +31,7 @@ const TeamQuerySchema = z
           title: z.string(),
           uri: z.string(),
           seo: SeoSchema.nullable(),
-          text: z
-            .object({
-              html: z.string(),
-            })
-            .nullable(),
+          text: TextSchema.nullable(),
         })
         .nullable(),
     }),

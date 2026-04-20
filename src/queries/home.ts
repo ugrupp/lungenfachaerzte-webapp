@@ -1,12 +1,14 @@
 import { imageFragment, imageSchema } from "#/lib/image";
 import { SEO_FRAGMENT, SeoSchema } from "#/lib/seo";
+import { TEXT_FRAGMENT, TextSchema } from "#/lib/text";
 import { z } from "zod";
 
-const HOME_IMAGE_WIDTHS = [400, 800, 1200] as const;
+const HERO_IMAGE_WIDTHS = [400, 800, 1200] as const;
 
 const HOME_QUERY = /* GraphQL */ `
-  ${imageFragment(HOME_IMAGE_WIDTHS, "HomeImage")}
+  ${imageFragment(HERO_IMAGE_WIDTHS, "HeroImage")}
   ${SEO_FRAGMENT}
+  ${TEXT_FRAGMENT}
   query Home {
     entry(section: "home") {
       id
@@ -16,11 +18,17 @@ const HOME_QUERY = /* GraphQL */ `
         seo {
           ...SeoFields
         }
-        text {
-          html
+        heroImage {
+          ...HeroImage
         }
-        image {
-          ...HomeImage
+        introHead {
+          ...TextFields
+        }
+        introText {
+          ...TextFields
+        }
+        introInfotext {
+          ...TextFields
         }
       }
     }
@@ -36,15 +44,11 @@ const HomeQuerySchema = z
           title: z.string(),
           uri: z.string(),
           seo: SeoSchema.nullable(),
-          text: z
-            .object({
-              html: z.string(),
-            })
-            .nullable(),
-          image: z
-            .array(imageSchema(HOME_IMAGE_WIDTHS))
+          heroImage: z
+            .array(imageSchema(HERO_IMAGE_WIDTHS))
             .transform((arr) => arr[0] ?? null)
             .nullable(),
+          introHead: TextSchema.nullable(),
         })
         .nullable(),
     }),
