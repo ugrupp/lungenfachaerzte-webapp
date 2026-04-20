@@ -12,5 +12,12 @@
   "files.readonlyInclude": {
     "**/routeTree.gen.ts": true
   },
-  "tailwindCSS.experimental.configFile": "./src/styles/main.css"
+  "tailwindCSS.experimental.configFile": "./src/styles/main.css",
+  "deno.enable": true,
+  "deno.enablePaths": [
+    "netlify/edge-functions"
+  ],
+  "deno.unstable": true,
+  "deno.importMap": ".netlify/edge-functions-import-map.json",
+  "deno.path": "/Users/ugrupp/Library/Preferences/netlify/deno-cli/deno"
 }
