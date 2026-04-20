@@ -49,13 +49,15 @@ const HomeQuerySchema = z
             .transform((arr) => arr[0] ?? null)
             .nullable(),
           introHead: TextSchema.nullable(),
+          introText: TextSchema.nullable(),
+          introInfotext: TextSchema.nullable(),
         })
         .nullable(),
     }),
   })
   .transform(({ data: { entry } }) => entry);
 
-type HomeQueryResult = z.infer<typeof HomeQuerySchema>;
+type HomeQuery = z.infer<typeof HomeQuerySchema>;
 
 export { HOME_QUERY, HomeQuerySchema };
-export type { HomeQueryResult };
+export type { HomeQuery };

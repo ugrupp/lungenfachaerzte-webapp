@@ -1,11 +1,9 @@
-/* @import "./richtext-spacing.css";
-@import "./richtext-list.css"; */
+@import "./richtext-spacing.css";
+/* @import "./richtext-list.css"; */
 
 .richtext {
   --text-color: theme("colors.ci-dark");
   color: var(--text-color);
-
-  @apply text-16;
 
   & strong {
     @apply font-bold;

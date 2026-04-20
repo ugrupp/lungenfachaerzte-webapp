@@ -28,4 +28,4 @@ export const ErrorpageQuerySchema = z
   })
   .transform(({ data: { globalSet } }) => globalSet);
 
-export type ErrorpageQueryResult = z.infer<typeof ErrorpageQuerySchema>;
+export type ErrorpageQuery = z.infer<typeof ErrorpageQuerySchema>;

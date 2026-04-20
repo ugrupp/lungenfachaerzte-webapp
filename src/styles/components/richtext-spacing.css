@@ -1,15 +1,15 @@
 .richtext {
   /* Inline elements */
   & :is(p, address, pre, table) {
-    @apply mb-[1.4em] sm:mb-[1.7em];
+    @apply mb-[1.4em];
   }
 
   & hr {
-    @apply my-[2.8em] sm:my-[3.4em];
+    @apply my-[2.8em];
   }
 
   & blockquote {
-    @apply my-[2.8em] sm:my-[3.4em];
+    @apply my-[2.8em];
 
     & > :first-child {
       margin-top: 0;
@@ -23,37 +23,22 @@
   /* Headlines */
   & h1,
   & .headline--h1 {
-    @apply my-[1.4em] sm:my-[1.7em];
+    @apply my-[1.4em];
   }
 
   & h2,
   & .headline--h2 {
-    @apply my-[1.4em] sm:my-[1.7em];
-  }
-
-  & h3,
-  & .headline--h3 {
-    @apply my-[1.4em] sm:my-[1.7em];
-  }
-
-  & h4,
-  & .headline--h4 {
-    @apply my-[1.4em] sm:my-[1.7em];
-  }
-
-  & h5,
-  & .headline--h5 {
-    @apply mt-[1.4em] sm:mt-[1.7em];
+    @apply my-[1.4em];
   }
 
   /* Lists */
   & ul,
   & ol {
-    @apply mb-[0.7em] sm:mb-[0.85em];
+    @apply mb-[0.7em];
   }
 
   & .richtext__ul--fancy {
-    @apply my-[0.7em] sm:my-[0.85em];
+    @apply my-[0.7em];
 
     & li {
       &:not(:last-of-type) {

@@ -53,4 +53,4 @@ export const GlobalsQuerySchema = z
     doctolibLink: doctolib?.doctolibLink ?? null,
   }));
 
-export type GlobalsQueryResult = z.infer<typeof GlobalsQuerySchema>;
+export type GlobalsQuery = z.infer<typeof GlobalsQuerySchema>;

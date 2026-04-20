@@ -38,7 +38,7 @@ const TeamQuerySchema = z
   })
   .transform(({ data: { entry } }) => entry);
 
-type TeamQueryResult = z.infer<typeof TeamQuerySchema>;
+type TeamQuery = z.infer<typeof TeamQuerySchema>;
 
 export { TEAM_QUERY, TeamQuerySchema };
-export type { TeamQueryResult };
+export type { TeamQuery };

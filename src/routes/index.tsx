@@ -1,10 +1,10 @@
+import { HomeIntro } from "#/components/HomeIntro";
 import SubHeader from "#/components/SubHeader";
 import { craftPreviewSearchSchema } from "#/lib/craftPreview";
 import { routeCacheHeaders } from "#/lib/routeCacheHeaders";
 import { seoToHead } from "#/lib/seo";
 import { getHomePageServerFn } from "#/serverFunctions/getHomePageServerFn";
 import { createFileRoute } from "@tanstack/react-router";
-import parse from "html-react-parser";
 
 export const Route = createFileRoute("/")({
   validateSearch: craftPreviewSearchSchema,
@@ -25,24 +25,10 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const { introHead } = Route.useLoaderData();
-
   return (
     <>
       <SubHeader />
-
-      {!!introHead?.html && (
-        <div className="richtext">{parse(introHead.html)}</div>
-      )}
-
-      {/* {heroImage && (
-        <Image
-          src={heroImage.url}
-          srcSet={heroImage.srcset}
-          sizes="100vw"
-          alt={heroImage.alt ?? ""}
-        />
-      )} */}
+      <HomeIntro />
     </>
   );
 }

@@ -15,8 +15,8 @@
   font-weight: 400;
   src:
     local(""),
-    url("/fonts/Denton-Italic.woff2") format("woff2"),
-    url("/fonts/Denton-Italic.woff") format("woff");
+    url("/fonts/Denton-RegularItalic.woff2") format("woff2"),
+    url("/fonts/Denton-RegularItalic.woff") format("woff");
 }
 
 /* DIN 2014 */
@@ -60,6 +60,7 @@
   --leading-*: initial;
   --leading-tight: 1.133;
   --leading-snug: 1.375;
+  --leading-relaxed: 1.75;
 
   --tracking-*: initial;
   --tracking-wide: 0.01em;
