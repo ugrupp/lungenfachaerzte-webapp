@@ -1,5 +1,6 @@
 import { Image } from "#/components/Image";
 import { craftPreviewSearchSchema } from "#/lib/craftPreview";
+import { routeCacheHeaders } from "#/lib/routeCacheHeaders";
 import { seoToHead } from "#/lib/seo";
 import { getHomePageServerFn } from "#/serverFunctions/getHomePageServerFn";
 import { createFileRoute } from "@tanstack/react-router";
@@ -18,13 +19,7 @@ export const Route = createFileRoute("/")({
     return { ...entry, _isPreview: !!deps.token };
   },
   headers: ({ loaderData }): Record<string, string> =>
-    loaderData?._isPreview
-      ? { "Cache-Control": "private, no-store" }
-      : {
-          "Netlify-CDN-Cache-Control":
-            "public, max-age=3600, stale-while-revalidate=86400",
-          "Cache-Control": "public, max-age=0, must-revalidate",
-        },
+    routeCacheHeaders(!!loaderData?._isPreview),
   head: ({ loaderData }) => seoToHead(loaderData?.seo),
   component: HomePage,
 });
