@@ -1,38 +1,29 @@
-import SubHeader from "#/components/SubHeader";
+import Subpage from "#/components/Subpage";
 import { craftPreviewSearchSchema } from "#/lib/craftPreview";
 import { routeCacheHeaders } from "#/lib/routeCacheHeaders";
 import { seoToHead } from "#/lib/seo";
-import { getTeamPageServerFn } from "#/serverFunctions/getTeamPageServerFn";
+import { getAusstattungPageServerFn } from "#/serverFunctions/getAusstattungPageServerFn";
 import { createFileRoute } from "@tanstack/react-router";
-import parse from "html-react-parser";
 
-export const Route = createFileRoute("/team")({
+export const Route = createFileRoute("/ausstattung")({
   validateSearch: craftPreviewSearchSchema,
   loaderDeps: ({ search }) => ({
     token: search.token,
     preview: search["x-craft-live-preview"],
   }),
   loader: async ({ deps }) => {
-    const entry = await getTeamPageServerFn({
+    const entry = await getAusstattungPageServerFn({
       data: { previewToken: deps.token },
     });
     return { ...entry, _isPreview: !!deps.token };
   },
   headers: ({ loaderData }) => routeCacheHeaders(!!loaderData?._isPreview),
   head: ({ loaderData }) => seoToHead(loaderData?.seo),
-  component: TeamPage,
+  component: AusstattungPage,
 });
 
-function TeamPage() {
-  const { text } = Route.useLoaderData();
+function AusstattungPage() {
+  const { heroImage } = Route.useLoaderData();
 
-  return (
-    <>
-      <SubHeader />
-
-      <section>
-        {!!text?.html && <div className="richtext">{parse(text.html)}</div>}
-      </section>
-    </>
-  );
+  return <Subpage heroImage={heroImage} />;
 }

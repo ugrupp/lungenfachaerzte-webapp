@@ -18,8 +18,7 @@ export const Route = createFileRoute("/")({
     });
     return { ...entry, _isPreview: !!deps.token };
   },
-  headers: ({ loaderData }): Record<string, string> =>
-    routeCacheHeaders(!!loaderData?._isPreview),
+  headers: ({ loaderData }) => routeCacheHeaders(!!loaderData?._isPreview),
   head: ({ loaderData }) => seoToHead(loaderData?.seo),
   component: HomePage,
 });
@@ -27,7 +26,7 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   return (
     <>
-      <SubHeader />
+      <SubHeader variant="tall" />
       <HomeIntro />
     </>
   );

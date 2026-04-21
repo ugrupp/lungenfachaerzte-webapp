@@ -1,10 +1,41 @@
+import type { Image } from "#/lib/image";
 import Doctors from "#/svg/doctors.svg?react";
-// TODO: dynamic image & sizing, variants
-export default function SubHeader() {
+import clsx from "clsx";
+import { Image as ImageCmp } from "./Image";
+
+export type SubHeaderVariant = "default" | "tall";
+
+// TODO: sizing
+type Props = {
+  heroImage?: Image | null;
+  variant?: SubHeaderVariant;
+};
+
+export default function SubHeader({ heroImage, variant = "default" }: Props) {
   return (
     <section className="container-grid gap-y-8">
       <Doctors className="col-start-[content]" />
-      <div className="max-1024:ml-(--logo-offset) col-[content/full] 1024:col-[7/content] bg-ci-dark h-100 rounded-bl-[50px]"></div>
+
+      <div
+        className={clsx(
+          "max-1024:ml-(--logo-offset) col-[content/full] 1024:col-[7/content] bg-ci-dark overflow-hidden",
+          {
+            "h-100 rounded-bl-[50px]": variant === "tall",
+            "h-37": variant === "default",
+          },
+        )}
+      >
+        {!!heroImage && (
+          <ImageCmp
+            src={heroImage.url}
+            srcSet={heroImage.srcset}
+            alt={heroImage.alt ?? ""}
+            focalPoint={heroImage.focalPoint}
+            sizes="100vw"
+            className="size-full object-cover"
+          />
+        )}
+      </div>
     </section>
   );
 }

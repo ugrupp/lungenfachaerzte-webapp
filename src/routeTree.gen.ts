@@ -10,11 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TeamRouteImport } from './routes/team'
+import { Route as SchwerpunkteRouteImport } from './routes/schwerpunkte'
+import { Route as AusstattungRouteImport } from './routes/ausstattung'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TeamRoute = TeamRouteImport.update({
   id: '/team',
   path: '/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SchwerpunkteRoute = SchwerpunkteRouteImport.update({
+  id: '/schwerpunkte',
+  path: '/schwerpunkte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AusstattungRoute = AusstattungRouteImport.update({
+  id: '/ausstattung',
+  path: '/ausstattung',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +37,35 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ausstattung': typeof AusstattungRoute
+  '/schwerpunkte': typeof SchwerpunkteRoute
   '/team': typeof TeamRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ausstattung': typeof AusstattungRoute
+  '/schwerpunkte': typeof SchwerpunkteRoute
   '/team': typeof TeamRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ausstattung': typeof AusstattungRoute
+  '/schwerpunkte': typeof SchwerpunkteRoute
   '/team': typeof TeamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/team'
+  fullPaths: '/' | '/ausstattung' | '/schwerpunkte' | '/team'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/team'
-  id: '__root__' | '/' | '/team'
+  to: '/' | '/ausstattung' | '/schwerpunkte' | '/team'
+  id: '__root__' | '/' | '/ausstattung' | '/schwerpunkte' | '/team'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AusstattungRoute: typeof AusstattungRoute
+  SchwerpunkteRoute: typeof SchwerpunkteRoute
   TeamRoute: typeof TeamRoute
 }
 
@@ -56,6 +76,20 @@ declare module '@tanstack/react-router' {
       path: '/team'
       fullPath: '/team'
       preLoaderRoute: typeof TeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/schwerpunkte': {
+      id: '/schwerpunkte'
+      path: '/schwerpunkte'
+      fullPath: '/schwerpunkte'
+      preLoaderRoute: typeof SchwerpunkteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ausstattung': {
+      id: '/ausstattung'
+      path: '/ausstattung'
+      fullPath: '/ausstattung'
+      preLoaderRoute: typeof AusstattungRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +104,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AusstattungRoute: AusstattungRoute,
+  SchwerpunkteRoute: SchwerpunkteRoute,
   TeamRoute: TeamRoute,
 }
 export const routeTree = rootRouteImport

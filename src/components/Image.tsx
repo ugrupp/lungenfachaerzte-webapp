@@ -1,3 +1,4 @@
+import type { Image } from "#/lib/image";
 import type { ComponentPropsWithoutRef } from "react";
 
 function applyLoadedClass(img: HTMLImageElement | null) {
@@ -10,9 +11,11 @@ function applyLoadedClass(img: HTMLImageElement | null) {
   }
 }
 
-type Props = Omit<ComponentPropsWithoutRef<"img">, "loading">;
+type Props = Omit<ComponentPropsWithoutRef<"img">, "loading"> & {
+  focalPoint?: Image["focalPoint"];
+};
 
-export function Image({ className, ...props }: Props) {
+export function Image({ className, focalPoint, style, ...props }: Props) {
   return (
     <img
       ref={applyLoadedClass}
@@ -23,6 +26,12 @@ export function Image({ className, ...props }: Props) {
       ]
         .filter(Boolean)
         .join(" ")}
+      style={{
+        objectPosition: focalPoint
+          ? `${focalPoint[0] * 100}% ${focalPoint[1] * 100}%`
+          : undefined,
+        ...style,
+      }}
       {...props}
     />
   );
