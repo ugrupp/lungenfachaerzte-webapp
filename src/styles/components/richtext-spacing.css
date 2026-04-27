@@ -1,15 +1,18 @@
 .richtext {
   /* Inline elements */
   & :is(p, address, pre, table) {
-    @apply mb-[1.4em];
+    margin-top: 1.4em;
+    margin-bottom: 1.4em;
   }
 
   & hr {
-    @apply my-[2.8em];
+    margin-top: 2.8em;
+    margin-bottom: 2.8em;
   }
 
   & blockquote {
-    @apply my-[2.8em];
+    margin-top: 2.8em;
+    margin-bottom: 2.8em;
 
     & > :first-child {
       margin-top: 0;
@@ -23,22 +26,20 @@
   /* Headlines */
   & h1,
   & .headline--h1 {
-    @apply my-[1.4em];
+    margin-top: 1em;
+    margin-bottom: 1em;
   }
 
   & h2,
   & .headline--h2 {
-    @apply my-[1.4em];
+    margin-top: 0.6em;
+    margin-bottom: 0.6em;
   }
 
   /* Lists */
   & ul,
   & ol {
-    @apply mb-[0.7em];
-  }
-
-  & .richtext__ul--fancy {
-    @apply my-[0.7em];
+    margin-bottom: 1.4em;
 
     & li {
       &:not(:last-of-type) {

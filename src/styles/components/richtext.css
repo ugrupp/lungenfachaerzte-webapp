@@ -1,5 +1,5 @@
 @import "./richtext-spacing.css";
-/* @import "./richtext-list.css"; */
+@import "./richtext-list.css";
 
 .richtext {
   --text-color: theme("colors.ci-dark");

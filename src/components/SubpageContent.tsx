@@ -33,7 +33,9 @@ function ContentImage({ image }: { image?: Image }) {
 function ContentText({ text }: { text?: Text }) {
   if (!text?.html) return null;
 
-  return <div className="richtext">{parse(text.html)}</div>;
+  return (
+    <div className="richtext text-18 leading-snug">{parse(text.html)}</div>
+  );
 }
 
 export default function SubpageContent({
