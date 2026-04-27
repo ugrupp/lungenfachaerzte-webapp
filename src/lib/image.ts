@@ -1,3 +1,4 @@
+import { nullToUndefined } from "#/lib/helpers";
 import { z } from "zod";
 
 export function imageFragment(widths: readonly number[], name = "ImageFields") {
@@ -21,14 +22,15 @@ export function imageSchema(widths: readonly number[]) {
     widths.map((w) => [`url${w}`, z.string()]),
   );
 
-  const BaseSchema = z.object({
+  const ImageSchemaPreTransform = z.object({
     ...urlShape,
-    alt: z.string().nullable(),
-    focalPoint: z.tuple([z.number(), z.number()]).nullable(),
+    alt: z.string().apply(nullToUndefined),
+    focalPoint: z.tuple([z.number(), z.number()]).apply(nullToUndefined),
   });
 
-  return BaseSchema.transform((data) => {
-    const d = data as Record<string, string> & z.infer<typeof BaseSchema>;
+  return ImageSchemaPreTransform.transform((data) => {
+    const d = data as Record<string, string> &
+      z.infer<typeof ImageSchemaPreTransform>;
     const srcset = widths.map((w) => `${d[`url${w}`]} ${w}w`).join(", ");
     return {
       srcset,
@@ -42,6 +44,6 @@ export function imageSchema(widths: readonly number[]) {
 export type Image = {
   srcset: string;
   url: string;
-  alt: string | null;
-  focalPoint: [number, number] | null;
+  alt?: string;
+  focalPoint?: [number, number];
 };

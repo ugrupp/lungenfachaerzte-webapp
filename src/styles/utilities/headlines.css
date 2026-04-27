@@ -3,5 +3,5 @@
 }
 
 @utility headline--2 {
-  @apply font-sans font-normal leading-tight tracking-wide text-27;
+  @apply font-sans font-normal leading-tight tracking-wide text-27 uppercase;
 }

@@ -1,9 +1,14 @@
+import { nullToUndefined } from "#/lib/helpers";
 import { imageFragment, imageSchema } from "#/lib/image";
 import { SEO_FRAGMENT, SeoSchema } from "#/lib/seo";
 import { TEXT_FRAGMENT, TextSchema } from "#/lib/text";
 import { z } from "zod";
 
 const HERO_IMAGE_WIDTHS = [400, 800, 1200] as const;
+
+const HeroImageSchema = z
+  .array(imageSchema(HERO_IMAGE_WIDTHS))
+  .transform((arr) => arr[0]);
 
 const HOME_QUERY = /* GraphQL */ `
   ${imageFragment(HERO_IMAGE_WIDTHS, "HeroImage")}
@@ -18,7 +23,7 @@ const HOME_QUERY = /* GraphQL */ `
         seo {
           ...SeoFields
         }
-        mainImage {
+        heroImage {
           ...HeroImage
         }
         introHead {
@@ -43,14 +48,11 @@ const HomeQuerySchema = z
           id: z.string(),
           title: z.string(),
           uri: z.string(),
-          seo: SeoSchema.nullable(),
-          mainImage: z
-            .array(imageSchema(HERO_IMAGE_WIDTHS))
-            .transform((arr) => arr[0] ?? null)
-            .nullable(),
-          introHead: TextSchema.nullable(),
-          introText: TextSchema.nullable(),
-          introInfotext: TextSchema.nullable(),
+          seo: SeoSchema.apply(nullToUndefined),
+          heroImage: HeroImageSchema,
+          introHead: TextSchema.apply(nullToUndefined),
+          introText: TextSchema.apply(nullToUndefined),
+          introInfotext: TextSchema.apply(nullToUndefined),
         })
         .nullable(),
     }),

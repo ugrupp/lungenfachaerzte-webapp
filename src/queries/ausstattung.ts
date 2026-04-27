@@ -1,12 +1,25 @@
+import { nullToUndefined } from "#/lib/helpers";
 import { imageFragment, imageSchema } from "#/lib/image";
 import { SEO_FRAGMENT, SeoSchema } from "#/lib/seo";
+import { TEXT_FRAGMENT, TextSchema } from "#/lib/text";
 import { z } from "zod";
 
-const HERO_IMAGE_WIDTHS = [400, 800, 1200, 1600] as const;
+const MAIN_IMAGE_WIDTHS = [400, 800, 1200, 1600] as const;
+const CONTENT_IMAGE_WIDTHS = [400, 800, 1200] as const;
+
+const MainImageSchema = z
+  .array(imageSchema(MAIN_IMAGE_WIDTHS))
+  .transform((arr) => arr[0]);
+
+const ContentImageSchema = z
+  .array(imageSchema(CONTENT_IMAGE_WIDTHS))
+  .transform((arr) => arr[0]);
 
 const AUSSTATTUNG_QUERY = /* GraphQL */ `
-  ${imageFragment(HERO_IMAGE_WIDTHS, "HeroImage")}
+  ${imageFragment(MAIN_IMAGE_WIDTHS, "MainImage")}
+  ${imageFragment(CONTENT_IMAGE_WIDTHS, "ContentImage")}
   ${SEO_FRAGMENT}
+  ${TEXT_FRAGMENT}
   query Ausstattung {
     entry(section: "ausstattung") {
       id
@@ -14,7 +27,31 @@ const AUSSTATTUNG_QUERY = /* GraphQL */ `
       uri
       ... on subpage_Entry {
         mainImage {
-          ...HeroImage
+          ...MainImage
+        }
+        introText {
+          ...TextFields
+        }
+        image {
+          ...ContentImage
+        }
+        image2 {
+          ...ContentImage
+        }
+        image3 {
+          ...ContentImage
+        }
+        image4 {
+          ...ContentImage
+        }
+        text {
+          ...TextFields
+        }
+        text2 {
+          ...TextFields
+        }
+        text3 {
+          ...TextFields
         }
         seo {
           ...SeoFields
@@ -32,11 +69,16 @@ const AusstattungQuerySchema = z
           id: z.string(),
           title: z.string(),
           uri: z.string(),
-          mainImage: z
-            .array(imageSchema(HERO_IMAGE_WIDTHS))
-            .transform((arr) => arr[0] ?? null)
-            .nullable(),
-          seo: SeoSchema.nullable(),
+          mainImage: MainImageSchema,
+          introText: TextSchema.apply(nullToUndefined),
+          image: ContentImageSchema,
+          image2: ContentImageSchema,
+          image3: ContentImageSchema,
+          image4: ContentImageSchema,
+          text: TextSchema.apply(nullToUndefined),
+          text2: TextSchema.apply(nullToUndefined),
+          text3: TextSchema.apply(nullToUndefined),
+          seo: SeoSchema.apply(nullToUndefined),
         })
         .nullable(),
     }),

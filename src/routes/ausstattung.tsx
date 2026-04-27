@@ -23,7 +23,37 @@ export const Route = createFileRoute("/ausstattung")({
 });
 
 function AusstattungPage() {
-  const { mainImage } = Route.useLoaderData();
+  const {
+    title,
+    mainImage,
+    introText,
+    image,
+    image2,
+    image3,
+    image4,
+    text,
+    text2,
+    text3,
+  } = Route.useLoaderData();
 
-  return <Subpage heroImage={mainImage} />;
+  return (
+    <Subpage
+      subHeaderProps={{
+        mainImage,
+      }}
+      subpageIntroProps={{
+        title: title ?? "",
+        introText,
+      }}
+      subpageContentProps={{
+        image,
+        text,
+        image2,
+        image3,
+        text2,
+        image4,
+        text3,
+      }}
+    />
+  );
 }

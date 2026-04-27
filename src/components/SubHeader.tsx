@@ -7,11 +7,11 @@ export type SubHeaderVariant = "default" | "tall";
 
 // TODO: sizing
 type Props = {
-  heroImage?: Image | null;
+  mainImage?: Image;
   variant?: SubHeaderVariant;
 };
 
-export default function SubHeader({ heroImage, variant = "default" }: Props) {
+export default function SubHeader({ mainImage, variant = "default" }: Props) {
   return (
     <section className="container-grid gap-y-8">
       <Doctors className="col-start-[content]" />
@@ -25,12 +25,12 @@ export default function SubHeader({ heroImage, variant = "default" }: Props) {
           },
         )}
       >
-        {!!heroImage && (
+        {!!mainImage && (
           <ImageCmp
-            src={heroImage.url}
-            srcSet={heroImage.srcset}
-            alt={heroImage.alt ?? ""}
-            focalPoint={heroImage.focalPoint}
+            src={mainImage.url}
+            srcSet={mainImage.srcset}
+            alt={mainImage.alt ?? ""}
+            focalPoint={mainImage.focalPoint}
             sizes="100vw"
             className="size-full object-cover"
           />
