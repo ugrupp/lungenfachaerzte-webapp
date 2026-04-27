@@ -5,7 +5,7 @@ import { z } from "zod";
 const HERO_IMAGE_WIDTHS = [400, 800, 1200, 1600] as const;
 
 const SCHWERPUNKTE_QUERY = /* GraphQL */ `
-  ${imageFragment(HERO_IMAGE_WIDTHS, "HeroImage")}
+  ${imageFragment(HERO_IMAGE_WIDTHS, "MainImage")}
   ${SEO_FRAGMENT}
   query Schwerpunkte {
     entry(section: "schwerpunkte") {
@@ -13,8 +13,8 @@ const SCHWERPUNKTE_QUERY = /* GraphQL */ `
       title
       uri
       ... on subpage_Entry {
-        heroImage {
-          ...HeroImage
+        mainImage {
+          ...MainImage
         }
         seo {
           ...SeoFields
@@ -32,7 +32,7 @@ const SchwerpunkteQuerySchema = z
           id: z.string(),
           title: z.string(),
           uri: z.string(),
-          heroImage: z
+          mainImage: z
             .array(imageSchema(HERO_IMAGE_WIDTHS))
             .transform((arr) => arr[0] ?? null)
             .nullable(),

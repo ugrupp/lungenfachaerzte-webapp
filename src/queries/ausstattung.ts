@@ -13,7 +13,7 @@ const AUSSTATTUNG_QUERY = /* GraphQL */ `
       title
       uri
       ... on subpage_Entry {
-        heroImage {
+        mainImage {
           ...HeroImage
         }
         seo {
@@ -32,7 +32,7 @@ const AusstattungQuerySchema = z
           id: z.string(),
           title: z.string(),
           uri: z.string(),
-          heroImage: z
+          mainImage: z
             .array(imageSchema(HERO_IMAGE_WIDTHS))
             .transform((arr) => arr[0] ?? null)
             .nullable(),

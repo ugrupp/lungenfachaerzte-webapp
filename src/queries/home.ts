@@ -18,7 +18,7 @@ const HOME_QUERY = /* GraphQL */ `
         seo {
           ...SeoFields
         }
-        heroImage {
+        mainImage {
           ...HeroImage
         }
         introHead {
@@ -44,7 +44,7 @@ const HomeQuerySchema = z
           title: z.string(),
           uri: z.string(),
           seo: SeoSchema.nullable(),
-          heroImage: z
+          mainImage: z
             .array(imageSchema(HERO_IMAGE_WIDTHS))
             .transform((arr) => arr[0] ?? null)
             .nullable(),

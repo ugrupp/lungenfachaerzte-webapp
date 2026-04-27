@@ -23,7 +23,7 @@ export const Route = createFileRoute("/ausstattung")({
 });
 
 function AusstattungPage() {
-  const { heroImage } = Route.useLoaderData();
+  const { mainImage } = Route.useLoaderData();
 
-  return <Subpage heroImage={heroImage} />;
+  return <Subpage heroImage={mainImage} />;
 }

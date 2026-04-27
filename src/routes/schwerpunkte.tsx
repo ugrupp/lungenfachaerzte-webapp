@@ -23,7 +23,7 @@ export const Route = createFileRoute("/schwerpunkte")({
 });
 
 function SchwerpunktePage() {
-  const { heroImage } = Route.useLoaderData();
+  const { mainImage } = Route.useLoaderData();
 
-  return <Subpage heroImage={heroImage} />;
+  return <Subpage heroImage={mainImage} />;
 }
