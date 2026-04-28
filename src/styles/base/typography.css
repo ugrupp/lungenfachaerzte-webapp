@@ -60,6 +60,7 @@
   --leading-*: initial;
   --leading-tight: 1.133;
   --leading-snug: 1.375;
+  --leading-normal: 1.57142857;
   --leading-relaxed: 1.75;
 
   --tracking-*: initial;

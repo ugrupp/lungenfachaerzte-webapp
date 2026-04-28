@@ -11,7 +11,7 @@ export function HomeIntro() {
   return (
     <section className="bg-ci-light pt-30 container-grid relative">
       {/* Scroll indicator */}
-      <div className="absolute top-0 left-0 right-0">
+      <div className="absolute top-0 left-0 right-0 hidden 1024:block">
         <div className="container-grid">
           <div className="col-[content/content] ml-(--logo-offset) flex justify-start pointer-events-none">
             <a
@@ -39,8 +39,8 @@ export function HomeIntro() {
         )}
       </div>
 
-      <div className="bg-white row-start-3 768:row-start-2 col-[content/full] max-768:ml-(--logo-offset) 768:col-[full/10] 1024:col-end-7 mt-20 768:-mt-20 1024:-mt-26"></div>
-      <div className="row-start-3 768:row-start-2 col-[content/full] ml-(--logo-offset) 768:col-[content/10] 1024:col-end-7 mt-20 768:-mt-20 1024:-mt-26 max-768:pl-15 pr-15 py-14 relative">
+      <div className="bg-white row-start-3 768:row-start-2 col-[content/full] 768:col-[full/10] 1024:col-end-7 mt-20 768:-mt-20 1024:-mt-26"></div>
+      <div className="row-start-3 768:row-start-2 col-[content/content] ml-(--logo-offset) 768:col-[content/10] 1024:col-end-7 mt-20 768:-mt-20 1024:-mt-26 768:pr-13 1280:pr-15 py-14 relative">
         <Info className="absolute left-0 top-0 -translate-y-1/2 size-11" />
         {!!introInfotext?.html && (
           <div className="richtext leading-relaxed">

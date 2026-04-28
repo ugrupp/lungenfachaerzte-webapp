@@ -46,6 +46,11 @@
     @apply headline--2;
   }
 
+  & h3,
+  & .headline--h3 {
+    @apply headline--3;
+  }
+
   /* Links in headlines */
   & :is(h1, .headline--h1, h2, .headline--h2, ) a {
     @apply text-current;

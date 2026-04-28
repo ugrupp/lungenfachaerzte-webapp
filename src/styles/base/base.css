@@ -1,7 +1,7 @@
 @layer base {
   html,
   body {
-    @apply text-16 leading-snug bg-white text-ci-dark font-sans font-normal antialiased;
+    @apply text-16 tracking-wide leading-snug bg-white text-ci-dark font-sans font-normal antialiased;
     scroll-behavior: smooth;
   }
 

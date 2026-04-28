@@ -5,3 +5,7 @@
 @utility headline--2 {
   @apply font-sans font-normal leading-tight tracking-wide text-27 uppercase;
 }
+
+@utility headline--3 {
+  @apply font-sans font-bold leading-normal tracking-wide text-14 uppercase;
+}
