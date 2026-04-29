@@ -54,10 +54,12 @@
   --text-16: 1rem;
   --text-18: 1.125rem;
   --text-19: 1.1875rem;
+  --text-24: 1.5rem;
   --text-27: 1.6875rem;
   --text-30: 1.875rem;
 
   --leading-*: initial;
+  --leading-none: 1;
   --leading-tight: 1.133;
   --leading-snug: 1.375;
   --leading-normal: 1.57142857;

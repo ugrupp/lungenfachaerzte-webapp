@@ -1,7 +1,11 @@
 import { LINK_FRAGMENT, LinkSchema } from "#/lib/craftLink";
+import { imageFragment, imageSchema } from "#/lib/image";
 import { z } from "zod";
 
+const TEXTURE_IMAGE_WIDTHS = [400, 800, 1200, 1600] as const;
+
 export const GLOBALS_QUERY = /* GraphQL */ `
+  ${imageFragment(TEXTURE_IMAGE_WIDTHS, "TextureImage")}
   ${LINK_FRAGMENT}
   query Globals {
     navigation: globalSet(handle: "navigation") {
@@ -63,6 +67,9 @@ export const GLOBALS_QUERY = /* GraphQL */ `
         }
       }
     }
+    textur: asset(filename: "textur.jpg") {
+      ...TextureImage
+    }
   }
 `;
 
@@ -109,28 +116,33 @@ export const GlobalsQuerySchema = z
           routeLink: LinkSchema.nullable(),
         })
         .nullable(),
+      textur: imageSchema(TEXTURE_IMAGE_WIDTHS).nullable(),
     }),
   })
-  .transform(({ data: { navigation, doctolib, footer, contact } }) => ({
-    navigation: (navigation?.navigationItems ?? []).flatMap(({ id, link }) =>
-      link !== null ? [{ id, link }] : [],
-    ),
-    doctolibLink: doctolib?.doctolibLink ?? null,
-    footer: {
-      infoText1: footer?.infoText1?.html,
-      infoText2: footer?.infoText2?.html,
-      navigationItems: (footer?.navigationItems ?? []).flatMap(
-        ({ id, link }) => (link !== null ? [{ id, link }] : []),
+  .transform(
+    ({ data: { navigation, doctolib, footer, contact, ...rest } }) => ({
+      navigation: (navigation?.navigationItems ?? []).flatMap(({ id, link }) =>
+        link !== null ? [{ id, link }] : [],
       ),
-    },
-    contact: {
-      appointmentText: contact?.appointmentText?.html ?? null,
-      appointmentLink: contact?.appointmentLink ?? null,
-      contactText: contact?.contactText?.html ?? null,
-      opentimes: contact?.opentimes?.html ?? null,
-      address: contact?.address?.html ?? null,
-      routeLink: contact?.routeLink ?? null,
-    },
-  }));
+      doctolibLink: doctolib?.doctolibLink ?? null,
+      footer: {
+        infoText1: footer?.infoText1?.html,
+        infoText2: footer?.infoText2?.html,
+        navigationItems: (footer?.navigationItems ?? []).flatMap(
+          ({ id, link }) => (link !== null ? [{ id, link }] : []),
+        ),
+      },
+      // TODO: clean up
+      contact: {
+        appointmentText: contact?.appointmentText?.html ?? null,
+        appointmentLink: contact?.appointmentLink ?? null,
+        contactText: contact?.contactText?.html ?? null,
+        opentimes: contact?.opentimes?.html ?? null,
+        address: contact?.address?.html ?? null,
+        routeLink: contact?.routeLink ?? null,
+      },
+      ...rest,
+    }),
+  );
 
 export type GlobalsQuery = z.infer<typeof GlobalsQuerySchema>;

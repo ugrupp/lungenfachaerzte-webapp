@@ -39,6 +39,7 @@ const getGlobalsServerFn = createServerFn({ method: "GET" }).handler(
           routeLink: null,
         },
         footer: { infoText1: null, infoText2: null, navigationItems: [] },
+        textur: null,
       };
     }
 
