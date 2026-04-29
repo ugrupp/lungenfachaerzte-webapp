@@ -1,5 +1,6 @@
 @import "./richtext-spacing.css";
 @import "./richtext-list.css";
+@import "./richtext-table.css";
 
 .richtext {
   --text-color: theme("colors.ci-dark");
@@ -7,6 +8,10 @@
 
   & strong {
     @apply font-bold;
+  }
+
+  .serif {
+    @apply font-serif tracking-widest text-[1.05555556em];
   }
 
   & a {

@@ -1,0 +1,14 @@
+.richtext {
+  & table {
+    border-collapse: collapse;
+  }
+
+  & th {
+    @apply font-bold text-14 tracking-wide uppercase text-left align-baseline pr-5;
+    white-space: nowrap;
+  }
+
+  & td {
+    @apply align-baseline;
+  }
+}

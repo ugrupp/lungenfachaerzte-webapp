@@ -1,7 +1,7 @@
 
 <svg width="197px" height="99px" viewBox="0 0 197 99" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Group" transform="translate(0.440000, 0.000000)" fill="#204D52" fill-rule="nonzero">
+        <g id="Group" transform="translate(0.440000, 0.000000)" fill="currentColor" fill-rule="nonzero">
             <polygon id="Path" points="2.14 15.4 10.33 15.4 10.33 17.34 0 17.34 0 0.2 2.14 0.2"></polygon>
             <path d="M24.67,0.2 L24.67,10.36 C24.67,15.43 22.26,17.54 18.46,17.54 C14.66,17.54 12.25,15.43 12.25,10.39 L12.25,0.2 L14.39,0.2 L14.39,10.38 C14.39,14.13 15.83,15.59 18.46,15.59 C21.09,15.59 22.53,14.13 22.53,10.38 L22.53,0.2 L24.67,0.2 Z" id="Path"></path>
             <polygon id="Path" points="40.23 0.2 40.23 17.33 38.14 17.33 30.74 4.37 30.74 17.33 28.6 17.33 28.6 0.2 30.64 0.2 38.09 13.29 38.09 0.2"></polygon>

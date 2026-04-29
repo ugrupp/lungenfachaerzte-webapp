@@ -30,6 +30,14 @@ const getGlobalsServerFn = createServerFn({ method: "GET" }).handler(
       return {
         navigation: [],
         doctolibLink: null,
+        contact: {
+          appointmentText: null,
+          appointmentLink: null,
+          contactText: null,
+          opentimes: null,
+          address: null,
+          routeLink: null,
+        },
         footer: { infoText1: null, infoText2: null, navigationItems: [] },
       };
     }

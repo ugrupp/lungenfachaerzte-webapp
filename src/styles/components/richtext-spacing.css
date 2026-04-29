@@ -1,6 +1,6 @@
 .richtext {
   /* Inline elements */
-  & :is(p, address, pre, table) {
+  & :is(p, address, pre) {
     margin-top: 1.4em;
     margin-bottom: 1.4em;
   }

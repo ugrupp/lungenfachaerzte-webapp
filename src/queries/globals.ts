@@ -41,6 +41,28 @@ export const GLOBALS_QUERY = /* GraphQL */ `
         }
       }
     }
+    contact: globalSet(handle: "contact") {
+      ... on contact_GlobalSet {
+        appointmentText {
+          html
+        }
+        appointmentLink {
+          ...LinkFields
+        }
+        contactText {
+          html
+        }
+        opentimes {
+          html
+        }
+        address {
+          html
+        }
+        routeLink {
+          ...LinkFields
+        }
+      }
+    }
   }
 `;
 
@@ -77,9 +99,19 @@ export const GlobalsQuerySchema = z
           ),
         })
         .nullable(),
+      contact: z
+        .object({
+          appointmentText: RichTextSchema,
+          appointmentLink: LinkSchema.nullable(),
+          contactText: RichTextSchema,
+          opentimes: RichTextSchema,
+          address: RichTextSchema,
+          routeLink: LinkSchema.nullable(),
+        })
+        .nullable(),
     }),
   })
-  .transform(({ data: { navigation, doctolib, footer } }) => ({
+  .transform(({ data: { navigation, doctolib, footer, contact } }) => ({
     navigation: (navigation?.navigationItems ?? []).flatMap(({ id, link }) =>
       link !== null ? [{ id, link }] : [],
     ),
@@ -90,6 +122,14 @@ export const GlobalsQuerySchema = z
       navigationItems: (footer?.navigationItems ?? []).flatMap(
         ({ id, link }) => (link !== null ? [{ id, link }] : []),
       ),
+    },
+    contact: {
+      appointmentText: contact?.appointmentText?.html ?? null,
+      appointmentLink: contact?.appointmentLink ?? null,
+      contactText: contact?.contactText?.html ?? null,
+      opentimes: contact?.opentimes?.html ?? null,
+      address: contact?.address?.html ?? null,
+      routeLink: contact?.routeLink ?? null,
     },
   }));
 
