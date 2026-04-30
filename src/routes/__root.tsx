@@ -12,7 +12,6 @@ import type { ReactNode } from "react";
 
 import { CraftPreviewListener } from "../components/CraftPreviewListener";
 import Footer from "../components/Footer";
-import { HashLinkHandler } from "../components/HashLinkHandler";
 import Header from "../components/Header";
 
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
@@ -71,7 +70,6 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       </head>
       <body>
         <CraftPreviewListener />
-        <HashLinkHandler />
 
         <a href="#start" className="sr-only">
           Zum Content springen

@@ -11,7 +11,8 @@ export function getRouter() {
     routeTree,
     context,
     scrollRestoration: true,
-    // MPA mode: all navigation is full-page reloads via reloadDocument on <Link>s.
+    // MPA mode: internal links are plain <a> tags, so navigation is always
+    // a full-page reload.
     // CDN-cached HTML is served for every GET; no server function invocations
     // on client-side nav. CSS @view-transition handles the transition animation.
     defaultStaleTime: Infinity,

@@ -3,7 +3,6 @@ import CraftLink from "#/components/CraftLink";
 import { Image } from "#/components/Image";
 import { getGlobalsServerFn } from "#/serverFunctions/getGlobalsServerFn";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -35,22 +34,6 @@ export default function MobileMenu({ isOpen, onClose, onExitComplete }: Props) {
     setContentHeight(el.offsetHeight);
     return () => ro.disconnect();
   }, [isOpen]);
-
-  // Close after navigation settles — avoids stutter from Suspense during exit animation
-  const [pendingClose, setPendingClose] = useState(false);
-  const isLoading = useRouterState({ select: (s) => s.isLoading });
-  const pendingCloseRef = useRef(false);
-  useEffect(() => {
-    if (!pendingCloseRef.current || isLoading) return;
-    pendingCloseRef.current = false;
-    onClose();
-  }, [isLoading, onClose]);
-
-  const handleNavClick = () => {
-    void pendingClose; // satisfy exhaustive deps if needed
-    pendingCloseRef.current = true;
-    setPendingClose(true); // triggers re-render so effect fires
-  };
 
   // Close on Escape
   useEffect(() => {
@@ -100,7 +83,7 @@ export default function MobileMenu({ isOpen, onClose, onExitComplete }: Props) {
                   <CraftLink
                     key={id}
                     link={link}
-                    onClick={handleNavClick}
+                    onClick={onClose}
                     className="text-24 leading-none tracking-wide text-ci-dark uppercase w-fit"
                   >
                     {link.label ?? link.defaultLabel}
