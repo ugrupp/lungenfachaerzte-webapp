@@ -1,4 +1,5 @@
 import { HomeIntro } from "#/components/HomeIntro";
+import { HomeTeasers } from "#/components/HomeTeasers";
 import SubHeader from "#/components/SubHeader";
 import { craftPreviewSearchSchema } from "#/lib/craftPreview";
 import { routeCacheHeaders } from "#/lib/routeCacheHeaders";
@@ -28,6 +29,7 @@ function HomePage() {
     <>
       <SubHeader variant="tall" />
       <HomeIntro />
+      <HomeTeasers />
     </>
   );
 }

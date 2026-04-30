@@ -9,11 +9,11 @@ const CONTENT_IMAGE_WIDTHS = [400, 800, 1200] as const;
 
 const MainImageSchema = z
   .array(imageSchema(MAIN_IMAGE_WIDTHS))
-  .transform((arr) => arr[0]);
+  .transform((arr) => arr.at(0));
 
 const ContentImageSchema = z
   .array(imageSchema(CONTENT_IMAGE_WIDTHS))
-  .transform((arr) => arr[0]);
+  .transform((arr) => arr.at(0));
 
 const AUSSTATTUNG_QUERY = /* GraphQL */ `
   ${imageFragment(MAIN_IMAGE_WIDTHS, "MainImage")}
