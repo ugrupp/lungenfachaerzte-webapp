@@ -48,13 +48,13 @@ export default function Contact({ className, ...props }: ContactProps) {
 
       {/* Appointment */}
       <div className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 mt-23 768:mt-39.75 flex flex-col items-start">
-        {!!contact.appointmentText && (
+        {!!contact?.appointmentText?.html && (
           <div className="richtext richtext--on-dark text-18 leading-snug">
-            {parse(contact.appointmentText)}
+            {parse(contact.appointmentText.html)}
           </div>
         )}
 
-        {contact.appointmentLink && (
+        {contact?.appointmentLink && (
           <CraftLink
             link={contact.appointmentLink}
             className="mt-5 inline-block font-bold text-14 tracking-wide leading-relaxed uppercase underline underline-offset-5"
@@ -76,31 +76,31 @@ export default function Contact({ className, ...props }: ContactProps) {
 
       {/* Contact */}
       <div className="col-[content/content] max-1024:ml-(--logo-offset) 768:col-[content/11] 1024:col-[7/12] mt-23 768:mt-15">
-        {!!contact.contactText && (
+        {!!contact?.contactText?.html && (
           <div>
             <ContactSectionHeading>Kontakt</ContactSectionHeading>
 
             <div className="mt-6 richtext richtext--on-dark text-18 leading-snug">
-              {parse(contact.contactText)}
+              {parse(contact.contactText.html)}
             </div>
           </div>
         )}
 
-        {!!contact.opentimes && (
+        {!!contact?.opentimes?.html && (
           <div className="mt-14">
             <ContactSectionHeading>Sprechzeiten</ContactSectionHeading>
             <div className="mt-6 richtext richtext--on-dark text-18 leading-snug">
-              {parse(contact.opentimes)}
+              {parse(contact.opentimes.html)}
             </div>
           </div>
         )}
 
-        {(!!contact.address || contact.routeLink) && (
+        {(!!contact?.address?.html || contact?.routeLink) && (
           <div className="mt-14">
             <ContactSectionHeading>Adresse</ContactSectionHeading>
-            {!!contact.address && (
+            {!!contact.address?.html && (
               <div className="mt-6 richtext richtext--on-dark text-18 leading-snug">
-                {parse(contact.address)}
+                {parse(contact.address.html)}
               </div>
             )}
 

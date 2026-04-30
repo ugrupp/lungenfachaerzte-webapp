@@ -29,17 +29,21 @@ const getGlobalsServerFn = createServerFn({ method: "GET" }).handler(
       console.error("Failed to get globals data.", result.error);
       return {
         navigation: [],
-        doctolibLink: null,
+        doctolibLink: undefined,
         contact: {
-          appointmentText: null,
-          appointmentLink: null,
-          contactText: null,
-          opentimes: null,
-          address: null,
-          routeLink: null,
+          appointmentText: undefined,
+          appointmentLink: undefined,
+          contactText: undefined,
+          opentimes: undefined,
+          address: undefined,
+          routeLink: undefined,
         },
-        footer: { infoText1: null, infoText2: null, navigationItems: [] },
-        textur: null,
+        footer: {
+          infoText1: undefined,
+          infoText2: undefined,
+          navigationItems: [],
+        },
+        textur: undefined,
       };
     }
 

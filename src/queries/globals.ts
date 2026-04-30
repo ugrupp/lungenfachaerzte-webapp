@@ -1,4 +1,5 @@
 import { LINK_FRAGMENT, LinkSchema } from "#/lib/craftLink";
+import { nullToUndefined } from "#/lib/helpers";
 import { imageFragment, imageSchema } from "#/lib/image";
 import { z } from "zod";
 
@@ -74,7 +75,7 @@ export const GLOBALS_QUERY = /* GraphQL */ `
 `;
 
 // TODO: globalize
-const RichTextSchema = z.object({ html: z.string() }).nullable();
+const RichTextSchema = z.object({ html: z.string() }).apply(nullToUndefined);
 
 export const GlobalsQuerySchema = z
   .object({
@@ -91,9 +92,9 @@ export const GlobalsQuerySchema = z
         .nullable(),
       doctolib: z
         .object({
-          doctolibLink: LinkSchema.nullable(),
+          doctolibLink: LinkSchema.apply(nullToUndefined),
         })
-        .nullable(),
+        .apply(nullToUndefined),
       footer: z
         .object({
           infoText1: RichTextSchema,
@@ -109,40 +110,28 @@ export const GlobalsQuerySchema = z
       contact: z
         .object({
           appointmentText: RichTextSchema,
-          appointmentLink: LinkSchema.nullable(),
+          appointmentLink: LinkSchema.apply(nullToUndefined),
           contactText: RichTextSchema,
           opentimes: RichTextSchema,
           address: RichTextSchema,
-          routeLink: LinkSchema.nullable(),
+          routeLink: LinkSchema.apply(nullToUndefined),
         })
         .nullable(),
       textur: imageSchema(TEXTURE_IMAGE_WIDTHS).nullable(),
     }),
   })
-  .transform(
-    ({ data: { navigation, doctolib, footer, contact, ...rest } }) => ({
-      navigation: (navigation?.navigationItems ?? []).flatMap(({ id, link }) =>
-        link !== null ? [{ id, link }] : [],
+  .transform(({ data: { navigation, footer, doctolib, ...rest } }) => ({
+    navigation: (navigation?.navigationItems ?? []).flatMap(({ id, link }) =>
+      link !== null ? [{ id, link }] : [],
+    ),
+    doctolibLink: doctolib?.doctolibLink,
+    footer: {
+      ...footer,
+      navigationItems: (footer?.navigationItems ?? []).flatMap(
+        ({ id, link }) => (link !== null ? [{ id, link }] : []),
       ),
-      doctolibLink: doctolib?.doctolibLink ?? null,
-      footer: {
-        infoText1: footer?.infoText1?.html,
-        infoText2: footer?.infoText2?.html,
-        navigationItems: (footer?.navigationItems ?? []).flatMap(
-          ({ id, link }) => (link !== null ? [{ id, link }] : []),
-        ),
-      },
-      // TODO: clean up
-      contact: {
-        appointmentText: contact?.appointmentText?.html ?? null,
-        appointmentLink: contact?.appointmentLink ?? null,
-        contactText: contact?.contactText?.html ?? null,
-        opentimes: contact?.opentimes?.html ?? null,
-        address: contact?.address?.html ?? null,
-        routeLink: contact?.routeLink ?? null,
-      },
-      ...rest,
-    }),
-  );
+    },
+    ...rest,
+  }));
 
 export type GlobalsQuery = z.infer<typeof GlobalsQuerySchema>;
