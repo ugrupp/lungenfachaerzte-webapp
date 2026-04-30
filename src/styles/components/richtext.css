@@ -15,7 +15,6 @@
   }
 
   & a {
-    overflow-wrap: anywhere;
     color: var(--text-color);
 
     &:hover,
