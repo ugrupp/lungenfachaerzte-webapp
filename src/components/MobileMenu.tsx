@@ -20,7 +20,6 @@ export default function MobileMenu({ isOpen, onClose, onExitComplete }: Props) {
   } = useSuspenseQuery({
     queryKey: ["globals"],
     queryFn: () => getGlobalsServerFn(),
-    staleTime: 1000 * 60 * 60,
   });
 
   const panelRef = useRef<HTMLDivElement>(null);

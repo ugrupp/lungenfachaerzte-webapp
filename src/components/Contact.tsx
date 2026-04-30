@@ -3,7 +3,6 @@ import { getGlobalsServerFn } from "#/serverFunctions/getGlobalsServerFn";
 import Doctors from "#/svg/doctors.svg?react";
 import Logo from "#/svg/logo.svg?react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
 import clsx from "clsx";
 import parse from "html-react-parser";
 import { type ComponentPropsWithoutRef } from "react";
@@ -25,7 +24,6 @@ export default function Contact({ className, ...props }: ContactProps) {
   } = useSuspenseQuery({
     queryKey: ["globals"],
     queryFn: () => getGlobalsServerFn(),
-    staleTime: 1000 * 60 * 60,
   });
 
   return (
@@ -38,10 +36,10 @@ export default function Contact({ className, ...props }: ContactProps) {
     >
       {/* Logo */}
       <div className="1024:sticky top-0 bottom-0 pt-8 1024:pb-8 col-start-[content] flex flex-col items-start gap-y-8">
-        <Link to="/" className="block ml-(--logo-offset) h-[95.37px] w-fit">
+        <a href="/" className="block ml-(--logo-offset) h-[95.37px] w-fit">
           <Logo className="h-full w-auto" />
           <span className="sr-only">Zur Startseite</span>
-        </Link>
+        </a>
 
         <Doctors />
       </div>

@@ -1,7 +1,6 @@
 import CraftLink from "#/components/CraftLink";
 import type { CraftLink as CraftLinkData } from "#/lib/craftLink";
 import ArrowIcon from "#/svg/arrow.svg?react";
-import type { LinkProps } from "@tanstack/react-router";
 import clsx from "clsx";
 import type { AnchorHTMLAttributes } from "react";
 
@@ -9,7 +8,7 @@ type ButtonProps = {
   label: string;
   link: CraftLinkData;
   variant?: "default" | "on-ci";
-} & Omit<LinkProps & AnchorHTMLAttributes<HTMLAnchorElement>, "children">;
+} & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "children">;
 
 export default function Button({
   label,

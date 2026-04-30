@@ -1,42 +1,23 @@
 import type { CraftLink } from "#/lib/craftLink";
-import type { LinkProps } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
 import type { AnchorHTMLAttributes } from "react";
 
-// Intersect LinkProps with AnchorHTMLAttributes so className, onClick, style,
-// data-* etc. are all available, as are TanStack-specific props.
 type CraftLinkProps = {
   link: CraftLink;
-} & Omit<LinkProps & AnchorHTMLAttributes<HTMLAnchorElement>, "to">;
+} & AnchorHTMLAttributes<HTMLAnchorElement>;
 
 /**
- * Renders a TanStack `<Link>` for internal Craft links (entries, assets, …)
- * and a plain `<a>` for external URLs, emails, and other non-internal types.
- * TanStack-specific props (activeProps, activeOptions, preload, …) are passed
- * through for internal links and silently ignored for external ones.
+ * Renders a plain `<a>` for all Craft links — both internal and external.
+ * MPA navigation: full-page reloads let the CDN serve cached responses.
  */
 export default function CraftLink({ link, children, ...rest }: CraftLinkProps) {
-  if (link.isExternal) {
-    return (
-      <a
-        href={link.href}
-        target={link.target}
-        rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
-        {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}
-      >
-        {children}
-      </a>
-    );
-  }
-
   return (
-    <Link
-      to={link.href as "/"}
+    <a
+      href={link.href}
       target={link.target}
       rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
       {...rest}
     >
       {children}
-    </Link>
+    </a>
   );
 }

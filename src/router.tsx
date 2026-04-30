@@ -11,17 +11,11 @@ export function getRouter() {
     routeTree,
     context,
     scrollRestoration: true,
-    defaultPreload: "intent",
-    // Content only changes when Craft publishes and the Netlify CDN cache is
-    // purged. Within a single browser session, loader data never goes stale —
-    // re-fetching on every client-side navigation would needlessly invoke the
-    // Netlify function. Preview mode is unaffected: loaderDeps changes (token)
-    // and router.invalidate() both bypass staleTime.
+    // MPA mode: all navigation is full-page reloads via reloadDocument on <Link>s.
+    // CDN-cached HTML is served for every GET; no server function invocations
+    // on client-side nav. CSS @view-transition handles the transition animation.
     defaultStaleTime: Infinity,
-    // Keep preloaded data for the full session too, so hover-preloads are
-    // reused on navigation rather than triggering a second fetch.
     defaultPreloadStaleTime: Infinity,
-    defaultViewTransition: true,
   });
 
   setupRouterSsrQueryIntegration({ router, queryClient: context.queryClient });

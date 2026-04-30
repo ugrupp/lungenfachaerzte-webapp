@@ -5,7 +5,6 @@ import { getGlobalsServerFn } from "#/serverFunctions/getGlobalsServerFn";
 import Ellipsis from "#/svg/ellipsis.svg?react";
 import Logo from "#/svg/logo.svg?react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -34,13 +33,13 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-white py-8 container-grid items-start">
       {/* Logo */}
-      <Link
-        to="/"
+      <a
+        href="/"
         className="ml-(--logo-offset) col-start-[content] h-[95.37px] w-fit"
       >
         <Logo className="h-full w-auto" />
         <span className="sr-only">Zur Startseite</span>
-      </Link>
+      </a>
 
       {/* Termin vereinbaren */}
       {doctolibLink && (

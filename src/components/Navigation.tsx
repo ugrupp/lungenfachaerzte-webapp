@@ -2,6 +2,8 @@ import CraftLink from "#/components/CraftLink";
 import { getGlobalsServerFn } from "#/serverFunctions/getGlobalsServerFn";
 import Ellipsis from "#/svg/ellipsis.svg?react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useRouterState } from "@tanstack/react-router";
+import clsx from "clsx";
 import type { ComponentPropsWithoutRef } from "react";
 
 type Props = ComponentPropsWithoutRef<"nav">;
@@ -11,23 +13,30 @@ export default function Navigation(props: Props) {
   } = useSuspenseQuery({
     queryKey: ["globals"],
     queryFn: () => getGlobalsServerFn(),
-    staleTime: 1000 * 60 * 60,
   });
+
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
     <nav
       {...props}
-      className={`bg-off-white rounded-full overflow-hidden ${props.className ?? ""}`}
+      className={clsx(
+        "bg-off-white rounded-full overflow-hidden",
+        props.className,
+      )}
     >
       <ul className="flex items-center justify-center">
         {navItems.map(({ id, link }, index) => {
+          const isActive = link.href === pathname;
           return (
             <li key={id} className="group relative">
               <CraftLink
                 link={link}
-                className="block px-5 pt-3 pb-1.5 text-16 leading-snug tracking-wide text-ci-dark uppercase group-last-of-type:pr-8 group-first-of-type:pl-8 border-b-3 border-transparent hover:border-ci-light transition-colors duration-200"
-                activeProps={{ className: "border-ci-light!" }}
-                activeOptions={{ exact: true }}
+                aria-current={isActive ? "page" : undefined}
+                className={clsx(
+                  "block px-5 pt-3 pb-1.5 text-16 leading-snug tracking-wide text-ci-dark uppercase group-last-of-type:pr-8 group-first-of-type:pl-8 border-b-3 hover:border-ci-light transition-colors duration-200",
+                  isActive ? "border-ci-light" : "border-transparent",
+                )}
               >
                 {link.label ?? link.defaultLabel}
 

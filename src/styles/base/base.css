@@ -1,3 +1,8 @@
+/* MPA view transitions — works with full-page reloads */
+@view-transition {
+  navigation: auto;
+}
+
 @layer base {
   html,
   body {

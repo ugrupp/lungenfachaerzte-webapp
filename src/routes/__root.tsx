@@ -45,6 +45,19 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         href: appCss,
       },
     ],
+    scripts: [
+      {
+        type: "speculationrules",
+        children: JSON.stringify({
+          prerender: [
+            {
+              where: { href_matches: "/*" },
+              eagerness: "moderate",
+            },
+          ],
+        }),
+      },
+    ],
   }),
   shellComponent: RootDocument,
   notFoundComponent: NotFoundPage,
@@ -97,7 +110,6 @@ function NotFoundPage() {
   const { data } = useSuspenseQuery({
     queryKey: ["errorpage"],
     queryFn: () => getErrorPageServerFn(),
-    staleTime: 1000 * 60 * 60,
   });
 
   return (
