@@ -1,5 +1,6 @@
 import Contact from "#/components/Contact";
 import CraftLink from "#/components/CraftLink";
+import { Image } from "#/components/Image";
 import { getGlobalsServerFn } from "#/serverFunctions/getGlobalsServerFn";
 import Info from "#/svg/info-2.svg?react";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -7,7 +8,7 @@ import parse from "html-react-parser";
 
 export default function Footer() {
   const {
-    data: { footer },
+    data: { footer, textur },
   } = useSuspenseQuery({
     queryKey: ["globals"],
     queryFn: () => getGlobalsServerFn(),
@@ -16,6 +17,20 @@ export default function Footer() {
 
   return (
     <>
+      {/* Decorative texture */}
+      {textur && (
+        <div className="h-107 768:h-112 -mb-10 768:-mb-12.5">
+          <Image
+            src={textur.url}
+            srcSet={textur.srcset}
+            sizes="100vw"
+            alt=""
+            focalPoint={textur.focalPoint}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+
       <Contact />
 
       <footer className="bg-ci-light relative z-70 pb-14 768:pb-24">
