@@ -59,6 +59,15 @@ const HOME_QUERY = /* GraphQL */ `
         }
       }
     }
+    teaserTeam: entry(section: "team") {
+      ... on team_Entry {
+        url
+        title
+        teaserText {
+          html
+        }
+      }
+    }
   }
 `;
 
@@ -78,6 +87,13 @@ const TeaserSchema = z.object({
 });
 type Teaser = z.infer<typeof TeaserSchema>;
 
+const TeamTeaserSchema = z.object({
+  url: z.string(),
+  title: z.string(),
+  teaserText: TextSchema.apply(nullToUndefined),
+});
+type TeamTeaser = z.infer<typeof TeamTeaserSchema>;
+
 const HomeQuerySchema = z
   .object({
     data: z.object({
@@ -95,15 +111,21 @@ const HomeQuerySchema = z
         .nullable(),
       teaserSchwerpunkte: TeaserSchema,
       teaserAusstattung: TeaserSchema,
+      teaserTeam: TeamTeaserSchema,
     }),
   })
-  .transform(({ data: { teaserAusstattung, teaserSchwerpunkte, entry } }) => ({
-    teaserAusstattung,
-    teaserSchwerpunkte,
-    ...entry,
-  }));
+  .transform(
+    ({
+      data: { teaserAusstattung, teaserSchwerpunkte, teaserTeam, entry },
+    }) => ({
+      teaserAusstattung,
+      teaserSchwerpunkte,
+      teaserTeam,
+      ...entry,
+    }),
+  );
 
 type HomeQuery = z.infer<typeof HomeQuerySchema>;
 
 export { HOME_QUERY, HomeQuerySchema };
-export type { HomeQuery, Teaser as HomeTeaser };
+export type { HomeQuery, TeamTeaser as HomeTeamTeaser, Teaser as HomeTeaser };

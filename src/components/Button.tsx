@@ -7,7 +7,7 @@ import type { AnchorHTMLAttributes } from "react";
 type ButtonProps = {
   label: string;
   link: CraftLinkData;
-  variant?: "default" | "on-ci";
+  variant?: "default" | "on-ci" | "on-ci-light";
 } & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "children">;
 
 export default function Button({
@@ -26,17 +26,25 @@ export default function Button({
       )}
       {...rest}
     >
-      <span className="px-4.75 pt-3 pb-2.25 bg-ci-light text-ci-dark text-base leading-snug tracking-wide uppercase">
+      <span
+        className={clsx(
+          "px-4.75 pt-3 pb-2.25 text-base leading-snug tracking-wide uppercase",
+          {
+            "bg-ci-light text-ci-dark":
+              variant === "default" || variant === "on-ci",
+            "bg-white text-ci-dark": variant === "on-ci-light",
+          },
+        )}
+      >
         {label}
       </span>
 
       <span
-        className={clsx(
-          "flex items-center justify-center px-3.5 shrink-0",
-          variant === "on-ci"
-            ? "bg-white text-ci-dark"
-            : "bg-ci-dark text-ci-light",
-        )}
+        className={clsx("flex items-center justify-center px-3.5 shrink-0", {
+          "bg-white text-ci-dark": variant === "on-ci",
+          "bg-ci-dark text-ci-light":
+            variant === "default" || variant === "on-ci-light",
+        })}
       >
         <ArrowIcon className="w-4 h-4" />
       </span>
