@@ -16,7 +16,6 @@ export default function Header() {
   } = useSuspenseQuery({
     queryKey: ["globals"],
     queryFn: () => getGlobalsServerFn(),
-    staleTime: 1000 * 60 * 60,
   });
 
   const [menuOpen, setMenuOpen] = useState(false);

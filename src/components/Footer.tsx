@@ -12,7 +12,6 @@ export default function Footer() {
   } = useSuspenseQuery({
     queryKey: ["globals"],
     queryFn: () => getGlobalsServerFn(),
-    staleTime: 1000 * 60 * 60,
   });
 
   return (
