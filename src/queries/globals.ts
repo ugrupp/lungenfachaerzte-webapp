@@ -1,6 +1,7 @@
-import { LINK_FRAGMENT, LinkSchema } from "#/lib/craftLink";
 import { nullToUndefined } from "#/lib/helpers";
 import { imageFragment, imageSchema } from "#/lib/image";
+import { LINK_FRAGMENT, LinkSchema } from "#/lib/link";
+import { TextSchema } from "#/lib/text";
 import { z } from "zod";
 
 const TEXTURE_IMAGE_WIDTHS = [400, 800, 1200, 1600] as const;
@@ -74,61 +75,52 @@ export const GLOBALS_QUERY = /* GraphQL */ `
   }
 `;
 
-// TODO: globalize
-const RichTextSchema = z.object({ html: z.string() }).apply(nullToUndefined);
-
 export const GlobalsQuerySchema = z
   .object({
     data: z.object({
-      navigation: z
-        .object({
-          navigationItems: z.array(
-            z.object({
-              id: z.string(),
-              link: LinkSchema.nullable(),
-            }),
-          ),
-        })
-        .nullable(),
+      navigation: z.object({
+        navigationItems: z.array(
+          z.object({
+            id: z.string(),
+            link: LinkSchema.nullable(),
+          }),
+        ),
+      }),
       doctolib: z
         .object({
           doctolibLink: LinkSchema.apply(nullToUndefined),
         })
         .apply(nullToUndefined),
-      footer: z
-        .object({
-          infoText1: RichTextSchema,
-          infoText2: RichTextSchema,
-          navigationItems: z.array(
-            z.object({
-              id: z.string(),
-              link: LinkSchema.nullable(),
-            }),
-          ),
-        })
-        .nullable(),
-      contact: z
-        .object({
-          appointmentText: RichTextSchema,
-          appointmentLink: LinkSchema.apply(nullToUndefined),
-          contactText: RichTextSchema,
-          opentimes: RichTextSchema,
-          address: RichTextSchema,
-          routeLink: LinkSchema.apply(nullToUndefined),
-        })
-        .nullable(),
+      footer: z.object({
+        infoText1: TextSchema.apply(nullToUndefined),
+        infoText2: TextSchema.apply(nullToUndefined),
+        navigationItems: z.array(
+          z.object({
+            id: z.string(),
+            link: LinkSchema.nullable(),
+          }),
+        ),
+      }),
+      contact: z.object({
+        appointmentText: TextSchema.apply(nullToUndefined),
+        appointmentLink: LinkSchema.apply(nullToUndefined),
+        contactText: TextSchema.apply(nullToUndefined),
+        opentimes: TextSchema.apply(nullToUndefined),
+        address: TextSchema.apply(nullToUndefined),
+        routeLink: LinkSchema.apply(nullToUndefined),
+      }),
       textur: imageSchema(TEXTURE_IMAGE_WIDTHS).nullable(),
     }),
   })
   .transform(({ data: { navigation, footer, doctolib, ...rest } }) => ({
-    navigation: (navigation?.navigationItems ?? []).flatMap(({ id, link }) =>
-      link !== null ? [{ id, link }] : [],
+    navigation: navigation.navigationItems.flatMap(({ id, link }) =>
+      link ? [{ id, link }] : [],
     ),
     doctolibLink: doctolib?.doctolibLink,
     footer: {
       ...footer,
-      navigationItems: (footer?.navigationItems ?? []).flatMap(
-        ({ id, link }) => (link !== null ? [{ id, link }] : []),
+      navigationItems: footer.navigationItems.flatMap(({ id, link }) =>
+        link ? [{ id, link }] : [],
       ),
     },
     ...rest,

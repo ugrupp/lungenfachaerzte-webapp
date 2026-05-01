@@ -1,30 +1,22 @@
-import CraftLink from "#/components/CraftLink";
-import type { CraftLink as CraftLinkData } from "#/lib/craftLink";
 import ArrowIcon from "#/svg/arrow.svg?react";
 import clsx from "clsx";
-import type { AnchorHTMLAttributes } from "react";
-
-type ButtonProps = {
-  label: string;
-  link: CraftLinkData;
-  variant?: "default" | "on-ci" | "on-ci-light";
-} & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "children">;
+import type { ComponentPropsWithoutRef } from "react";
 
 export default function Button({
-  label,
-  link,
+  children,
   variant = "default",
   className,
-  ...rest
-}: ButtonProps) {
+  ...props
+}: ComponentPropsWithoutRef<"a"> & {
+  variant?: "default" | "on-ci" | "on-ci-light";
+}) {
   return (
-    <CraftLink
-      link={link}
+    <a
       className={clsx(
         "inline-flex whitespace-nowrap rounded-br-[15px] overflow-hidden",
         className,
       )}
-      {...rest}
+      {...props}
     >
       <span
         className={clsx(
@@ -36,7 +28,7 @@ export default function Button({
           },
         )}
       >
-        {label}
+        {children}
       </span>
 
       <span
@@ -48,6 +40,6 @@ export default function Button({
       >
         <ArrowIcon className="w-4 h-4" />
       </span>
-    </CraftLink>
+    </a>
   );
 }

@@ -1,5 +1,4 @@
 import Button from "#/components/Button";
-import CraftLink from "#/components/CraftLink";
 import { Image } from "#/components/Image";
 import { getGlobalsServerFn } from "#/serverFunctions/getGlobalsServerFn";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -80,24 +79,37 @@ export default function MobileMenu({ isOpen, onClose, onExitComplete }: Props) {
               {/* Nav items */}
               <nav className="flex flex-col px-11 gap-y-5">
                 {navItems.map(({ id, link }) => (
-                  <CraftLink
+                  <a
                     key={id}
-                    link={link}
+                    href={link.href}
+                    target={link.target}
+                    rel={
+                      link.target === "_blank"
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
                     onClick={onClose}
                     className="text-24 leading-none tracking-wide text-ci-dark uppercase w-fit"
                   >
                     {link.label ?? link.defaultLabel}
-                  </CraftLink>
+                  </a>
                 ))}
               </nav>
               {/* Doctolib button — 80px below nav */}
               {doctolibLink && (
                 <div className="px-11 mt-20">
                   <Button
-                    label={doctolibLink.label ?? doctolibLink.defaultLabel}
-                    link={doctolibLink}
+                    href={doctolibLink.href}
+                    target={doctolibLink.target}
+                    rel={
+                      doctolibLink.target === "_blank"
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
                     onClick={onClose}
-                  />
+                  >
+                    {doctolibLink.label ?? doctolibLink.defaultLabel}
+                  </Button>
                 </div>
               )}
             </div>

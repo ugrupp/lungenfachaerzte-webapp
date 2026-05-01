@@ -44,10 +44,15 @@ export default function Header() {
       {/* Termin vereinbaren */}
       {doctolibLink && (
         <Button
-          label={doctolibLink.label ?? doctolibLink.defaultLabel}
-          link={doctolibLink}
+          href={doctolibLink.href}
+          target={doctolibLink.target}
+          rel={
+            doctolibLink.target === "_blank" ? "noopener noreferrer" : undefined
+          }
           className="max-896:hidden w-fit col-start-11 1024:col-start-7"
-        />
+        >
+          {doctolibLink.label ?? doctolibLink.defaultLabel}
+        </Button>
       )}
 
       {/* Navigation */}

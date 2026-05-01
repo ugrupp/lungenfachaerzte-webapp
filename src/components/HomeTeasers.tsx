@@ -1,5 +1,4 @@
 import { Image } from "#/components/Image";
-import { makeCraftLink } from "#/lib/craftLink";
 import type { HomeTeamTeaser, HomeTeaser } from "#/queries/home";
 import { getRouteApi } from "@tanstack/react-router";
 import clsx from "clsx";
@@ -35,7 +34,7 @@ function Teaser({ teaser, className, ...props }: TeaserProps) {
 
       {/* Link button */}
       <div className="col-[content/content] max-1024:ml-(--logo-offset) 768:col-end-10 1024:col-[7/12] mt-14 768:mt-32 1024:mt-12 768:self-end">
-        <Button link={makeCraftLink(teaser.url)} label="Mehr erfahren" />
+        <Button href={teaser.url}>Mehr erfahren</Button>
       </div>
 
       {/* Image */}
@@ -92,11 +91,9 @@ function TeamTeaser({ teaser, className, ...props }: TeamTeaserProps) {
 
       {/* Link button */}
       <div className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 mt-14 768:mt-18 pb-25 row-start-3">
-        <Button
-          link={makeCraftLink(teaser.url)}
-          label="Mehr erfahren"
-          variant="on-ci-light"
-        />
+        <Button href={teaser.url} variant="on-ci-light">
+          Mehr erfahren
+        </Button>
       </div>
     </div>
   );

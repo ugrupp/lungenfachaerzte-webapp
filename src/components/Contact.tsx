@@ -1,4 +1,3 @@
-import CraftLink from "#/components/CraftLink";
 import { getGlobalsServerFn } from "#/serverFunctions/getGlobalsServerFn";
 import Doctors from "#/svg/doctors.svg?react";
 import Logo from "#/svg/logo.svg?react";
@@ -53,22 +52,35 @@ export default function Contact({ className, ...props }: ContactProps) {
         )}
 
         {contact?.appointmentLink && (
-          <CraftLink
-            link={contact.appointmentLink}
+          <a
+            href={contact.appointmentLink.href}
+            target={contact.appointmentLink.target}
+            rel={
+              contact.appointmentLink.target === "_blank"
+                ? "noopener noreferrer"
+                : undefined
+            }
             className="mt-5 inline-block font-bold text-14 tracking-wide leading-relaxed uppercase underline underline-offset-5"
           >
             {contact.appointmentLink.label ??
               contact.appointmentLink.defaultLabel}
-          </CraftLink>
+          </a>
         )}
 
         {doctolibLink && (
           <Button
-            label={doctolibLink.label ?? doctolibLink.defaultLabel}
-            link={doctolibLink}
+            href={doctolibLink.href}
+            target={doctolibLink.target}
+            rel={
+              doctolibLink.target === "_blank"
+                ? "noopener noreferrer"
+                : undefined
+            }
             variant="on-ci"
             className="inline-block mt-7"
-          />
+          >
+            {doctolibLink.label ?? doctolibLink.defaultLabel}
+          </Button>
         )}
       </div>
 
@@ -104,13 +116,18 @@ export default function Contact({ className, ...props }: ContactProps) {
 
             {contact.routeLink && (
               <Button
-                label={
-                  contact.routeLink.label ?? contact.routeLink.defaultLabel
+                href={contact.routeLink.href}
+                target={contact.routeLink.target}
+                rel={
+                  contact.routeLink.target === "_blank"
+                    ? "noopener noreferrer"
+                    : undefined
                 }
-                link={contact.routeLink}
                 variant="on-ci"
                 className="mt-6"
-              />
+              >
+                {contact.routeLink.label ?? contact.routeLink.defaultLabel}
+              </Button>
             )}
           </div>
         )}

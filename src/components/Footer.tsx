@@ -1,5 +1,4 @@
 import Contact from "#/components/Contact";
-import CraftLink from "#/components/CraftLink";
 import { Image } from "#/components/Image";
 import { getGlobalsServerFn } from "#/serverFunctions/getGlobalsServerFn";
 import Info from "#/svg/info-2.svg?react";
@@ -59,13 +58,17 @@ export default function Footer() {
           {/* Navigation */}
           <div className="col-[content/content] 768:col-[content/10] 1024:col-[7/12] max-1024:ml-(--logo-offset) mt-14 768:mt-0 768:row-start-1 flex flex-col items-start gap-y-3">
             {footer.navigationItems.map(({ id, link }) => (
-              <CraftLink
+              <a
                 key={id}
-                link={link}
+                href={link.href}
+                target={link.target}
+                rel={
+                  link.target === "_blank" ? "noopener noreferrer" : undefined
+                }
                 className="inline-block font-bold text-14 tracking-wide leading-relaxed uppercase underline underline-offset-5"
               >
                 {link.label ?? link.defaultLabel}
-              </CraftLink>
+              </a>
             ))}
           </div>
         </div>
