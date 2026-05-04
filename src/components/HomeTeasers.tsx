@@ -34,7 +34,9 @@ function Teaser({ teaser, className, ...props }: TeaserProps) {
 
       {/* Link button */}
       <div className="col-[content/content] max-1024:ml-(--logo-offset) 768:col-end-10 1024:col-[7/12] mt-14 768:mt-32 1024:mt-12 768:self-end">
-        <Button href={teaser.url}>Mehr erfahren</Button>
+        <Button href={teaser.url} aria-label={teaser.title}>
+          Mehr erfahren
+        </Button>
       </div>
 
       {/* Image */}
@@ -43,6 +45,7 @@ function Teaser({ teaser, className, ...props }: TeaserProps) {
           <a
             href={teaser.url}
             className="block w-full h-81.25 768:h-full rounded-br-[40px] 768:rounded-br-[50px] overflow-hidden"
+            aria-label={teaser.title}
           >
             <Image
               src={teaser.mainImage.url}
