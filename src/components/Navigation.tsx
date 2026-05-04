@@ -13,9 +13,11 @@ const getPathname = (href: string): string => {
   }
 };
 
-type Props = ComponentPropsWithoutRef<"nav">;
+type Props = ComponentPropsWithoutRef<"nav"> & {
+  onCiDark?: boolean;
+};
 
-export default function Navigation(props: Props) {
+export default function Navigation({ className, onCiDark, ...props }: Props) {
   const {
     data: { navigation: navItems },
   } = useSuspenseQuery({
@@ -29,8 +31,9 @@ export default function Navigation(props: Props) {
     <nav
       {...props}
       className={clsx(
-        "bg-off-white rounded-full overflow-hidden",
-        props.className,
+        "rounded-full overflow-hidden",
+        onCiDark ? "bg-white" : "bg-off-white",
+        className,
       )}
     >
       <ul className="flex items-center justify-center">

@@ -1,11 +1,16 @@
 import { getGlobalsServerFn } from "#/serverFunctions/getGlobalsServerFn";
 import Doctors from "#/svg/doctors.svg?react";
+import Ellipsis from "#/svg/ellipsis.svg?react";
 import Logo from "#/svg/logo.svg?react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import parse from "html-react-parser";
-import { type ComponentPropsWithoutRef } from "react";
+import { motion } from "motion/react";
+import { useEffect, useState, type ComponentPropsWithoutRef } from "react";
+import { createPortal } from "react-dom";
 import Button from "./Button";
+import MobileMenu from "./MobileMenu";
+import Navigation from "./Navigation";
 
 function ContactSectionHeading({ children }: { children: string }) {
   return (
@@ -15,9 +20,15 @@ function ContactSectionHeading({ children }: { children: string }) {
   );
 }
 
-type ContactProps = ComponentPropsWithoutRef<"section">;
+type ContactProps = ComponentPropsWithoutRef<"section"> & {
+  standalone?: boolean;
+};
 
-export default function Contact({ className, ...props }: ContactProps) {
+export default function Contact({
+  className,
+  standalone = false,
+  ...props
+}: ContactProps) {
   const {
     data: { contact, doctolibLink },
   } = useSuspenseQuery({
@@ -25,16 +36,104 @@ export default function Contact({ className, ...props }: ContactProps) {
     queryFn: () => getGlobalsServerFn(),
   });
 
+  const [menuOpen, setMenuOpen] = useState(false);
+  // stays true during exit animation so portal button remains visible
+  const [panelVisible, setPanelVisible] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1280px)");
+    const handler = (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        setMenuOpen(false);
+        setPanelVisible(false);
+      }
+    };
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
   return (
     <section
       className={clsx(
-        "relative top-0 z-60 bg-ci-dark text-ci-light rounded-tr-[40px] 768:rounded-tr-[50px] pb-30 container-grid items-start",
+        "relative top-0 z-60 bg-ci-dark text-ci-light pb-30 container-grid items-start",
+        !standalone && "rounded-tr-[40px] 768:rounded-tr-[50px]",
         className,
       )}
       {...props}
     >
+      {/* Navigation */}
+      {standalone && (
+        <>
+          {/* Desktop navigation */}
+          <div
+            className="col-end-[content-end] w-fit justify-self-end sticky top-0 bottom-0 pt-8 row-start-1"
+            id="navigation"
+          >
+            <Navigation onCiDark className="max-1280:hidden" />
+
+            {/* Mobile toggle — inline when closed, portaled above panel when open */}
+            {!panelVisible && (
+              <button
+                className="1280:hidden cursor-pointer size-11 rounded-full bg-white flex items-center justify-center"
+                onClick={() => {
+                  setPanelVisible(true);
+                  requestAnimationFrame(() => setMenuOpen(true));
+                }}
+                aria-expanded={false}
+                aria-label="Menü einblenden"
+              >
+                <Ellipsis
+                  aria-hidden="true"
+                  className="size-4.5 text-ci-dark"
+                />
+              </button>
+            )}
+
+            {/* Placeholder keeps grid space when button is portaled */}
+            {panelVisible && (
+              <div className="1280:hidden size-11" aria-hidden="true" />
+            )}
+          </div>
+
+          {/* Mobile toggle portal — active while panel is visible (incl. exit animation) */}
+          {panelVisible &&
+            createPortal(
+              <button
+                className={clsx(
+                  "1280:hidden cursor-pointer fixed top-8 right-8 size-11 z-210 rounded-full flex items-center justify-center transition-colors duration-300",
+                  menuOpen ? "bg-ci-dark" : "bg-white",
+                )}
+                onClick={() => setMenuOpen((prev) => !prev)}
+                aria-expanded={menuOpen}
+                aria-label={menuOpen ? "Menü ausblenden" : "Menü einblenden"}
+              >
+                <motion.span
+                  aria-hidden="true"
+                  animate={{ rotate: menuOpen ? 90 : 0 }}
+                  transition={{ type: "spring", stiffness: 380, damping: 40 }}
+                  className="flex items-center justify-center"
+                >
+                  <Ellipsis
+                    className={clsx(
+                      "size-4.5 transition-colors duration-300",
+                      menuOpen ? "text-ci-light" : "text-ci-dark",
+                    )}
+                  />
+                </motion.span>
+              </button>,
+              document.body,
+            )}
+
+          <MobileMenu
+            isOpen={menuOpen}
+            onClose={() => setMenuOpen(false)}
+            onExitComplete={() => setPanelVisible(false)}
+          />
+        </>
+      )}
+
       {/* Logo */}
-      <div className="1024:sticky top-0 bottom-0 pt-8 1024:pb-8 col-start-[content] flex flex-col items-start gap-y-8">
+      <div className="1024:sticky top-0 bottom-0 pt-8 col-start-[content] flex flex-col items-start gap-y-8 row-start-1">
         <a href="/" className="block ml-(--logo-offset) h-[95.37px] w-fit">
           <Logo className="h-full w-auto" />
           <span className="sr-only">Zur Startseite</span>
@@ -44,14 +143,14 @@ export default function Contact({ className, ...props }: ContactProps) {
       </div>
 
       {/* Appointment */}
-      <div className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 mt-23 768:mt-39.75 flex flex-col items-start">
-        {!!contact?.appointmentText?.html && (
+      <div className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 mt-23 768:mt-39.75 flex flex-col items-start row-start-2 768:row-start-1">
+        {!!contact.appointmentText?.html && (
           <div className="richtext richtext--on-dark text-18 leading-snug">
             {parse(contact.appointmentText.html)}
           </div>
         )}
 
-        {contact?.appointmentLink && (
+        {contact.appointmentLink && (
           <a
             href={contact.appointmentLink.href}
             target={contact.appointmentLink.target}
@@ -85,8 +184,8 @@ export default function Contact({ className, ...props }: ContactProps) {
       </div>
 
       {/* Contact */}
-      <div className="col-[content/content] max-1024:ml-(--logo-offset) 768:col-[content/11] 1024:col-[7/12] mt-23 768:mt-15">
-        {!!contact?.contactText?.html && (
+      <div className="col-[content/content] max-1024:ml-(--logo-offset) 768:col-[content/11] 1024:col-[7/12] mt-23 768:mt-15 row-start-3 768:row-start-2">
+        {!!contact.contactText?.html && (
           <div>
             <ContactSectionHeading>Kontakt</ContactSectionHeading>
 
@@ -96,7 +195,7 @@ export default function Contact({ className, ...props }: ContactProps) {
           </div>
         )}
 
-        {!!contact?.opentimes?.html && (
+        {!!contact.opentimes?.html && (
           <div className="mt-14">
             <ContactSectionHeading>Sprechzeiten</ContactSectionHeading>
             <div className="mt-6 richtext richtext--on-dark text-18 leading-snug">
@@ -105,7 +204,7 @@ export default function Contact({ className, ...props }: ContactProps) {
           </div>
         )}
 
-        {(!!contact?.address?.html || contact?.routeLink) && (
+        {(!!contact.address?.html || contact.routeLink) && (
           <div className="mt-14">
             <ContactSectionHeading>Adresse</ContactSectionHeading>
             {!!contact.address?.html && (

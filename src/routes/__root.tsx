@@ -5,6 +5,7 @@ import {
   HeadContent,
   Scripts,
   createRootRouteWithContext,
+  useRouterState,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import parse from "html-react-parser";
@@ -13,6 +14,7 @@ import type { ReactNode } from "react";
 import { CraftPreviewListener } from "../components/CraftPreviewListener";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { isContactPagePath } from "../lib/contact";
 
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 
@@ -63,6 +65,9 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isContactPage = isContactPagePath(pathname);
+
   return (
     <html lang="de">
       <head>
@@ -78,7 +83,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
           Zur Navigation springen
         </a>
 
-        <Header />
+        {!isContactPage && <Header />}
 
         <main id="start" className="relative">
           {children}

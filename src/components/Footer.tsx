@@ -1,8 +1,10 @@
 import Contact from "#/components/Contact";
 import { Image } from "#/components/Image";
+import { isContactPagePath } from "#/lib/contact";
 import { getGlobalsServerFn } from "#/serverFunctions/getGlobalsServerFn";
 import Info from "#/svg/info-2.svg?react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useRouterState } from "@tanstack/react-router";
 import parse from "html-react-parser";
 
 export default function Footer() {
@@ -13,10 +15,12 @@ export default function Footer() {
     queryFn: () => getGlobalsServerFn(),
   });
 
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isContactPage = isContactPagePath(pathname);
+
   return (
     <>
-      {/* Decorative texture */}
-      {textur && (
+      {!isContactPage && textur && (
         <div className="h-107 768:h-112 -mb-10 768:-mb-12.5">
           <Image
             src={textur.url}
@@ -29,7 +33,7 @@ export default function Footer() {
         </div>
       )}
 
-      <Contact />
+      {!isContactPage && <Contact />}
 
       <footer className="bg-ci-light relative z-70 pb-14 768:pb-24">
         {/* Infotext 1 */}
