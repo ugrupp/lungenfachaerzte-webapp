@@ -44,25 +44,25 @@ Copy `.env.example` to `.env` and fill in values before starting.
 | --------------- | --------------------------------------------------------------------------------- |
 | `CRAFT_URL`     | Craft CMS backend URL, no trailing slash (e.g. `https://api.lungenfachaerzte.de`) |
 | `GRAPHQL_TOKEN` | Bearer token for the public GraphQL schema                                        |
-| `BASE_URL`      | This app's public URL — must match `PRIMARY_SITE_URL` in Craft's `.env`           |
 
-`GRAPHQL_TOKEN` is accessed only inside `createServerFn` (`src/lib/craft.rpc.ts`) and never sent to the browser.
+`GRAPHQL_TOKEN` is accessed only inside `createServerFn` (in `src/serverFunctions/`) and never sent to the browser.
 
 ## Key architecture decisions
 
 ### Craft API client
 
-`src/lib/craft.rpc.ts` — a single `createServerFn` wraps all Craft GraphQL calls.
+`src/lib/executeCraftQuery.ts` — low-level Craft GraphQL HTTP client (uses `ky` + `neverthrow`).
 
-- Keeps `GRAPHQL_TOKEN` server-only (CRITICAL — never access it in a loader directly)
+- Keeps `GRAPHQL_TOKEN` server-only (CRITICAL — only call this inside server function handlers, never in loaders or components directly)
 - Accepts an optional `previewToken` for live-preview requests
-- Must be called from route loaders or event handlers, never directly in components
 
-`src/lib/craft.ts` — shared client-safe types and the `craftPreviewSearchSchema` Zod schema used by route `validateSearch`.
+`src/serverFunctions/get*ServerFn.ts` — one `createServerFn` per page/section. Each validates and parses the response with Zod. Call these from route loaders.
+
+`src/lib/craftPreview.ts` — client-safe `craftPreviewSearchSchema` Zod schema used by route `validateSearch`.
 
 ### Query files
 
-`src/queries/craft.ts` — GraphQL query strings as named exports. Adjust field handles to match your Craft schema. Run queries against `${CRAFT_URL}/api/graphiql` to verify them.
+`src/queries/<section>.ts` — one file per section/page (e.g. `home.ts`, `team.ts`, `globals.ts`). Each exports query strings and a Zod schema for the response. Run queries against `${CRAFT_URL}/api/graphiql` to verify them.
 
 ### Live preview
 
@@ -71,9 +71,8 @@ Craft live-preview passes `?token=<uuid>&x-craft-live-preview=1` to the preview 
 **Per-route setup** (required for any Craft-powered route):
 
 ```ts
-import { craftPreviewSearchSchema } from "#/lib/craft";
-import { fetchCraft } from "#/lib/craft.rpc";
-import { MY_QUERY } from "#/queries/craft";
+import { craftPreviewSearchSchema } from "#/lib/craftPreview";
+import { getMyPageServerFn } from "#/serverFunctions/getMyPageServerFn";
 
 export const Route = createFileRoute("/my-path")({
   validateSearch: craftPreviewSearchSchema,
@@ -82,12 +81,8 @@ export const Route = createFileRoute("/my-path")({
     preview: search["x-craft-live-preview"],
   }),
   loader: ({ params, deps }) =>
-    fetchCraft({
-      data: {
-        query: MY_QUERY,
-        variables: { slug: params.slug },
-        previewToken: deps.token,
-      },
+    getMyPageServerFn({
+      data: { slug: params.slug, previewToken: deps.token },
     }),
 });
 ```
@@ -114,8 +109,8 @@ Pages in Craft can live under arbitrary URIs. Two recommended patterns:
 ### Data fetching guideline
 
 ```
-Craft data → createServerFn (server-only) → route loader → component via useLoaderData()
-TanStack Query → client-side cache for interactive/user-specific data only
+Craft data → executeCraftQuery (inside createServerFn) → route loader → component via useLoaderData()
+TanStack Query → client-side cache for interactive/user-specific data only (e.g. globals used across many components)
 ```
 
 ## Deployment — Netlify
@@ -139,20 +134,10 @@ Set environment variables in Netlify dashboard → Site → Environment Variable
 
 - **Tailwind v4**: no `tailwind.config.ts` — CSS is in `src/styles/main.css` only. Use `@source` directives or `content` globs inside the CSS file if classes are not detected.
 - **pnpm build scripts**: `pnpm approve-builds` may be needed for `@parcel/watcher` and `sharp` if asset transforms are added.
-- **Craft GraphQL path**: the default API path is `/api`. This must match `backend/config/routes.php` → `'api' => 'graphql/api'`.
-- **CORS**: Craft headless mode only serves CP, action, and asset requests. The GraphQL endpoint must allow the frontend origin. Set `allowedOrigins` in `backend/config/app.web.php` or use a proxy.
+- **Craft GraphQL path**: the default API path is `/api`. This must match `cms/config/routes.php` → `'api' => 'graphql/api'`.
+- **CORS**: Craft headless mode only serves CP, action, and asset requests. The GraphQL endpoint must allow the frontend origin. Set `allowedOrigins` in `cms/config/app.web.php` or use a proxy.
 - **Preview tokens**: preview tokens are scoped to a specific entry draft and expire. They are not the same as the static `GRAPHQL_TOKEN`.
 - **loaderDeps and staleTime**: preview requests intentionally bypass cache. The loader will re-fetch whenever `deps.token` changes. Do not set a `staleTime` on routes that support preview.
-
-## Next steps
-
-1. Set up Craft CMS backend (DDEV recommended for local dev, Craft Cloud or shared PHP hosting for production)
-2. Copy `.env.example` → `.env` and fill in `CRAFT_URL` + `GRAPHQL_TOKEN`
-3. Create a GraphQL schema in the Craft CP → GraphQL → Schemas and generate a public token
-4. Adapt queries in `src/queries/craft.ts` to match your actual Craft field handles (use the GraphiQL IDE at `${CRAFT_URL}/api/graphiql`)
-5. Create route files under `src/routes/` following the live-preview pattern above
-6. Build the Craft module for postMessage hot-reload (see AGENTS.md → live preview)
-7. Configure preview targets in each Craft section
 
 <!-- intent-skills:start -->
 

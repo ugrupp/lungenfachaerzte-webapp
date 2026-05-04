@@ -1,193 +1,113 @@
-Welcome to your new TanStack Start app! 
+# Lungenfachärzte in der Bertoldstrasse — Frontend
 
-# Getting Started
+[![Netlify Status](https://api.netlify.com/api/v1/badges/91a9135d-4e8f-40ec-8b4b-bae274514b62/deploy-status)](https://app.netlify.com/projects/lungenfachaerzte/deploys)
 
-To run this application:
+[www.lungenfachaerzte.de](https://lungenfachaerzte.de/)
+
+- ➡️ **Frontend** — TanStack Start (React 19, SSR) deployed to Netlify
+- [**CMS**](https://github.com/ugrupp/lungenfachaerzte-cms) — Craft CMS 5 in headless mode, GraphQL API
+
+## Stack
+
+| Layer      | Technology                                         |
+| ---------- | -------------------------------------------------- |
+| Framework  | TanStack Start + TanStack Router (file-based, SSR) |
+| Data       | TanStack Query + server functions                  |
+| Styling    | Tailwind CSS v4 (Vite plugin, no config file)      |
+| CMS        | Craft CMS 5 — GraphQL                              |
+| Deployment | Netlify (`@netlify/vite-plugin-tanstack-start`)    |
+| Animation  | Motion (motion/react)                              |
+
+## Prerequisites
+
+- Node.js ≥ 24
+- pnpm
+- Running Craft CMS instance (local or remote)
+
+## Setup
 
 ```bash
-npm install
-npm run dev
+# Install dependencies
+pnpm install
+
+# Copy env file and fill in values
+cp .env.example .env
 ```
 
-# Building For Production
+| Variable        | Description                                |
+| --------------- | ------------------------------------------ |
+| `CRAFT_URL`     | Craft CMS backend URL, no trailing slash   |
+| `GRAPHQL_TOKEN` | Bearer token for the public GraphQL schema |
 
-To build this application for production:
+`GRAPHQL_TOKEN` is server-only. It is accessed exclusively inside server functions and never exposed to the browser.
+
+## Development
 
 ```bash
-npm run build
+pnpm dev        # dev server on http://localhost:3000
+pnpm typecheck  # TypeScript check
+pnpm lint       # ESLint
+pnpm test       # Vitest
 ```
 
-## Testing
-
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+## Production build
 
 ```bash
-npm run test
+pnpm build
 ```
 
-## Styling
+Deploy to Netlify:
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
-
-### Removing Tailwind CSS
-
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `npm install @tailwindcss/vite tailwindcss -D`
-
-
-
-## Routing
-
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router";
+```bash
+npx netlify deploy --prod
 ```
 
-Then anywhere in your JSX you can use it like so:
+Set `CRAFT_URL` and `GRAPHQL_TOKEN` as environment variables in the Netlify dashboard.
 
-```tsx
-<Link to="/about">About</Link>
+## Project structure
+
+```
+src/
+  routes/           # File-based routes (TanStack Router)
+    __root.tsx        # Root layout — Header, Contact footer, preview listener
+    index.tsx         # Home (/)
+    kontakt.tsx       # Contact page (/kontakt)
+    schwerpunkte.tsx  # Specialties (/schwerpunkte)
+    ausstattung.tsx   # Equipment (/ausstattung)
+    team.tsx          # Team (/team)
+  serverFunctions/  # createServerFn wrappers — all Craft API calls live here
+  queries/          # GraphQL query strings
+  components/       # React components
+  lib/              # Utilities (image helpers, SEO, link, text …)
+  styles/           # Global CSS + Tailwind v4 source
 ```
 
-This will create a link that will navigate to the `/about` route.
+## Craft CMS integration
 
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
+All Craft data fetching happens through `src/serverFunctions/`. Server functions keep `GRAPHQL_TOKEN` server-only and accept an optional `previewToken` for live-preview requests.
 
-### Using A Layout
+GraphQL queries are defined in `src/queries/`. Test and iterate them against `${CRAFT_URL}/api/graphiql`.
 
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
+### Live preview
 
-Here is an example layout that includes a header:
+Routes that support Craft live preview use `craftPreviewSearchSchema` as `validateSearch` and pass `deps.token` to the server function. See `AGENTS.md` for the full setup guide.
 
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+Craft preview target URL template:
 
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-})
+```
+{siteUrl}/{uri}?token={previewToken}&x-craft-live-preview=1
 ```
 
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
+## Continuous deployment
 
-## Server Functions
+The repository is connected to Netlify. Every push to the main branch triggers an automatic production deploy — no manual `netlify deploy` step needed.
 
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
+## Sitemap
 
-```tsx
-import { createServerFn } from '@tanstack/react-start'
+Sitemap requests (`/sitemap*`) are proxied to Craft via `netlify.toml`.
 
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString()
-})
+## Notes
 
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('')
-  
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-  
-  return <div>Server time: {time}</div>
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { json } from '@tanstack/react-start'
-
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-})
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+- Tailwind v4 — no `tailwind.config.ts`. All CSS in `src/styles/`.
+- SVGs imported as React components via `vite-plugin-svgr` using the `?react` suffix.
+- `NODE_OPTIONS=--use-system-ca` is set in the dev script for corporate CA trust chains.
