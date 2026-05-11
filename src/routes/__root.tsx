@@ -46,19 +46,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         href: appCss,
       },
     ],
-    scripts: [
-      {
-        type: "speculationrules",
-        children: JSON.stringify({
-          prerender: [
-            {
-              where: { href_matches: "/*" },
-              eagerness: "moderate",
-            },
-          ],
-        }),
-      },
-    ],
   }),
   shellComponent: RootDocument,
   notFoundComponent: NotFoundPage,
@@ -72,6 +59,20 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
     <html lang="de">
       <head>
         <HeadContent />
+        <script
+          type="speculationrules"
+          // eslint-disable-next-line @eslint-react/dom-no-dangerously-set-innerhtml
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              prerender: [
+                {
+                  where: { href_matches: "/*" },
+                  eagerness: "moderate",
+                },
+              ],
+            }),
+          }}
+        />
       </head>
       <body>
         <CraftPreviewListener />
