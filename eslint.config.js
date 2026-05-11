@@ -141,4 +141,12 @@ export default defineConfig(
       "@typescript-eslint/only-throw-error": "off",
     },
   },
+  {
+    // HTML from Craft CMS is sanitized server-side via sanitize-html in TextSchema.
+    name: "lungenfachaerzte/allow-dangerously-set-innerhtml",
+    files: GLOBS_JSX,
+    rules: {
+      "@eslint-react/dom-no-dangerously-set-innerhtml": "off",
+    },
+  },
 );

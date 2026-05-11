@@ -8,7 +8,6 @@ import {
   useRouterState,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import parse from "html-react-parser";
 import type { ReactNode } from "react";
 
 import { CraftPreviewListener } from "../components/CraftPreviewListener";
@@ -118,8 +117,8 @@ function NotFoundPage() {
 
   return (
     <main>
-      {data?.text?.html ? (
-        <div className="richtext">{parse(data.text.html)}</div>
+      {data?.text?.__html ? (
+        <div className="richtext" dangerouslySetInnerHTML={data.text} />
       ) : (
         <h1>404 — Seite nicht gefunden</h1>
       )}

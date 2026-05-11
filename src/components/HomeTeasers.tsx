@@ -2,7 +2,6 @@ import { Image } from "#/components/Image";
 import type { HomeTeamTeaser, HomeTeaser } from "#/queries/home";
 import { getRouteApi } from "@tanstack/react-router";
 import clsx from "clsx";
-import parse from "html-react-parser";
 import type { ComponentPropsWithoutRef } from "react";
 import Button from "./Button";
 
@@ -26,10 +25,11 @@ function Teaser({ teaser, className, ...props }: TeaserProps) {
       </div>
 
       {/* Text */}
-      {!!teaser.introText?.html && (
-        <div className="col-[content/content] 768:col-end-10 768:ml-(--logo-offset) 1024:ml-0 1024:col-[7/12] mt-8 richtext text-18">
-          {parse(teaser.introText.html)}
-        </div>
+      {!!teaser.introText?.__html && (
+        <div
+          className="col-[content/content] 768:col-end-10 768:ml-(--logo-offset) 1024:ml-0 1024:col-[7/12] mt-8 richtext text-18"
+          dangerouslySetInnerHTML={teaser.introText}
+        />
       )}
 
       {/* Link button */}
@@ -86,10 +86,11 @@ function TeamTeaser({ teaser, className, ...props }: TeamTeaserProps) {
       </div>
 
       {/* Text */}
-      {!!teaser.teaserText?.html && (
-        <div className="col-[content/content] 768:col-start-11 1024:col-start-13 mt-8 richtext text-18 row-start-2">
-          {parse(teaser.teaserText.html)}
-        </div>
+      {!!teaser.teaserText?.__html && (
+        <div
+          className="col-[content/content] 768:col-start-11 1024:col-start-13 mt-8 richtext text-18 row-start-2"
+          dangerouslySetInnerHTML={teaser.teaserText}
+        />
       )}
 
       {/* Link button */}

@@ -1,7 +1,6 @@
 import { Image as ImageCmp } from "#/components/Image";
 import type { Image } from "#/lib/image";
 import type { Text } from "#/lib/text";
-import parse from "html-react-parser";
 
 type Props = {
   image?: Image;
@@ -31,10 +30,13 @@ function ContentImage({ image }: { image?: Image }) {
 }
 
 function ContentText({ text }: { text?: Text }) {
-  if (!text?.html) return null;
+  if (!text?.__html) return null;
 
   return (
-    <div className="richtext text-18 leading-snug">{parse(text.html)}</div>
+    <div
+      className="richtext text-18 leading-snug"
+      dangerouslySetInnerHTML={text}
+    />
   );
 }
 

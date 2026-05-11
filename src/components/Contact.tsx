@@ -4,7 +4,6 @@ import Ellipsis from "#/svg/ellipsis.svg?react";
 import Logo from "#/svg/logo.svg?react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import parse from "html-react-parser";
 import { motion } from "motion/react";
 import { useEffect, useState, type ComponentPropsWithoutRef } from "react";
 import { createPortal } from "react-dom";
@@ -144,10 +143,11 @@ export default function Contact({
 
       {/* Appointment */}
       <div className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 mt-23 768:mt-39.75 flex flex-col items-start row-start-2 768:row-start-1">
-        {!!contact.appointmentText?.html && (
-          <div className="richtext richtext--on-dark text-18 leading-snug">
-            {parse(contact.appointmentText.html)}
-          </div>
+        {!!contact.appointmentText?.__html && (
+          <div
+            className="richtext richtext--on-dark text-18 leading-snug"
+            dangerouslySetInnerHTML={contact.appointmentText}
+          />
         )}
 
         {contact.appointmentLink && (
@@ -185,32 +185,35 @@ export default function Contact({
 
       {/* Contact */}
       <div className="col-[content/content] max-1024:ml-(--logo-offset) 768:col-[content/11] 1024:col-[7/12] mt-23 768:mt-15 row-start-3 768:row-start-2">
-        {!!contact.contactText?.html && (
+        {!!contact.contactText?.__html && (
           <div>
             <ContactSectionHeading>Kontakt</ContactSectionHeading>
 
-            <div className="mt-6 richtext richtext--on-dark text-18 leading-snug">
-              {parse(contact.contactText.html)}
-            </div>
+            <div
+              className="mt-6 richtext richtext--on-dark text-18 leading-snug"
+              dangerouslySetInnerHTML={contact.contactText}
+            />
           </div>
         )}
 
-        {!!contact.opentimes?.html && (
+        {!!contact.opentimes?.__html && (
           <div className="mt-14">
             <ContactSectionHeading>Sprechzeiten</ContactSectionHeading>
-            <div className="mt-6 richtext richtext--on-dark text-18 leading-snug">
-              {parse(contact.opentimes.html)}
-            </div>
+            <div
+              className="mt-6 richtext richtext--on-dark text-18 leading-snug"
+              dangerouslySetInnerHTML={contact.opentimes}
+            />
           </div>
         )}
 
-        {(!!contact.address?.html || contact.routeLink) && (
+        {(!!contact.address?.__html || contact.routeLink) && (
           <div className="mt-14">
             <ContactSectionHeading>Adresse</ContactSectionHeading>
-            {!!contact.address?.html && (
-              <div className="mt-6 richtext richtext--on-dark text-18 leading-snug">
-                {parse(contact.address.html)}
-              </div>
+            {!!contact.address?.__html && (
+              <div
+                className="mt-6 richtext richtext--on-dark text-18 leading-snug"
+                dangerouslySetInnerHTML={contact.address}
+              />
             )}
 
             {contact.routeLink && (

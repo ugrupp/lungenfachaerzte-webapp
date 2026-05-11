@@ -5,7 +5,6 @@ import { getGlobalsServerFn } from "#/serverFunctions/getGlobalsServerFn";
 import Info from "#/svg/info-2.svg?react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRouterState } from "@tanstack/react-router";
-import parse from "html-react-parser";
 
 export default function Footer() {
   const {
@@ -41,10 +40,11 @@ export default function Footer() {
           <div className="row-start-1 bg-white col-[content/full] 768:col-[full/10] 1024:col-end-7"></div>
           <div className="row-start-1 col-[content/content] ml-(--logo-offset) 768:col-[content/10] 1024:col-end-7 py-11 768:py-14 768:pr-13 1280:pr-15 relative pointer-events-auto">
             <Info className="text-ci-light absolute left-0 top-0 -translate-y-1/2 size-11" />
-            {!!footer.infoText1?.html && (
-              <div className="richtext leading-relaxed">
-                {parse(footer.infoText1.html)}
-              </div>
+            {!!footer.infoText1?.__html && (
+              <div
+                className="richtext leading-relaxed"
+                dangerouslySetInnerHTML={footer.infoText1}
+              />
             )}
           </div>
         </div>
@@ -52,10 +52,11 @@ export default function Footer() {
         <div className="container-grid items-end pt-14 768:pt-24">
           {/* Infotext 2 */}
           <div className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 row-start-1">
-            {!!footer.infoText2?.html && (
-              <div className="richtext leading-snug">
-                {parse(footer.infoText2.html)}
-              </div>
+            {!!footer.infoText2?.__html && (
+              <div
+                className="richtext leading-snug"
+                dangerouslySetInnerHTML={footer.infoText2}
+              />
             )}
           </div>
 

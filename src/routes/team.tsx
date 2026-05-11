@@ -4,7 +4,6 @@ import { routeCacheHeaders } from "#/lib/routeCacheHeaders";
 import { seoToHead } from "#/lib/seo";
 import { getTeamPageServerFn } from "#/serverFunctions/getTeamPageServerFn";
 import { createFileRoute } from "@tanstack/react-router";
-import parse from "html-react-parser";
 
 export const Route = createFileRoute("/team")({
   validateSearch: craftPreviewSearchSchema,
@@ -31,7 +30,9 @@ function TeamPage() {
       <SubHeader />
 
       <section>
-        {!!text?.html && <div className="richtext">{parse(text.html)}</div>}
+        {!!text?.__html && (
+          <div className="richtext" dangerouslySetInnerHTML={text} />
+        )}
       </section>
     </>
   );
