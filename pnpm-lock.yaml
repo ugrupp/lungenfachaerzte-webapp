@@ -48,8 +48,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       html-react-parser:
-        specifier: ^6.0.1
-        version: 6.0.1(@types/react@19.2.14)(react@19.2.5)
+        specifier: ^6.1.0
+        version: 6.1.0(@types/react@19.2.14)(react@19.2.5)
       ky:
         specifier: ^2.0.1
         version: 2.0.1
@@ -3437,15 +3437,15 @@ packages:
     resolution: {integrity: sha512-puUZAUKT5m8Zzvs72XWy3HtvVbTWljRE66cP60bxJzAqf2DgICo7lYTY2IHUmLnNpjYvw5bvmoHvPc0QO2a62w==}
     engines: {node: ^16.14.0 || >=18.0.0}
 
-  html-dom-parser@7.0.1:
-    resolution: {integrity: sha512-loRBDTCY/05/jAC63J1X9ID+xjRucmpLkIcQO0IRbOubBo5ucnpUpyXXob9UMXOskMZlu7KPsDP/2KOMelzJNA==}
+  html-dom-parser@7.1.0:
+    resolution: {integrity: sha512-83BgaFSW/Sj6QTotGenvPvKfGxFzpFfrJNYes77mzqnq+YjVm12d4qeG0+108w4ejnam/+nCnnLuyyJlXkuPtA==}
 
   html-encoding-sniffer@6.0.0:
     resolution: {integrity: sha512-CV9TW3Y3f8/wT0BRFc1/KAVQ3TUHiXmaAb6VW9vtiMFf7SLoMd1PdAc4W3KFOFETBJUb90KatHqlsZMWV+R9Gg==}
     engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
 
-  html-react-parser@6.0.1:
-    resolution: {integrity: sha512-tIie2HSIk2Ct1tdupjd/DhBjskxN/NL5J4ncbUnk2smBr5UIfpPpitUo0imGfBM0BlOL7ac8RcqEwne1jXTcsQ==}
+  html-react-parser@6.1.0:
+    resolution: {integrity: sha512-FoFY2aZrSAMcPPhUmb4R87gwfhwvYT6luJIQ++Xl9qm2x/4IDGjf+B2F+wcdrhMVOe/o44Nq7IEbvsKfq6fq+Q==}
     peerDependencies:
       '@types/react': 0.14 || 15 || 16 || 17 || 18 || 19
       react: 0.14 || 15 || 16 || 17 || 18 || 19
@@ -9022,7 +9022,7 @@ snapshots:
     dependencies:
       lru-cache: 10.4.3
 
-  html-dom-parser@7.0.1:
+  html-dom-parser@7.1.0:
     dependencies:
       domhandler: 6.0.1
       htmlparser2: 12.0.0
@@ -9033,10 +9033,10 @@ snapshots:
     transitivePeerDependencies:
       - '@noble/hashes'
 
-  html-react-parser@6.0.1(@types/react@19.2.14)(react@19.2.5):
+  html-react-parser@6.1.0(@types/react@19.2.14)(react@19.2.5):
     dependencies:
       domhandler: 6.0.1
-      html-dom-parser: 7.0.1
+      html-dom-parser: 7.1.0
       react: 19.2.5
       react-property: 2.0.2
       style-to-js: 1.1.21

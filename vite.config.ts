@@ -10,9 +10,6 @@ import svgr from "vite-plugin-svgr";
 
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
-  ssr: {
-    noExternal: ["html-react-parser"],
-  },
   plugins: [
     devtools(),
     netlify(),
