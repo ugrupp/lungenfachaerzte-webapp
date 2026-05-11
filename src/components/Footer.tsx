@@ -1,10 +1,18 @@
 import Contact from "#/components/Contact";
 import { Image } from "#/components/Image";
 import { isContactPagePath } from "#/lib/contact";
+import {
+  createScrollRevealVariants,
+  scrollRevealInitial,
+  scrollRevealWhileInView,
+} from "#/lib/scrollReveal";
 import { getGlobalsServerFn } from "#/serverFunctions/getGlobalsServerFn";
 import Info from "#/svg/info-2.svg?react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRouterState } from "@tanstack/react-router";
+import { motion } from "motion/react";
+
+const scrollReveal = createScrollRevealVariants();
 
 export default function Footer() {
   const {
@@ -34,11 +42,20 @@ export default function Footer() {
 
       {!isContactPage && <Contact />}
 
-      <footer className="bg-ci-light relative z-70 pb-14 768:pb-24">
+      <motion.footer
+        className="bg-ci-light relative z-70 pb-14 768:pb-24"
+        variants={scrollReveal.container}
+        initial={scrollRevealInitial}
+        whileInView={scrollRevealWhileInView}
+        viewport={scrollReveal.viewport}
+      >
         {/* Infotext 1 */}
         <div className="768:absolute top-0 inset-x-0 container-grid pointer-events-none">
           <div className="row-start-1 bg-white col-[content/full] 768:col-[full/10] 1024:col-end-7"></div>
-          <div className="row-start-1 col-[content/content] ml-(--logo-offset) 768:col-[content/10] 1024:col-end-7 py-11 768:py-14 768:pr-13 1280:pr-15 relative pointer-events-auto">
+          <motion.div
+            className="row-start-1 col-[content/content] ml-(--logo-offset) 768:col-[content/10] 1024:col-end-7 py-11 768:py-14 768:pr-13 1280:pr-15 relative pointer-events-auto"
+            variants={scrollReveal.item}
+          >
             <Info className="text-ci-light absolute left-0 top-0 -translate-y-1/2 size-11" />
             {!!footer.infoText1?.__html && (
               <div
@@ -46,22 +63,28 @@ export default function Footer() {
                 dangerouslySetInnerHTML={footer.infoText1}
               />
             )}
-          </div>
+          </motion.div>
         </div>
 
         <div className="container-grid items-end pt-14 768:pt-24">
           {/* Infotext 2 */}
-          <div className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 row-start-1">
+          <motion.div
+            className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 row-start-1"
+            variants={scrollReveal.item}
+          >
             {!!footer.infoText2?.__html && (
               <div
                 className="richtext leading-snug"
                 dangerouslySetInnerHTML={footer.infoText2}
               />
             )}
-          </div>
+          </motion.div>
 
           {/* Navigation */}
-          <div className="col-[content/content] 768:col-[content/10] 1024:col-[7/12] max-1024:ml-(--logo-offset) mt-14 768:mt-0 768:row-start-1 flex flex-col items-start gap-y-3">
+          <motion.div
+            className="col-[content/content] 768:col-[content/10] 1024:col-[7/12] max-1024:ml-(--logo-offset) mt-14 768:mt-0 768:row-start-1 flex flex-col items-start gap-y-3"
+            variants={scrollReveal.item}
+          >
             {footer.navigationItems.map(({ id, link }) => (
               <a
                 key={id}
@@ -75,9 +98,9 @@ export default function Footer() {
                 {link.label ?? link.defaultLabel}
               </a>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </footer>
+      </motion.footer>
     </>
   );
 }

@@ -1,3 +1,8 @@
+import {
+  createScrollRevealVariants,
+  scrollRevealInitial,
+  scrollRevealWhileInView,
+} from "#/lib/scrollReveal";
 import { getGlobalsServerFn } from "#/serverFunctions/getGlobalsServerFn";
 import Doctors from "#/svg/doctors.svg?react";
 import Ellipsis from "#/svg/ellipsis.svg?react";
@@ -19,14 +24,18 @@ function ContactSectionHeading({ children }: { children: string }) {
   );
 }
 
-type ContactProps = ComponentPropsWithoutRef<"section"> & {
+type ContactProps = Omit<
+  ComponentPropsWithoutRef<"section">,
+  "onDrag" | "onDragStart" | "onDragEnd"
+> & {
   standalone?: boolean;
 };
+
+const scrollReveal = createScrollRevealVariants();
 
 export default function Contact({
   className,
   standalone = false,
-  ...props
 }: ContactProps) {
   const {
     data: { contact, doctolibLink },
@@ -52,13 +61,16 @@ export default function Contact({
   }, []);
 
   return (
-    <section
+    <motion.section
       className={clsx(
         "relative top-0 z-60 bg-ci-dark text-ci-light pb-30 container-grid items-start",
         !standalone && "rounded-tr-[40px] 768:rounded-tr-[50px]",
         className,
       )}
-      {...props}
+      variants={scrollReveal.container}
+      initial={scrollRevealInitial}
+      whileInView={scrollRevealWhileInView}
+      viewport={scrollReveal.viewport}
     >
       {/* Navigation */}
       {standalone && (
@@ -142,7 +154,10 @@ export default function Contact({
       </div>
 
       {/* Appointment */}
-      <div className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 mt-23 768:mt-39.75 flex flex-col items-start row-start-2 768:row-start-1">
+      <motion.div
+        className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 mt-23 768:mt-39.75 flex flex-col items-start row-start-2 768:row-start-1"
+        variants={scrollReveal.item}
+      >
         {!!contact.appointmentText?.__html && (
           <div
             className="richtext richtext--on-dark text-18 leading-snug"
@@ -181,10 +196,13 @@ export default function Contact({
             {doctolibLink.label ?? doctolibLink.defaultLabel}
           </Button>
         )}
-      </div>
+      </motion.div>
 
       {/* Contact */}
-      <div className="col-[content/content] max-1024:ml-(--logo-offset) 768:col-[content/11] 1024:col-[7/12] mt-23 768:mt-15 row-start-3 768:row-start-2">
+      <motion.div
+        className="col-[content/content] max-1024:ml-(--logo-offset) 768:col-[content/11] 1024:col-[7/12] mt-23 768:mt-15 row-start-3 768:row-start-2"
+        variants={scrollReveal.item}
+      >
         {!!contact.contactText?.__html && (
           <div>
             <ContactSectionHeading>Kontakt</ContactSectionHeading>
@@ -233,7 +251,7 @@ export default function Contact({
             )}
           </div>
         )}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }
