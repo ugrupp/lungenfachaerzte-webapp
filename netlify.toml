@@ -1,5 +1,5 @@
 [build]
-  command = "vite build"
+  command = "sed -i \"s|CRAFT_URL_PLACEHOLDER|${CRAFT_URL}|g\" netlify.toml && vite build"
   dir = "dist/client"
 
 [dev]
@@ -9,7 +9,7 @@
 
 [[redirects]]
   from = "/sitemap*"
-  to = "$CRAFT_URL/sitemap:splat"
+  to = "CRAFT_URL_PLACEHOLDER/sitemap:splat"
   status = 200
   force = true
 
