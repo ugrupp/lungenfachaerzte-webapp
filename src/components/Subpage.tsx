@@ -31,8 +31,10 @@ export default function Subpage({
   return (
     <>
       <SubHeader {...subHeaderProps} />
-      <SubpageIntro {...subpageIntroProps} />
-      <SubpageContent {...subpageContentProps} />
+      <div className="bg-off-white py-30 768:py-38 1024:pb-50">
+        <SubpageIntro {...subpageIntroProps} />
+        <SubpageContent {...subpageContentProps} className="mt-18 768:mt-36" />
+      </div>
     </>
   );
 }
