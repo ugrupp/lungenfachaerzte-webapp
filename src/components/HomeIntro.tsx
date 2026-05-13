@@ -16,7 +16,8 @@ export function HomeIntro() {
 
   return (
     <motion.section
-      className="bg-ci-light pt-30 container-grid relative"
+      id="start"
+      className="bg-ci-light pt-30 768:pt-50 container-grid relative"
       variants={scrollReveal.container}
       initial={scrollRevealInitial}
       whileInView={scrollRevealWhileInView}

@@ -25,9 +25,11 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const { heroImage } = Route.useLoaderData();
+
   return (
     <>
-      <SubHeader variant="tall" />
+      <SubHeader variant="tall" mainImage={heroImage} />
       <HomeIntro />
       <HomeTeasers />
     </>
