@@ -39,7 +39,7 @@ const HOME_QUERY = /* GraphQL */ `
       ... on subpage_Entry {
         url
         title
-        mainImage {
+        teaserImage {
           ...TeaserImage
         }
         introText {
@@ -51,7 +51,7 @@ const HOME_QUERY = /* GraphQL */ `
       ... on subpage_Entry {
         url
         title
-        mainImage {
+        teaserImage {
           ...TeaserImage
         }
         introText {
@@ -63,6 +63,9 @@ const HOME_QUERY = /* GraphQL */ `
       ... on team_Entry {
         url
         title
+        teaserImage {
+          ...TeaserImage
+        }
         teaserText {
           html
         }
@@ -82,7 +85,7 @@ const TeaserImageSchema = z
 const TeaserSchema = z.object({
   url: z.string(),
   title: z.string(),
-  mainImage: TeaserImageSchema,
+  teaserImage: TeaserImageSchema,
   introText: TextSchema.apply(nullToUndefined),
 });
 type Teaser = z.infer<typeof TeaserSchema>;
@@ -90,6 +93,7 @@ type Teaser = z.infer<typeof TeaserSchema>;
 const TeamTeaserSchema = z.object({
   url: z.string(),
   title: z.string(),
+  teaserImage: TeaserImageSchema,
   teaserText: TextSchema.apply(nullToUndefined),
 });
 type TeamTeaser = z.infer<typeof TeamTeaserSchema>;

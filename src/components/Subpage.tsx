@@ -6,7 +6,7 @@ import SubpageIntro from "./SubpageIntro";
 
 type Props = {
   subHeaderProps: {
-    mainImage?: Image;
+    heroImage?: Image;
   };
   subpageIntroProps: {
     title: string;

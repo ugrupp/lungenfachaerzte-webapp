@@ -60,7 +60,7 @@ function Teaser({ teaser, className }: TeaserProps) {
       </motion.div>
 
       {/* Image */}
-      {teaser.mainImage && (
+      {teaser.teaserImage && (
         <motion.div
           className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 768:row-span-2 1024:row-span-3 mt-10 768:mt-8 1024:mt-0"
           variants={scrollReveal.item}
@@ -71,11 +71,11 @@ function Teaser({ teaser, className }: TeaserProps) {
             aria-label={teaser.title}
           >
             <Image
-              src={teaser.mainImage.url}
-              srcSet={teaser.mainImage.srcset}
-              alt={teaser.mainImage.alt ?? ""}
+              src={teaser.teaserImage.url}
+              srcSet={teaser.teaserImage.srcset}
+              alt={teaser.teaserImage.alt ?? ""}
               sizes="100vw"
-              focalPoint={teaser.mainImage.focalPoint}
+              focalPoint={teaser.teaserImage.focalPoint}
               className="size-full object-cover"
             />
           </a>
@@ -99,10 +99,25 @@ function TeamTeaser({ teaser, className }: TeamTeaserProps) {
       whileInView={scrollRevealWhileInView}
       viewport={scrollReveal.viewport}
     >
-      {/* Image bg */}
-      <div className="col-[full/full] 768:col-end-[center] bg-ci-dark row-start-4 768:row-start-1 row-span-3"></div>
       {/* Image */}
-      <div className="col-[full/full] 768:col-end-[center] h-95 768:h-auto row-start-4 768:row-start-1 row-span-3"></div>
+      {teaser.teaserImage && (
+        <div className="col-[full/full] 768:col-end-[center] h-95 768:h-auto relative bg-ci-dark row-start-4 768:row-start-1 row-span-3 overflow-hidden">
+          <a
+            href={teaser.url}
+            className="absolute size-full"
+            aria-label={teaser.title}
+          >
+            <Image
+              src={teaser.teaserImage.url}
+              srcSet={teaser.teaserImage.srcset}
+              alt={teaser.teaserImage.alt ?? ""}
+              sizes="100vw"
+              focalPoint={teaser.teaserImage.focalPoint}
+              className="size-full object-cover"
+            />
+          </a>
+        </div>
+      )}
 
       {/* Content bg */}
       <div className="col-[full/full] 768:col-start-[center] bg-ci-light row-start-1 row-span-3"></div>

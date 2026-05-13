@@ -4,11 +4,11 @@ import { SEO_FRAGMENT, SeoSchema } from "#/lib/seo";
 import { TEXT_FRAGMENT, TextSchema } from "#/lib/text";
 import { z } from "zod";
 
-const MAIN_IMAGE_WIDTHS = [400, 800, 1200, 1600] as const;
+const HERO_IMAGE_WIDTHS = [400, 800, 1200, 1600] as const;
 const CONTENT_IMAGE_WIDTHS = [400, 800, 1200] as const;
 
-const MainImageSchema = z
-  .array(imageSchema(MAIN_IMAGE_WIDTHS))
+const HeroImageSchema = z
+  .array(imageSchema(HERO_IMAGE_WIDTHS))
   .transform((arr) => arr.at(0));
 
 const ContentImageSchema = z
@@ -16,7 +16,7 @@ const ContentImageSchema = z
   .transform((arr) => arr.at(0));
 
 const AUSSTATTUNG_QUERY = /* GraphQL */ `
-  ${imageFragment(MAIN_IMAGE_WIDTHS, "MainImage")}
+  ${imageFragment(HERO_IMAGE_WIDTHS, "HeroImage")}
   ${imageFragment(CONTENT_IMAGE_WIDTHS, "ContentImage")}
   ${SEO_FRAGMENT}
   ${TEXT_FRAGMENT}
@@ -26,8 +26,8 @@ const AUSSTATTUNG_QUERY = /* GraphQL */ `
       title
       uri
       ... on subpage_Entry {
-        mainImage {
-          ...MainImage
+        heroImage {
+          ...HeroImage
         }
         introText {
           ...TextFields
@@ -69,7 +69,7 @@ const AusstattungQuerySchema = z
           id: z.string(),
           title: z.string(),
           uri: z.string(),
-          mainImage: MainImageSchema,
+          heroImage: HeroImageSchema,
           introText: TextSchema.apply(nullToUndefined),
           image: ContentImageSchema,
           image2: ContentImageSchema,

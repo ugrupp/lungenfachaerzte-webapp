@@ -29,7 +29,7 @@ function HomePage() {
 
   return (
     <>
-      <SubHeader variant="tall" mainImage={heroImage} />
+      <SubHeader variant="tall" heroImage={heroImage} />
       <HomeIntro />
       <HomeTeasers />
     </>

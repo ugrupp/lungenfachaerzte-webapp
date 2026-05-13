@@ -23,11 +23,11 @@ export const Route = createFileRoute("/team")({
 });
 
 function TeamPage() {
-  const { text } = Route.useLoaderData();
+  const { heroImage, text } = Route.useLoaderData();
 
   return (
     <>
-      <SubHeader />
+      <SubHeader heroImage={heroImage} />
 
       <section>
         {!!text?.__html && (

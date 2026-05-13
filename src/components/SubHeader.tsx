@@ -7,11 +7,11 @@ import { Image as ImageCmp } from "./Image";
 export type SubHeaderVariant = "default" | "tall";
 
 type Props = {
-  mainImage?: Image;
+  heroImage?: Image;
   variant?: SubHeaderVariant;
 };
 
-export default function SubHeader({ mainImage, variant = "default" }: Props) {
+export default function SubHeader({ heroImage, variant = "default" }: Props) {
   const imageWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -41,20 +41,21 @@ export default function SubHeader({ mainImage, variant = "default" }: Props) {
       <div
         ref={imageWrapperRef}
         className={clsx(
-          "max-1024:ml-(--logo-offset) col-[content/full] 1024:col-[7/content] bg-ci-dark overflow-hidden",
+          "max-1024:ml-(--logo-offset) col-[content/full] 1024:col-[7/content] overflow-hidden",
           {
-            "h-[calc(100vh-var(--subheader-offset)-120px)] 768:h-[calc(100vh-var(--subheader-offset)-200px)] min-h-50 rounded-bl-[50px]":
+            "h-[calc(100vh-var(--subheader-offset,159.36px)-120px)] 768:h-[calc(100vh-var(--subheader-offset,159.36px)-200px)] min-h-50 rounded-bl-[50px]":
               variant === "tall",
             "h-30 768:h-38": variant === "default",
+            "bg-ci-dark": !heroImage,
           },
         )}
       >
-        {!!mainImage && (
+        {!!heroImage && (
           <ImageCmp
-            src={mainImage.url}
-            srcSet={mainImage.srcset}
-            alt={mainImage.alt ?? ""}
-            focalPoint={mainImage.focalPoint}
+            src={heroImage.url}
+            srcSet={heroImage.srcset}
+            alt={heroImage.alt ?? ""}
+            focalPoint={heroImage.focalPoint}
             sizes="100vw"
             className="size-full object-cover"
           />

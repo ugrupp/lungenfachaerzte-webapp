@@ -1,8 +1,16 @@
+import { imageFragment, imageSchema } from "#/lib/image";
 import { SEO_FRAGMENT, SeoSchema } from "#/lib/seo";
 import { TEXT_FRAGMENT, TextSchema } from "#/lib/text";
 import { z } from "zod";
 
+const HERO_IMAGE_WIDTHS = [400, 800, 1200, 1600] as const;
+
+const HeroImageSchema = z
+  .array(imageSchema(HERO_IMAGE_WIDTHS))
+  .transform((arr) => arr.at(0));
+
 const TEAM_QUERY = /* GraphQL */ `
+  ${imageFragment(HERO_IMAGE_WIDTHS, "HeroImage")}
   ${SEO_FRAGMENT}
   ${TEXT_FRAGMENT}
   query Team {
@@ -11,6 +19,9 @@ const TEAM_QUERY = /* GraphQL */ `
       title
       uri
       ... on team_Entry {
+        heroImage {
+          ...HeroImage
+        }
         seo {
           ...SeoFields
         }
@@ -30,6 +41,7 @@ const TeamQuerySchema = z
           id: z.string(),
           title: z.string(),
           uri: z.string(),
+          heroImage: HeroImageSchema,
           seo: SeoSchema.nullable(),
           text: TextSchema.nullable(),
         })

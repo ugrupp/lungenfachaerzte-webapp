@@ -25,7 +25,7 @@ export const Route = createFileRoute("/ausstattung")({
 function AusstattungPage() {
   const {
     title,
-    mainImage,
+    heroImage,
     introText,
     image,
     image2,
@@ -39,7 +39,7 @@ function AusstattungPage() {
   return (
     <Subpage
       subHeaderProps={{
-        mainImage,
+        heroImage,
       }}
       subpageIntroProps={{
         title: title ?? "",
