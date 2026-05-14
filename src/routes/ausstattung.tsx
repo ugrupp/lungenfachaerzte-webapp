@@ -18,7 +18,7 @@ export const Route = createFileRoute("/ausstattung")({
     return { ...entry, _isPreview: !!deps.token };
   },
   headers: ({ loaderData }) => routeCacheHeaders(!!loaderData?._isPreview),
-  head: ({ loaderData }) => seoToHead(loaderData?.seo),
+  head: ({ loaderData }) => seoToHead(loaderData?.seo, loaderData?.uri),
   component: AusstattungPage,
 });
 

@@ -1,7 +1,7 @@
-import SubHeader from "#/components/SubHeader";
-import TeamIntro from "#/components/TeamIntro";
 import TeamMembersPrimary from "#/components/TeamMembersPrimary";
 import TeamMembersSecondary from "#/components/TeamMembersSecondary";
+import SubHeader from "#/components/SubHeader";
+import TeamIntro from "#/components/TeamIntro";
 import { craftPreviewSearchSchema } from "#/lib/craftPreview";
 import { routeCacheHeaders } from "#/lib/routeCacheHeaders";
 import { seoToHead } from "#/lib/seo";
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/team")({
     return { ...entry, _isPreview: !!deps.token };
   },
   headers: ({ loaderData }) => routeCacheHeaders(!!loaderData?._isPreview),
-  head: ({ loaderData }) => seoToHead(loaderData?.seo),
+  head: ({ loaderData }) => seoToHead(loaderData?.seo, loaderData?.uri),
   component: TeamPage,
 });
 
