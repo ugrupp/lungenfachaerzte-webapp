@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TeamRouteImport } from './routes/team'
 import { Route as SchwerpunkteRouteImport } from './routes/schwerpunkte'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as AusstattungRouteImport } from './routes/ausstattung'
 import { Route as IndexRouteImport } from './routes/index'
@@ -23,6 +24,11 @@ const TeamRoute = TeamRouteImport.update({
 const SchwerpunkteRoute = SchwerpunkteRouteImport.update({
   id: '/schwerpunkte',
   path: '/schwerpunkte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KontaktRoute = KontaktRouteImport.update({
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ausstattung': typeof AusstattungRoute
   '/kontakt': typeof KontaktRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/schwerpunkte': typeof SchwerpunkteRoute
   '/team': typeof TeamRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ausstattung': typeof AusstattungRoute
   '/kontakt': typeof KontaktRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/schwerpunkte': typeof SchwerpunkteRoute
   '/team': typeof TeamRoute
 }
@@ -60,21 +68,42 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/ausstattung': typeof AusstattungRoute
   '/kontakt': typeof KontaktRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/schwerpunkte': typeof SchwerpunkteRoute
   '/team': typeof TeamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ausstattung' | '/kontakt' | '/schwerpunkte' | '/team'
+  fullPaths:
+    | '/'
+    | '/ausstattung'
+    | '/kontakt'
+    | '/robots.txt'
+    | '/schwerpunkte'
+    | '/team'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ausstattung' | '/kontakt' | '/schwerpunkte' | '/team'
-  id: '__root__' | '/' | '/ausstattung' | '/kontakt' | '/schwerpunkte' | '/team'
+  to:
+    | '/'
+    | '/ausstattung'
+    | '/kontakt'
+    | '/robots.txt'
+    | '/schwerpunkte'
+    | '/team'
+  id:
+    | '__root__'
+    | '/'
+    | '/ausstattung'
+    | '/kontakt'
+    | '/robots.txt'
+    | '/schwerpunkte'
+    | '/team'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AusstattungRoute: typeof AusstattungRoute
   KontaktRoute: typeof KontaktRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
   SchwerpunkteRoute: typeof SchwerpunkteRoute
   TeamRoute: typeof TeamRoute
 }
@@ -93,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/schwerpunkte'
       fullPath: '/schwerpunkte'
       preLoaderRoute: typeof SchwerpunkteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kontakt': {
@@ -123,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AusstattungRoute: AusstattungRoute,
   KontaktRoute: KontaktRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
   SchwerpunkteRoute: SchwerpunkteRoute,
   TeamRoute: TeamRoute,
 }
