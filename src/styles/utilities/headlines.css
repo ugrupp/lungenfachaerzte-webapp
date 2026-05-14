@@ -7,5 +7,9 @@
 }
 
 @utility headline--3 {
+  @apply font-serif font-normal leading-snug tracking-wider text-19;
+}
+
+@utility headline--4 {
   @apply font-sans font-bold leading-normal tracking-wide text-14 uppercase;
 }
