@@ -15,6 +15,7 @@ import { isContactPagePath } from "../lib/contact";
 
 import { getErrorPageServerFn } from "../serverFunctions/getErrorPageServerFn";
 
+import Plainpage from "#/components/Plainpage";
 import appCss from "../styles/main.css?url";
 
 type MyRouterContext = {
@@ -122,13 +123,9 @@ function NotFoundPage() {
     queryFn: () => getErrorPageServerFn(),
   });
 
-  return (
-    <main>
-      {data?.text?.__html ? (
-        <div className="richtext" dangerouslySetInnerHTML={data.text} />
-      ) : (
-        <h1>404 — Seite nicht gefunden</h1>
-      )}
-    </main>
+  return data?.text?.__html ? (
+    <Plainpage title="404" textSecondary={data.text} />
+  ) : (
+    <h1>404 — Seite nicht gefunden</h1>
   );
 }

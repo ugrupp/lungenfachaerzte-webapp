@@ -6,6 +6,7 @@
   --text-color: theme("colors.ci-dark");
   color: var(--text-color);
 
+  /* Inline elements */
   & strong {
     @apply font-bold;
   }

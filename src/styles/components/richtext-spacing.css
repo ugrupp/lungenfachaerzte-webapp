@@ -1,6 +1,6 @@
 .richtext {
   /* Inline elements */
-  & :is(p, address, pre) {
+  & :is(p, address, pre, .table) {
     margin-top: 1.4em;
     margin-bottom: 1.4em;
   }
@@ -55,5 +55,13 @@
 
   & > :last-child {
     margin-bottom: 0;
+  }
+}
+
+.richtext--condensed {
+  & :is(h4, .headline--h4) {
+    + :is(p, address, pre, .table) {
+      margin-top: 0;
+    }
   }
 }

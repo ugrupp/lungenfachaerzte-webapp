@@ -13,6 +13,8 @@ import { Route as TeamRouteImport } from './routes/team'
 import { Route as SchwerpunkteRouteImport } from './routes/schwerpunkte'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as KontaktRouteImport } from './routes/kontakt'
+import { Route as ImpressumRouteImport } from './routes/impressum'
+import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as AusstattungRouteImport } from './routes/ausstattung'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -36,6 +38,16 @@ const KontaktRoute = KontaktRouteImport.update({
   path: '/kontakt',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ImpressumRoute = ImpressumRouteImport.update({
+  id: '/impressum',
+  path: '/impressum',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DatenschutzRoute = DatenschutzRouteImport.update({
+  id: '/datenschutz',
+  path: '/datenschutz',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AusstattungRoute = AusstattungRouteImport.update({
   id: '/ausstattung',
   path: '/ausstattung',
@@ -50,6 +62,8 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ausstattung': typeof AusstattungRoute
+  '/datenschutz': typeof DatenschutzRoute
+  '/impressum': typeof ImpressumRoute
   '/kontakt': typeof KontaktRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/schwerpunkte': typeof SchwerpunkteRoute
@@ -58,6 +72,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ausstattung': typeof AusstattungRoute
+  '/datenschutz': typeof DatenschutzRoute
+  '/impressum': typeof ImpressumRoute
   '/kontakt': typeof KontaktRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/schwerpunkte': typeof SchwerpunkteRoute
@@ -67,6 +83,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ausstattung': typeof AusstattungRoute
+  '/datenschutz': typeof DatenschutzRoute
+  '/impressum': typeof ImpressumRoute
   '/kontakt': typeof KontaktRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/schwerpunkte': typeof SchwerpunkteRoute
@@ -77,6 +95,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/ausstattung'
+    | '/datenschutz'
+    | '/impressum'
     | '/kontakt'
     | '/robots.txt'
     | '/schwerpunkte'
@@ -85,6 +105,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/ausstattung'
+    | '/datenschutz'
+    | '/impressum'
     | '/kontakt'
     | '/robots.txt'
     | '/schwerpunkte'
@@ -93,6 +115,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/ausstattung'
+    | '/datenschutz'
+    | '/impressum'
     | '/kontakt'
     | '/robots.txt'
     | '/schwerpunkte'
@@ -102,6 +126,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AusstattungRoute: typeof AusstattungRoute
+  DatenschutzRoute: typeof DatenschutzRoute
+  ImpressumRoute: typeof ImpressumRoute
   KontaktRoute: typeof KontaktRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SchwerpunkteRoute: typeof SchwerpunkteRoute
@@ -138,6 +164,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KontaktRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/impressum': {
+      id: '/impressum'
+      path: '/impressum'
+      fullPath: '/impressum'
+      preLoaderRoute: typeof ImpressumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/datenschutz': {
+      id: '/datenschutz'
+      path: '/datenschutz'
+      fullPath: '/datenschutz'
+      preLoaderRoute: typeof DatenschutzRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ausstattung': {
       id: '/ausstattung'
       path: '/ausstattung'
@@ -158,6 +198,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AusstattungRoute: AusstattungRoute,
+  DatenschutzRoute: DatenschutzRoute,
+  ImpressumRoute: ImpressumRoute,
   KontaktRoute: KontaktRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SchwerpunkteRoute: SchwerpunkteRoute,

@@ -35,22 +35,25 @@ export default function SubHeader({ heroImage, variant = "default" }: Props) {
   }, [variant]);
 
   return (
-    <section className="container-grid gap-y-8">
+    <section
+      className={clsx("container-grid gap-y-8", {
+        "pb-8": !heroImage,
+      })}
+    >
       <Doctors className="col-start-[content]" />
 
-      <div
-        ref={imageWrapperRef}
-        className={clsx(
-          "max-1024:ml-(--logo-offset) col-[content/full] 1024:col-[7/content] overflow-hidden",
-          {
-            "h-[calc(100vh-var(--subheader-offset,159.36px)-120px)] 768:h-[calc(100vh-var(--subheader-offset,159.36px)-200px)] min-h-50 rounded-bl-[50px]":
-              variant === "tall",
-            "h-30 768:h-38": variant === "default",
-            "bg-ci-dark": !heroImage,
-          },
-        )}
-      >
-        {!!heroImage && (
+      {!!heroImage && (
+        <div
+          ref={imageWrapperRef}
+          className={clsx(
+            "max-1024:ml-(--logo-offset) col-[content/full] 1024:col-[7/content] overflow-hidden",
+            {
+              "h-[calc(100vh-var(--subheader-offset,159.36px)-120px)] 768:h-[calc(100vh-var(--subheader-offset,159.36px)-200px)] min-h-50 rounded-bl-[50px]":
+                variant === "tall",
+              "h-30 768:h-38": variant === "default",
+            },
+          )}
+        >
           <ImageCmp
             src={heroImage.url}
             srcSet={heroImage.srcset}
@@ -59,8 +62,8 @@ export default function SubHeader({ heroImage, variant = "default" }: Props) {
             sizes="100vw"
             className="size-full object-cover"
           />
-        )}
-      </div>
+        </div>
+      )}
     </section>
   );
 }
