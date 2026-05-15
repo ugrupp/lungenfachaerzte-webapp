@@ -12,6 +12,7 @@ export function imageFragment(widths: readonly number[], name = "ImageFields") {
     fragment ${name} on AssetInterface {
       ${urlFields}
       alt
+      title
       focalPoint
     }
   `;
@@ -25,6 +26,7 @@ export function imageSchema(widths: readonly number[]) {
   const ImageSchemaPreTransform = z.object({
     ...urlShape,
     alt: z.string().apply(nullToUndefined),
+    title: z.string().apply(nullToUndefined),
     focalPoint: z.tuple([z.number(), z.number()]).apply(nullToUndefined),
   });
 
@@ -35,7 +37,7 @@ export function imageSchema(widths: readonly number[]) {
     return {
       srcset,
       url: d[`url${widths[0]}`],
-      alt: data.alt,
+      alt: data.alt || data.title,
       focalPoint: data.focalPoint,
     };
   });
