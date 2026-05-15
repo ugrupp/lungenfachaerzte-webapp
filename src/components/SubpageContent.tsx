@@ -1,10 +1,6 @@
 import { Image as ImageCmp } from "#/components/Image";
 import type { Image } from "#/lib/image";
-import {
-  createScrollRevealVariants,
-  scrollRevealInitial,
-  scrollRevealWhileInView,
-} from "#/lib/scrollReveal";
+import { createScrollRevealVariants } from "#/lib/scrollReveal";
 import type { Text } from "#/lib/text";
 import { clsx } from "clsx";
 import { motion } from "motion/react";
@@ -20,7 +16,10 @@ function ContentImage({ image, className }: ContentImageProps) {
   if (!image) return null;
 
   return (
-    <motion.div className={clsx(className)} variants={scrollReveal.item}>
+    <motion.div
+      className={clsx(className)}
+      variants={scrollReveal.itemVariants}
+    >
       <ImageCmp
         src={image.url}
         srcSet={image.srcset}
@@ -44,7 +43,7 @@ function ContentText({ text, className }: ContentTextProps) {
   return (
     <motion.div
       className={clsx("richtext text-18 leading-snug", className)}
-      variants={scrollReveal.item}
+      variants={scrollReveal.itemVariants}
       dangerouslySetInnerHTML={text}
     />
   );
@@ -74,10 +73,7 @@ export default function SubpageContent({
   return (
     <motion.section
       className={clsx("container-grid", className)}
-      variants={scrollReveal.container}
-      initial={scrollRevealInitial}
-      whileInView={scrollRevealWhileInView}
-      viewport={scrollReveal.viewport}
+      {...scrollReveal.containerProps}
     >
       {/* Section 1 */}
       <ContentImage

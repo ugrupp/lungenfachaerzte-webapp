@@ -1,8 +1,4 @@
-import {
-  createScrollRevealVariants,
-  scrollRevealInitial,
-  scrollRevealWhileInView,
-} from "#/lib/scrollReveal";
+import { createScrollRevealVariants } from "#/lib/scrollReveal";
 import ArrowLongDown from "#/svg/arrow-long-down.svg?react";
 import Info from "#/svg/info-1.svg?react";
 import { getRouteApi } from "@tanstack/react-router";
@@ -18,10 +14,7 @@ export function HomeIntro() {
     <motion.section
       id="start"
       className="bg-ci-light pt-30 768:pt-50 container-grid relative"
-      variants={scrollReveal.container}
-      initial={scrollRevealInitial}
-      whileInView={scrollRevealWhileInView}
-      viewport={scrollReveal.viewport}
+      {...scrollReveal.containerProps}
     >
       {/* Scroll indicator */}
       <div className="absolute top-0 left-0 right-0 hidden 1024:block">
@@ -42,7 +35,7 @@ export function HomeIntro() {
       {/* Content */}
       <motion.div
         className="row-start-1 col-[content/content] max-1024:ml-(--logo-offset) 768:col-end-10 768:mb-40 1024:col-[7/12] 1024:mb-0"
-        variants={scrollReveal.item}
+        variants={scrollReveal.itemVariants}
       >
         {!!introHead?.__html && (
           <div className="richtext" dangerouslySetInnerHTML={introHead} />
@@ -51,7 +44,7 @@ export function HomeIntro() {
 
       <motion.div
         className="row-start-2 768:row-start-1 col-[content/content] 768:col-start-11 mt-20 768:mt-30 1024:col-start-13"
-        variants={scrollReveal.item}
+        variants={scrollReveal.itemVariants}
       >
         {!!introText?.__html && (
           <div className="richtext" dangerouslySetInnerHTML={introText} />
@@ -61,7 +54,7 @@ export function HomeIntro() {
       <div className="bg-white row-start-3 768:row-start-2 col-[content/full] 768:col-[full/10] 1024:col-end-7 mt-20 768:-mt-20 1024:-mt-26"></div>
       <motion.div
         className="row-start-3 768:row-start-2 col-[content/content] ml-(--logo-offset) 768:col-[content/10] 1024:col-end-7 mt-20 768:-mt-20 1024:-mt-26 768:pr-13 1280:pr-15 py-14 relative"
-        variants={scrollReveal.item}
+        variants={scrollReveal.itemVariants}
       >
         <Info className="absolute left-0 top-0 -translate-y-1/2 size-11" />
         {!!introInfotext?.__html && (

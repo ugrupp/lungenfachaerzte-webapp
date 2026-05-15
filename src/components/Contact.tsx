@@ -1,8 +1,4 @@
-import {
-  createScrollRevealVariants,
-  scrollRevealInitial,
-  scrollRevealWhileInView,
-} from "#/lib/scrollReveal";
+import { createScrollRevealVariants } from "#/lib/scrollReveal";
 import { getGlobalsServerFn } from "#/serverFunctions/getGlobalsServerFn";
 import Doctors from "#/svg/doctors.svg?react";
 import Ellipsis from "#/svg/ellipsis.svg?react";
@@ -67,10 +63,7 @@ export default function Contact({
         !standalone && "rounded-tr-[40px] 768:rounded-tr-[50px]",
         className,
       )}
-      variants={scrollReveal.container}
-      initial={scrollRevealInitial}
-      whileInView={scrollRevealWhileInView}
-      viewport={scrollReveal.viewport}
+      {...scrollReveal.containerProps}
     >
       {/* Navigation */}
       {standalone && (
@@ -156,7 +149,7 @@ export default function Contact({
       {/* Appointment */}
       <motion.div
         className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 mt-23 768:mt-39.75 flex flex-col items-start row-start-2 768:row-start-1"
-        variants={scrollReveal.item}
+        variants={scrollReveal.itemVariants}
       >
         {!!contact.appointmentText?.__html && (
           <div
@@ -201,7 +194,7 @@ export default function Contact({
       {/* Contact */}
       <motion.div
         className="col-[content/content] max-1024:ml-(--logo-offset) 768:col-[content/11] 1024:col-[7/12] mt-23 768:mt-15 row-start-3 768:row-start-2"
-        variants={scrollReveal.item}
+        variants={scrollReveal.itemVariants}
       >
         {!!contact.contactText?.__html && (
           <div>

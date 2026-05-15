@@ -1,9 +1,5 @@
 import { Image as ImageCmp } from "#/components/Image";
-import {
-  createScrollRevealVariants,
-  scrollRevealInitial,
-  scrollRevealWhileInView,
-} from "#/lib/scrollReveal";
+import { createScrollRevealVariants } from "#/lib/scrollReveal";
 import type { TeamMember } from "#/queries/team";
 import clsx from "clsx";
 import { motion } from "motion/react";
@@ -21,10 +17,7 @@ export default function TeamMembersSecondary({ members, className }: Props) {
   return (
     <motion.section
       className={clsx("container-grid gap-y-14 1024:gap-y-20", className)}
-      variants={scrollReveal.container}
-      initial={scrollRevealInitial}
-      whileInView={scrollRevealWhileInView}
-      viewport={scrollReveal.viewport}
+      {...scrollReveal.containerProps}
     >
       {members.map((member, index) => (
         <motion.article
@@ -33,7 +26,7 @@ export default function TeamMembersSecondary({ members, className }: Props) {
             "768:col-[3/10] 1024:col-[7/12]": index % 2 === 0,
             "768:col-start-11 1024:col-start-13": index % 2 !== 0,
           })}
-          variants={scrollReveal.item}
+          variants={scrollReveal.itemVariants}
         >
           {/* Image */}
           {member.image && (

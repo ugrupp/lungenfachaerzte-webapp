@@ -1,10 +1,6 @@
 import { Image as ImageCmp } from "#/components/Image";
 import { nl2br } from "#/lib/nl2br";
-import {
-  createScrollRevealVariants,
-  scrollRevealInitial,
-  scrollRevealWhileInView,
-} from "#/lib/scrollReveal";
+import { createScrollRevealVariants } from "#/lib/scrollReveal";
 import type { TeamMember } from "#/queries/team";
 import clsx from "clsx";
 import { motion } from "motion/react";
@@ -27,23 +23,20 @@ export default function TeamMembersPrimary({ members, className }: Props) {
         <motion.article
           key={member.id}
           className="container-grid"
-          variants={scrollReveal.container}
-          initial={scrollRevealInitial}
-          whileInView={scrollRevealWhileInView}
-          viewport={scrollReveal.viewport}
+          {...scrollReveal.containerProps}
         >
           {/* Name */}
           <motion.h2
             className="col-[content/content] 768:col-end-10 1024:col-end-7 1024:row-start-1 768:self-end ml-(--logo-offset) 1024:pr-8 headline--1"
             dangerouslySetInnerHTML={nl2br(member.title)}
-            variants={scrollReveal.item}
+            variants={scrollReveal.itemVariants}
           />
 
           {/* Image */}
           {member.image && (
             <motion.div
               className="col-[content/content] 768:col-start-11 1024:col-[7/12] 1024:row-start-1 ml-(--logo-offset) 768:ml-0 mt-10 768:mt-0"
-              variants={scrollReveal.item}
+              variants={scrollReveal.itemVariants}
             >
               <ImageCmp
                 src={member.image.url}
@@ -61,7 +54,7 @@ export default function TeamMembersPrimary({ members, className }: Props) {
             <motion.div
               className="col-[content/content] 768:col-end-10 1024:col-[13/content] 1024:row-start-2 richtext richtext--on-ci-light text-18 mt-10 768:mt-8 1280:mt-14"
               dangerouslySetInnerHTML={member.description}
-              variants={scrollReveal.item}
+              variants={scrollReveal.itemVariants}
             />
           )}
 
@@ -69,7 +62,7 @@ export default function TeamMembersPrimary({ members, className }: Props) {
           {member.vita.length > 0 && (
             <motion.dl
               className="col-[content/content] 768:col-[6/14] 1024:col-[7/12] 1024:row-start-3 ml-(--logo-offset) 768:ml-0 mt-10 768:mt-8 1280:mt-13 space-y-5"
-              variants={scrollReveal.item}
+              variants={scrollReveal.itemVariants}
             >
               {member.vita.map((item) => (
                 <div key={item.id}>

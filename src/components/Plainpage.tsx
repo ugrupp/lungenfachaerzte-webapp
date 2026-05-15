@@ -1,8 +1,4 @@
-import {
-  createScrollRevealVariants,
-  scrollRevealInitial,
-  scrollRevealWhileInView,
-} from "#/lib/scrollReveal";
+import { createScrollRevealVariants } from "#/lib/scrollReveal";
 import type { Text } from "#/lib/text";
 import { motion } from "motion/react";
 import SubHeader from "./SubHeader";
@@ -27,15 +23,12 @@ export default function Plainpage({
       <div className="bg-off-white py-20 768:py-30 1024:pb-40">
         <motion.section
           className="container-grid"
-          variants={scrollReveal.container}
-          initial={scrollRevealInitial}
-          whileInView={scrollRevealWhileInView}
-          viewport={scrollReveal.viewport}
+          {...scrollReveal.containerProps}
         >
           {/* Headline */}
           <motion.div
             className="col-[content/content] ml-(--logo-offset)"
-            variants={scrollReveal.item}
+            variants={scrollReveal.itemVariants}
           >
             <h1 className="w-fit headline--1 text-ci-light bg-ci-dark rounded-full px-7 py-2.75 overflow-hidden">
               {title}
@@ -46,7 +39,7 @@ export default function Plainpage({
           {!!textPrimary?.__html && (
             <motion.div
               className="col-[content/content] 768:col-start-11 1024:col-start-13 mt-8 768:mt-14 1024:mt-16 richtext richtext--condensed text-18"
-              variants={scrollReveal.item}
+              variants={scrollReveal.itemVariants}
               dangerouslySetInnerHTML={textPrimary}
             />
           )}
@@ -55,7 +48,7 @@ export default function Plainpage({
           {!!textSecondary?.__html && (
             <motion.div
               className="col-[content/content] 768:col-[content/10] 1024:col-[7/12] ml-(--logo-offset) 1024:ml-0 mt-8 768:mt-14 1024:mt-18 richtext richtext--condensed text-18"
-              variants={scrollReveal.item}
+              variants={scrollReveal.itemVariants}
               dangerouslySetInnerHTML={textSecondary}
             />
           )}

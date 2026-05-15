@@ -1,9 +1,5 @@
 import { Image } from "#/components/Image";
-import {
-  createScrollRevealVariants,
-  scrollRevealInitial,
-  scrollRevealWhileInView,
-} from "#/lib/scrollReveal";
+import { createScrollRevealVariants } from "#/lib/scrollReveal";
 import type { HomeTeamTeaser, HomeTeaser } from "#/queries/home";
 import { getRouteApi } from "@tanstack/react-router";
 import clsx from "clsx";
@@ -23,15 +19,12 @@ function Teaser({ teaser, className }: TeaserProps) {
   return (
     <motion.div
       className={clsx("container-grid grid-flow-dense", className)}
-      variants={scrollReveal.container}
-      initial={scrollRevealInitial}
-      whileInView={scrollRevealWhileInView}
-      viewport={scrollReveal.viewport}
+      {...scrollReveal.containerProps}
     >
       {/* Headline */}
       <motion.div
         className="col-[content/content] 1024:col-end-12 ml-(--logo-offset)"
-        variants={scrollReveal.item}
+        variants={scrollReveal.itemVariants}
       >
         <h2 className="w-fit headline--1 text-ci-light bg-ci-dark rounded-full overflow-hidden">
           <a className="px-7 py-2.75 block" href={teaser.url}>
@@ -44,7 +37,7 @@ function Teaser({ teaser, className }: TeaserProps) {
       {!!teaser.introText?.__html && (
         <motion.div
           className="col-[content/content] 768:col-end-10 768:ml-(--logo-offset) 1024:ml-0 1024:col-[7/12] mt-8 richtext text-18"
-          variants={scrollReveal.item}
+          variants={scrollReveal.itemVariants}
           dangerouslySetInnerHTML={teaser.introText}
         />
       )}
@@ -52,7 +45,7 @@ function Teaser({ teaser, className }: TeaserProps) {
       {/* Link button */}
       <motion.div
         className="col-[content/content] max-1024:ml-(--logo-offset) 768:col-end-10 1024:col-[7/12] mt-14 768:mt-32 1024:mt-12 768:self-end"
-        variants={scrollReveal.item}
+        variants={scrollReveal.itemVariants}
       >
         <Button href={teaser.url} aria-label={teaser.title}>
           Mehr erfahren
@@ -63,7 +56,7 @@ function Teaser({ teaser, className }: TeaserProps) {
       {teaser.teaserImage && (
         <motion.div
           className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 768:row-span-2 1024:row-span-3 mt-10 768:mt-8 1024:mt-0"
-          variants={scrollReveal.item}
+          variants={scrollReveal.itemVariants}
         >
           <a
             href={teaser.url}
@@ -94,10 +87,7 @@ function TeamTeaser({ teaser, className }: TeamTeaserProps) {
   return (
     <motion.div
       className={clsx("container-grid", className)}
-      variants={scrollReveal.container}
-      initial={scrollRevealInitial}
-      whileInView={scrollRevealWhileInView}
-      viewport={scrollReveal.viewport}
+      {...scrollReveal.containerProps}
     >
       {/* Image */}
       {teaser.teaserImage && (
@@ -124,7 +114,7 @@ function TeamTeaser({ teaser, className }: TeamTeaserProps) {
       {/* Headline */}
       <motion.div
         className="col-[content/content] 768:col-start-11 1024:col-start-13 max-768:ml-(--logo-offset) bg-ci-light row-start-1 pt-25"
-        variants={scrollReveal.item}
+        variants={scrollReveal.itemVariants}
       >
         <h2 className="w-fit headline--1 text-ci-light bg-ci-dark rounded-full overflow-hidden">
           <a className="px-7 py-2.75 block" href={teaser.url}>
@@ -137,7 +127,7 @@ function TeamTeaser({ teaser, className }: TeamTeaserProps) {
       {!!teaser.teaserText?.__html && (
         <motion.div
           className="col-[content/content] 768:col-start-11 1024:col-start-13 mt-8 richtext text-18 row-start-2"
-          variants={scrollReveal.item}
+          variants={scrollReveal.itemVariants}
           dangerouslySetInnerHTML={teaser.teaserText}
         />
       )}
@@ -145,7 +135,7 @@ function TeamTeaser({ teaser, className }: TeamTeaserProps) {
       {/* Link button */}
       <motion.div
         className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 mt-14 768:mt-18 pb-25 row-start-3"
-        variants={scrollReveal.item}
+        variants={scrollReveal.itemVariants}
       >
         <Button href={teaser.url} variant="on-ci-light">
           Mehr erfahren
