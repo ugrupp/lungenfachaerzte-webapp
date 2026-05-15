@@ -28,7 +28,7 @@ export default function TeamMembersPrimary({ members, className }: Props) {
           {/* Name */}
           <motion.h2
             className="col-[content/content] 768:col-end-10 1024:col-end-7 1024:row-start-1 768:self-end ml-(--logo-offset) 1024:pr-8 headline--1"
-            dangerouslySetInnerHTML={nl2br(member.title)}
+            dangerouslySetInnerHTML={nl2br(member.title ?? "")}
             variants={scrollReveal.itemVariants}
           />
 

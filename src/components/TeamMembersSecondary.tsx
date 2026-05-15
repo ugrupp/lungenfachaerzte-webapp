@@ -43,7 +43,7 @@ export default function TeamMembersSecondary({ members, className }: Props) {
           )}
 
           {/* Name */}
-          <h2 className="headline--3 mt-8">{member.title}</h2>
+          <h2 className="headline--3 mt-8">{member.title ?? ""}</h2>
 
           {/* Description */}
           {!!member.description?.__html && (

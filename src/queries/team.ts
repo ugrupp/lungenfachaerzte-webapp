@@ -17,14 +17,14 @@ const TeamMemberImageSchema = z
 
 const TeamMemberSchema = z.object({
   id: z.string(),
-  title: z.string(),
+  title: z.string().apply(nullToUndefined),
   image: TeamMemberImageSchema,
   teamMemberPrimary: z.boolean(),
   description: TextSchema.apply(nullToUndefined),
   vita: z.array(
     z.object({
       id: z.string(),
-      title: z.string(),
+      title: z.string().apply(nullToUndefined),
       occupation: TextSchema.apply(nullToUndefined),
     }),
   ),
