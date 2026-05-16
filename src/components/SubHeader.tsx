@@ -61,6 +61,7 @@ export default function SubHeader({ heroImage, variant = "default" }: Props) {
             focalPoint={heroImage.focalPoint}
             sizes="100vw"
             className="size-full object-cover"
+            loading="eager"
           />
         </div>
       )}

@@ -1,4 +1,5 @@
 import type { Image } from "#/lib/image";
+import clsx from "clsx";
 import type { ComponentPropsWithoutRef } from "react";
 
 function applyLoadedClass(img: HTMLImageElement | null) {
@@ -11,21 +12,28 @@ function applyLoadedClass(img: HTMLImageElement | null) {
   }
 }
 
-type Props = Omit<ComponentPropsWithoutRef<"img">, "loading"> & {
+type Props = ComponentPropsWithoutRef<"img"> & {
   focalPoint?: Image["focalPoint"];
 };
 
-export function Image({ className, focalPoint, style, ...props }: Props) {
+export function Image({
+  className,
+  focalPoint,
+  loading = "lazy",
+  style,
+  ...props
+}: Props) {
   return (
     <img
       ref={applyLoadedClass}
-      loading="lazy"
-      className={[
-        "opacity-0 transition-opacity duration-500 [&.loaded]:opacity-100",
+      loading={loading}
+      className={clsx([
+        {
+          "opacity-0 transition-opacity duration-500 [&.loaded]:opacity-100":
+            loading === "lazy",
+        },
         className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
+      ])}
       style={{
         objectPosition: focalPoint
           ? `${focalPoint[0] * 100}% ${focalPoint[1] * 100}%`
