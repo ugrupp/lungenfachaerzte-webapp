@@ -88,7 +88,6 @@ export default function MobileMenu({ isOpen, onClose, onExitComplete }: Props) {
                         ? "noopener noreferrer"
                         : undefined
                     }
-                    onClick={onClose}
                     className="text-24 leading-none tracking-wide text-ci-dark uppercase w-fit"
                   >
                     {link.label ?? link.defaultLabel}
@@ -106,7 +105,6 @@ export default function MobileMenu({ isOpen, onClose, onExitComplete }: Props) {
                         ? "noopener noreferrer"
                         : undefined
                     }
-                    onClick={onClose}
                   >
                     {doctolibLink.label ?? doctolibLink.defaultLabel}
                   </Button>
