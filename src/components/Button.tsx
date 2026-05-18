@@ -13,11 +13,12 @@ export default function Button({
   return (
     <a
       className={clsx(
-        "inline-flex whitespace-nowrap rounded-br-[15px] overflow-hidden",
+        "group inline-flex whitespace-nowrap rounded-br-[15px] overflow-hidden",
         className,
       )}
       {...props}
     >
+      {/* Text */}
       <span
         className={clsx(
           "px-4.75 pt-3 pb-2.25 text-base leading-snug tracking-wide uppercase",
@@ -28,17 +29,42 @@ export default function Button({
           },
         )}
       >
-        {children}
+        <span className="transition-transform duration-300 group-hover:translate-x-0.5 inline-block">
+          {children}
+        </span>
       </span>
 
+      {/* Icon wrapper */}
       <span
-        className={clsx("flex items-center justify-center px-3.5 shrink-0", {
-          "bg-white text-ci-dark": variant === "on-ci",
-          "bg-ci-dark text-ci-light":
-            variant === "default" || variant === "on-ci-light",
-        })}
+        className={clsx(
+          "relative flex items-center justify-center px-3.5 shrink-0 overflow-hidden",
+          {
+            "bg-white text-ci-dark": variant === "on-ci",
+            "bg-ci-dark text-ci-light":
+              variant === "default" || variant === "on-ci-light",
+          },
+        )}
       >
-        <ArrowIcon className="w-4 h-4" />
+        {/* Background that slides out on hover */}
+        <span
+          className={clsx(
+            "absolute inset-0 -translate-x-full transition-transform duration-300 ease-in-out group-hover:translate-x-0",
+            {
+              "bg-ci-light": variant === "default" || variant === "on-ci",
+              "bg-white": variant === "on-ci-light",
+            },
+          )}
+        />
+        {/* Icon */}
+        <ArrowIcon
+          className={clsx(
+            "relative z-10 w-4 h-4 translate-x-0 transition-all duration-300 group-hover:translate-x-1",
+            {
+              "group-hover:text-ci-dark":
+                variant === "default" || variant === "on-ci-light",
+            },
+          )}
+        />
       </span>
     </a>
   );
