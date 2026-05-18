@@ -104,7 +104,7 @@ export default function Contact({
             createPortal(
               <button
                 className={clsx(
-                  "1280:hidden cursor-pointer fixed top-8 right-8 size-11 z-210 rounded-full flex items-center justify-center transition-colors duration-300",
+                  "1280:hidden cursor-pointer fixed top-8 right-8 size-11 z-210 rounded-full flex items-center justify-center transition-colors duration-250",
                   menuOpen ? "bg-ci-dark" : "bg-white",
                 )}
                 onClick={() => setMenuOpen((prev) => !prev)}
@@ -119,7 +119,7 @@ export default function Contact({
                 >
                   <Ellipsis
                     className={clsx(
-                      "size-4.5 transition-colors duration-300",
+                      "size-4.5 transition-colors duration-250",
                       menuOpen ? "text-ci-light" : "text-ci-dark",
                     )}
                   />
@@ -167,7 +167,7 @@ export default function Contact({
                 ? "noopener noreferrer"
                 : undefined
             }
-            className="mt-5 inline-block font-bold text-14 tracking-wide leading-relaxed uppercase underline underline-offset-5"
+            className="mt-5 inline-block font-bold text-14 tracking-wide leading-relaxed uppercase underline underline-offset-5 hover:decoration-transparent hover:text-white transition-colors duration-250"
           >
             {contact.appointmentLink.label ??
               contact.appointmentLink.defaultLabel}

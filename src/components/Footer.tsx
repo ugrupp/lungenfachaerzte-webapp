@@ -62,6 +62,7 @@ export default function Footer() {
         <div className="container-grid items-end pt-14 768:pt-24">
           {/* Infotext 2 */}
           <motion.div
+            id="weitere-informationen-zur-terminbuchung"
             className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 row-start-1"
             variants={scrollReveal.itemVariants}
           >
@@ -86,7 +87,7 @@ export default function Footer() {
                 rel={
                   link.target === "_blank" ? "noopener noreferrer" : undefined
                 }
-                className="inline-block font-bold text-14 tracking-wide leading-relaxed uppercase underline underline-offset-5"
+                className="inline-block font-bold text-14 tracking-wide leading-relaxed uppercase underline underline-offset-5 hover:text-white hover:decoration-transparent transition-colors duration-250"
               >
                 {link.label ?? link.defaultLabel}
               </a>

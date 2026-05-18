@@ -29,7 +29,7 @@ export default function Button({
           },
         )}
       >
-        <span className="transition-transform duration-300 group-hover:translate-x-0.5 inline-block">
+        <span className="transition-transform duration-250 group-hover:translate-x-0.5 inline-block">
           {children}
         </span>
       </span>
@@ -48,7 +48,7 @@ export default function Button({
         {/* Background that slides out on hover */}
         <span
           className={clsx(
-            "absolute inset-0 -translate-x-full transition-transform duration-300 ease-in-out group-hover:translate-x-0",
+            "absolute inset-0 -translate-x-full transition-transform duration-250 ease-in-out group-hover:translate-x-0",
             {
               "bg-ci-light": variant === "default" || variant === "on-ci",
               "bg-white": variant === "on-ci-light",
@@ -58,7 +58,7 @@ export default function Button({
         {/* Icon */}
         <ArrowIcon
           className={clsx(
-            "relative z-10 w-4 h-4 translate-x-0 transition-all duration-300 group-hover:translate-x-1",
+            "relative z-10 w-4 h-4 translate-x-0 transition-all duration-250 group-hover:translate-x-1",
             {
               "group-hover:text-ci-dark":
                 variant === "default" || variant === "on-ci-light",
