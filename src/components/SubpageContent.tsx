@@ -26,7 +26,7 @@ function ContentImage({ image, className }: ContentImageProps) {
         alt={image.alt}
         focalPoint={image.focalPoint}
         sizes="100vw"
-        className="w-full h-auto"
+        className="w-full aspect-285/235 object-cover"
       />
     </motion.div>
   );

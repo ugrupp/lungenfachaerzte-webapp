@@ -44,7 +44,7 @@ export default function TeamMembersPrimary({ members, className }: Props) {
                 alt={member.image.alt}
                 focalPoint={member.image.focalPoint}
                 sizes="100vw"
-                className="h-auto w-full"
+                className="w-full aspect-285/235 object-cover"
               />
             </motion.div>
           )}

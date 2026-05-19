@@ -30,7 +30,7 @@ export default function TeamMembersSecondary({ members, className }: Props) {
         >
           {/* Image */}
           {member.image && (
-            <div className="aspect-316/260">
+            <div className="aspect-285/235">
               <ImageCmp
                 src={member.image.url}
                 srcSet={member.image.srcset}
