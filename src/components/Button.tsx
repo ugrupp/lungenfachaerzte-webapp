@@ -14,6 +14,10 @@ export default function Button({
     <a
       className={clsx(
         "group inline-flex whitespace-nowrap rounded-br-[15px] overflow-hidden",
+        {
+          "bg-ci-light": variant === "default" || variant === "on-ci",
+          "bg-white": variant === "on-ci-light",
+        },
         className,
       )}
       {...props}
@@ -21,12 +25,7 @@ export default function Button({
       {/* Text */}
       <span
         className={clsx(
-          "px-4.75 pt-3 pb-2.25 text-base leading-snug tracking-wide uppercase",
-          {
-            "bg-ci-light text-ci-dark":
-              variant === "default" || variant === "on-ci",
-            "bg-white text-ci-dark": variant === "on-ci-light",
-          },
+          "px-4.75 pt-3 pb-2.25 text-base leading-snug tracking-wide uppercase text-ci-dark",
         )}
       >
         <span className="transition-transform duration-250 group-hover:translate-x-0.5 inline-block">
@@ -39,19 +38,18 @@ export default function Button({
         className={clsx(
           "relative flex items-center justify-center px-3.5 shrink-0 overflow-hidden",
           {
-            "bg-white text-ci-dark": variant === "on-ci",
-            "bg-ci-dark text-ci-light":
-              variant === "default" || variant === "on-ci-light",
+            "text-ci-dark": variant === "on-ci",
+            "text-ci-light": variant === "default" || variant === "on-ci-light",
           },
         )}
       >
         {/* Background that slides out on hover */}
         <span
           className={clsx(
-            "absolute inset-0 -translate-x-full transition-transform duration-250 ease-in-out group-hover:translate-x-0",
+            "absolute inset-0 translate-x-0 transition-transform duration-250 ease-in-out group-hover:translate-x-full",
             {
-              "bg-ci-light": variant === "default" || variant === "on-ci",
-              "bg-white": variant === "on-ci-light",
+              "bg-ci-dark": variant === "default" || variant === "on-ci-light",
+              "bg-white": variant === "on-ci",
             },
           )}
         />
