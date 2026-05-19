@@ -55,12 +55,12 @@ function Teaser({ teaser, className }: TeaserProps) {
       {/* Image */}
       {teaser.teaserImage && (
         <motion.div
-          className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 768:row-span-2 1024:row-span-3 mt-10 768:mt-8 1024:mt-0"
+          className="col-[content/content] max-768:ml-(--logo-offset) 768:col-start-11 1024:col-start-13 768:row-span-2 1024:row-span-3 mt-10 768:mt-8 1024:mt-0 relative"
           variants={scrollReveal.itemVariants}
         >
           <a
             href={teaser.url}
-            className="block w-full h-81.25 768:h-full rounded-br-[40px] 768:rounded-br-[50px] overflow-hidden"
+            className="block w-full h-81.25 768:h-full 768:absolute 768:inset-0 rounded-br-[40px] 768:rounded-br-[50px] overflow-hidden"
             aria-label={teaser.title}
           >
             <Image
