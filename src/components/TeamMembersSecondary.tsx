@@ -48,7 +48,7 @@ export default function TeamMembersSecondary({ members, className }: Props) {
           {/* Description */}
           {!!member.description?.__html && (
             <div
-              className="richtext richtext--on-ci-light text-18"
+              className="richtext richtext--on-ci-dark-light text-18"
               dangerouslySetInnerHTML={member.description}
             />
           )}

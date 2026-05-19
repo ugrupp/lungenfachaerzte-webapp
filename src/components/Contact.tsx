@@ -70,7 +70,7 @@ export default function Contact({
         <>
           {/* Desktop navigation */}
           <div
-            className="col-end-[content-end] w-fit justify-self-end sticky top-0 bottom-0 pt-8 row-start-1"
+            className="col-end-[content-end] w-fit justify-self-end sticky top-0 bottom-0 z-50 pt-8 row-start-1"
             id="navigation"
           >
             <Navigation onCiDark className="max-1280:hidden" />
@@ -153,7 +153,7 @@ export default function Contact({
       >
         {!!contact.appointmentText?.__html && (
           <div
-            className="richtext richtext--on-dark text-18 leading-snug"
+            className="richtext richtext--on-ci-dark text-18 leading-snug"
             dangerouslySetInnerHTML={contact.appointmentText}
           />
         )}
@@ -167,7 +167,7 @@ export default function Contact({
                 ? "noopener noreferrer"
                 : undefined
             }
-            className="mt-5 inline-block font-bold text-14 tracking-wide leading-relaxed uppercase underline underline-offset-5 hover:decoration-transparent hover:text-white transition-colors duration-250"
+            className="mt-5 inline-block font-bold text-14 tracking-wide leading-relaxed uppercase underline underline-offset-5 hover:text-white transition-colors duration-250"
           >
             {contact.appointmentLink.label ??
               contact.appointmentLink.defaultLabel}
@@ -201,7 +201,7 @@ export default function Contact({
             <ContactSectionHeading>Kontakt</ContactSectionHeading>
 
             <div
-              className="mt-6 richtext richtext--on-dark text-18 leading-snug"
+              className="mt-6 richtext richtext--on-ci-dark text-18 leading-snug"
               dangerouslySetInnerHTML={contact.contactText}
             />
           </div>
@@ -211,7 +211,7 @@ export default function Contact({
           <div className="mt-14">
             <ContactSectionHeading>Sprechzeiten</ContactSectionHeading>
             <div
-              className="mt-6 richtext richtext--on-dark text-18 leading-snug"
+              className="mt-6 richtext richtext--on-ci-dark text-18 leading-snug"
               dangerouslySetInnerHTML={contact.opentimes}
             />
           </div>
@@ -222,7 +222,7 @@ export default function Contact({
             <ContactSectionHeading>Adresse</ContactSectionHeading>
             {!!contact.address?.__html && (
               <div
-                className="mt-6 richtext richtext--on-dark text-18 leading-snug"
+                className="mt-6 richtext richtext--on-ci-dark text-18 leading-snug"
                 dangerouslySetInnerHTML={contact.address}
               />
             )}

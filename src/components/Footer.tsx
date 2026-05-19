@@ -87,7 +87,7 @@ export default function Footer() {
                 rel={
                   link.target === "_blank" ? "noopener noreferrer" : undefined
                 }
-                className="inline-block font-bold text-14 tracking-wide leading-relaxed uppercase underline underline-offset-5 hover:text-white hover:decoration-transparent transition-colors duration-250"
+                className="inline-block font-bold text-14 tracking-wide leading-relaxed uppercase underline underline-offset-5"
               >
                 {link.label ?? link.defaultLabel}
               </a>

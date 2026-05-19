@@ -52,7 +52,7 @@ export default function TeamMembersPrimary({ members, className }: Props) {
           {/* Description */}
           {!!member.description?.__html && (
             <motion.div
-              className="col-[content/content] 768:col-end-10 1024:col-[13/content] 1024:row-start-2 richtext richtext--on-ci-light text-18 mt-10 768:mt-8 1280:mt-14"
+              className="col-[content/content] 768:col-end-10 1024:col-[13/content] 1024:row-start-2 richtext richtext--on-ci-dark-light text-18 mt-10 768:mt-8 1280:mt-14"
               dangerouslySetInnerHTML={member.description}
               variants={scrollReveal.itemVariants}
             />
@@ -69,7 +69,7 @@ export default function TeamMembersPrimary({ members, className }: Props) {
                   <dt className="text-16 font-bold uppercase">{item.title}</dt>
                   {!!item.occupation?.__html && (
                     <dd
-                      className="pl-15 richtext richtext--on-ci-light text-16"
+                      className="pl-15 richtext richtext--on-ci-dark-light text-16"
                       dangerouslySetInnerHTML={item.occupation}
                     />
                   )}

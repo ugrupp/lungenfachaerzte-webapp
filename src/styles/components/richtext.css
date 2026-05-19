@@ -83,15 +83,23 @@
   }
 }
 
-.richtext--on-dark {
+.richtext--on-ci-dark {
   --text-color: theme("colors.ci-light");
 
   ::selection {
     @apply bg-white text-ci-dark;
   }
+
+  & a {
+    @apply transition-colors duration-250;
+    &:hover,
+    &:focus-visible {
+      @apply text-white no-underline;
+    }
+  }
 }
 
-.richtext--on-ci-light {
+.richtext--on-ci-dark-light {
   mark {
     @apply text-white;
   }
