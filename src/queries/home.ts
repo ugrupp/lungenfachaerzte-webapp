@@ -5,7 +5,7 @@ import { TEXT_FRAGMENT, TextSchema } from "#/lib/text";
 import { z } from "zod";
 
 const HERO_IMAGE_WIDTHS = [400, 800, 1200, 1600] as const;
-const TEASER_IMAGE_WIDTHS = [400, 800] as const;
+const TEASER_IMAGE_WIDTHS = [400, 800, 1200, 1600] as const;
 
 const HOME_QUERY = /* GraphQL */ `
   ${imageFragment(HERO_IMAGE_WIDTHS, "HeroImage")}
