@@ -15,7 +15,7 @@ import { isContactPagePath } from "../lib/contact";
 
 import { getErrorPageServerFn } from "../serverFunctions/getErrorPageServerFn";
 
-import Plainpage from "#/components/Plainpage";
+import NotFound from "#/components/NotFound";
 import appCss from "../styles/main.css?url";
 
 type MyRouterContext = {
@@ -72,6 +72,10 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isNotFound = useRouterState({
+    select: (s) =>
+      !!s.matches.find(({ routeId }) => routeId === "__root__")?.globalNotFound,
+  });
   const isContactPage = isContactPagePath(pathname);
   const isHomePage = pathname === "/";
 
@@ -103,13 +107,13 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
           Zur Navigation springen
         </a>
 
-        {!isContactPage && <Header />}
+        {!isContactPage && !isNotFound && <Header />}
 
         <main id={isHomePage ? undefined : "start"} className="relative">
           {children}
         </main>
 
-        <Footer />
+        {!isNotFound && <Footer />}
 
         <Scripts />
       </body>
@@ -124,7 +128,7 @@ function NotFoundPage() {
   });
 
   return data?.text?.__html ? (
-    <Plainpage title="404" textSecondary={data.text} />
+    <NotFound text={data.text} />
   ) : (
     <h1>404 — Seite nicht gefunden</h1>
   );

@@ -17,7 +17,7 @@ type Props = ComponentPropsWithoutRef<"nav"> & {
   onCiDark?: boolean;
 };
 
-export default function Navigation({ className, onCiDark, ...props }: Props) {
+export default function DesktopMenu({ className, onCiDark, ...props }: Props) {
   const {
     data: { navigation: navItems },
   } = useSuspenseQuery({
