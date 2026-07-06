@@ -7,6 +7,7 @@ import Plus from "#/svg/plus.svg?react";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import Button from "./Button";
 
 const scrollReveal = createScrollRevealVariants();
 
@@ -139,10 +140,32 @@ export default function TeamMembersPrimary({ members, className }: Props) {
           {/* Vita */}
           {member.vita.length > 0 && (
             <motion.div
-              className="col-[content/content] 768:col-[6/14] 1024:col-[7/12] 1024:row-start-3 ml-(--logo-offset) 768:ml-0 mt-10 768:mt-8 1280:mt-13"
+              className="col-[content/content] 1024:col-[7/12] 1024:row-start-3 ml-(--logo-offset) 1024:ml-0 mt-10 768:mt-8"
               variants={scrollReveal.itemVariants}
             >
               <VitaToggle vita={member.vita} />
+            </motion.div>
+          )}
+
+          {/* Appoinment Link */}
+          {member.appointmentLink && (
+            <motion.div
+              className="col-[content/content] 768:col-end-10 1024:col-[13/content] 1024:row-start-3 richtext richtext--on-ci-dark-light text-18 ml-(--logo-offset) 1024:ml-0 mt-10 768:mt-8"
+              variants={scrollReveal.itemVariants}
+            >
+              <Button
+                href={member.appointmentLink.href}
+                target={member.appointmentLink.target}
+                rel={
+                  member.appointmentLink.target === "_blank"
+                    ? "noopener noreferrer"
+                    : undefined
+                }
+                variant="on-ci-light"
+              >
+                {member.appointmentLink.label ??
+                  member.appointmentLink.defaultLabel}
+              </Button>
             </motion.div>
           )}
         </motion.article>

@@ -1,5 +1,6 @@
 import { nullToUndefined } from "#/lib/helpers";
 import { imageFragment, imageSchema } from "#/lib/image";
+import { LINK_FRAGMENT, LinkSchema } from "#/lib/link";
 import { SEO_FRAGMENT, SeoSchema } from "#/lib/seo";
 import { TEXT_FRAGMENT, TextSchema } from "#/lib/text";
 import { z } from "zod";
@@ -28,6 +29,7 @@ const TeamMemberSchema = z.object({
       occupation: TextSchema.apply(nullToUndefined),
     }),
   ),
+  appointmentLink: LinkSchema.apply(nullToUndefined),
 });
 
 const TEAM_QUERY = /* GraphQL */ `
@@ -35,6 +37,7 @@ const TEAM_QUERY = /* GraphQL */ `
   ${imageFragment(TEAM_MEMBER_IMAGE_WIDTHS, "TeamMemberImage")}
   ${SEO_FRAGMENT}
   ${TEXT_FRAGMENT}
+  ${LINK_FRAGMENT}
   query Team {
     entry(section: "team") {
       id
@@ -64,6 +67,9 @@ const TEAM_QUERY = /* GraphQL */ `
                   ...TextFields
                 }
               }
+            }
+            appointmentLink {
+              ...LinkFields
             }
           }
         }
