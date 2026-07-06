@@ -96,7 +96,7 @@ export default function TeamMembersPrimary({ members, className }: Props) {
 
   return (
     <section
-      className={clsx("space-y-30 768:space-y-44 1024:space-y-50", className)}
+      className={clsx("space-y-30 768:space-y-38 1024:space-y-50", className)}
     >
       {members.map((member) => (
         <motion.article

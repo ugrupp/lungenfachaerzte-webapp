@@ -119,6 +119,7 @@ export default defineConfig(
       "no-console": ["warn", { allow: ["warn", "error"] }],
       "unicorn/prefer-top-level-await": "off",
       "unicorn/prefer-global-this": "off",
+      "unicorn/no-array-reduce": "off",
       "@eslint-community/eslint-comments/disable-enable-pair": [
         "error",
         { allowWholeFile: true },

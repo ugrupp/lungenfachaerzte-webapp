@@ -17,10 +17,10 @@ const TeamMemberImageSchema = z
   .transform((arr) => arr.at(0));
 
 const TeamMemberSchema = z.object({
+  typeHandle: z.literal("teamMember"),
   id: z.string(),
   title: z.string().apply(nullToUndefined),
   image: TeamMemberImageSchema,
-  teamMemberPrimary: z.boolean(),
   description: TextSchema.apply(nullToUndefined),
   vita: z.array(
     z.object({
@@ -30,6 +30,23 @@ const TeamMemberSchema = z.object({
     }),
   ),
   appointmentLink: LinkSchema.apply(nullToUndefined),
+});
+
+const TeamCategorySchema = z.object({
+  typeHandle: z.literal("teamCategory"),
+  id: z.string(),
+  title: z.string(),
+  teamCategoryPrimary: z.boolean(),
+});
+
+const TeamMembersSchema = z.array(
+  z.discriminatedUnion("typeHandle", [TeamMemberSchema, TeamCategorySchema]),
+);
+
+// eslint-disable-next-line unused-imports/no-unused-vars
+const TeamSectionSchema = z.object({
+  category: TeamCategorySchema,
+  members: z.array(TeamMemberSchema),
 });
 
 const TEAM_QUERY = /* GraphQL */ `
@@ -50,12 +67,12 @@ const TEAM_QUERY = /* GraphQL */ `
         headline
         teamMembers {
           ... on teamMember_Entry {
+            typeHandle
             id
             title
             image {
               ...TeamMemberImage
             }
-            teamMemberPrimary
             description {
               ...TextFields
             }
@@ -71,6 +88,12 @@ const TEAM_QUERY = /* GraphQL */ `
             appointmentLink {
               ...LinkFields
             }
+          }
+          ... on teamCategory_Entry {
+            typeHandle
+            id
+            title
+            teamCategoryPrimary
           }
         }
         seo {
@@ -91,16 +114,38 @@ const TeamQuerySchema = z
           uri: z.string(),
           heroImage: HeroImageSchema,
           headline: z.string().apply(nullToUndefined),
-          teamMembers: z.array(TeamMemberSchema),
+          teamMembers: TeamMembersSchema,
           seo: SeoSchema.apply(nullToUndefined),
         })
         .nullable(),
     }),
   })
-  .transform(({ data: { entry } }) => entry);
+  .transform(({ data: { entry } }) => ({
+    ...entry,
+    // Transform the flat list of team members and categories into sections
+    teamSections: entry?.teamMembers.reduce<
+      z.infer<typeof TeamSectionSchema>[]
+    >((sections, item) => {
+      if (item.typeHandle === "teamCategory") {
+        sections.push({ category: item, members: [] });
+      } else {
+        sections.at(-1)?.members.push(item);
+      }
+
+      return sections;
+    }, []),
+  }));
 
 type TeamQuery = z.infer<typeof TeamQuerySchema>;
 type TeamMember = z.infer<typeof TeamMemberSchema>;
+type TeamCategory = z.infer<typeof TeamCategorySchema>;
+type TeamMembers = z.infer<typeof TeamMembersSchema>;
 
-export { TEAM_QUERY, TeamMemberSchema, TeamQuerySchema };
-export type { TeamMember, TeamQuery };
+export {
+  TEAM_QUERY,
+  TeamCategorySchema,
+  TeamMemberSchema,
+  TeamMembersSchema,
+  TeamQuerySchema,
+};
+export type { TeamCategory, TeamMember, TeamMembers, TeamQuery };

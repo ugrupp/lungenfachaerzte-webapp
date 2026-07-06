@@ -1,5 +1,4 @@
 import SubHeader from "#/components/SubHeader";
-import TeamIntro from "#/components/TeamIntro";
 import TeamMembersPrimary from "#/components/TeamMembersPrimary";
 import TeamMembersSecondary from "#/components/TeamMembersSecondary";
 import { craftPreviewSearchSchema } from "#/lib/craftPreview";
@@ -7,7 +6,6 @@ import { routeCacheHeaders } from "#/lib/routeCacheHeaders";
 import { seoToHead } from "#/lib/seo";
 import { getTeamPageServerFn } from "#/serverFunctions/getTeamPageServerFn";
 import { createFileRoute } from "@tanstack/react-router";
-import { partition } from "es-toolkit";
 
 export const Route = createFileRoute("/team")({
   validateSearch: craftPreviewSearchSchema,
@@ -27,26 +25,37 @@ export const Route = createFileRoute("/team")({
 });
 
 function TeamPage() {
-  const { heroImage, title, headline, teamMembers } = Route.useLoaderData();
-  const [primaryMembers, secondaryMembers] = partition(
-    teamMembers ?? [],
-    ({ teamMemberPrimary }) => teamMemberPrimary,
-  );
+  const {
+    heroImage,
+    title,
+    headline,
+    teamSections = [],
+  } = Route.useLoaderData();
 
   return (
     <>
       <SubHeader heroImage={heroImage} />
 
       <div className="bg-ci-light py-30 768:py-38 1024:pb-50">
-        <TeamIntro title={headline || title || ""} />
-        <TeamMembersPrimary
-          members={primaryMembers}
-          className="mt-14 768:mt-15 1024:mt-18"
-        />
-        <TeamMembersSecondary
-          members={secondaryMembers}
-          className="mt-36 1280:mt-50"
-        />
+        <h1 className="sr-only">{headline || title}</h1>
+
+        <div className="space-y-36 1280:space-y-50">
+          {teamSections.map(({ category, members }) => (
+            <section key={category.id}>
+              <div className="container-grid">
+                <h2 className="col-[content/content] ml-(--logo-offset) w-fit headline--1 text-ci-light bg-ci-dark rounded-full px-7 py-2.75 overflow-hidden mb-10 768:mb-16">
+                  {category.title}
+                </h2>
+              </div>
+
+              {category.teamCategoryPrimary ? (
+                <TeamMembersPrimary members={members} />
+              ) : (
+                <TeamMembersSecondary members={members} />
+              )}
+            </section>
+          ))}
+        </div>
       </div>
     </>
   );
