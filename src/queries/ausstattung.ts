@@ -29,6 +29,7 @@ const AUSSTATTUNG_QUERY = /* GraphQL */ `
         heroImage {
           ...HeroImage
         }
+        headline
         introText {
           ...TextFields
         }
@@ -70,6 +71,7 @@ const AusstattungQuerySchema = z
           title: z.string(),
           uri: z.string(),
           heroImage: HeroImageSchema,
+          headline: z.string().apply(nullToUndefined),
           introText: TextSchema.apply(nullToUndefined),
           image: ContentImageSchema,
           image2: ContentImageSchema,

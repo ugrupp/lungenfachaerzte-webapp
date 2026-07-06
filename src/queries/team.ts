@@ -44,9 +44,7 @@ const TEAM_QUERY = /* GraphQL */ `
         heroImage {
           ...HeroImage
         }
-        seo {
-          ...SeoFields
-        }
+        headline
         teamMembers {
           ... on teamMember_Entry {
             id
@@ -69,6 +67,9 @@ const TEAM_QUERY = /* GraphQL */ `
             }
           }
         }
+        seo {
+          ...SeoFields
+        }
       }
     }
   }
@@ -83,8 +84,9 @@ const TeamQuerySchema = z
           title: z.string(),
           uri: z.string(),
           heroImage: HeroImageSchema,
-          seo: SeoSchema.apply(nullToUndefined),
+          headline: z.string().apply(nullToUndefined),
           teamMembers: z.array(TeamMemberSchema),
+          seo: SeoSchema.apply(nullToUndefined),
         })
         .nullable(),
     }),

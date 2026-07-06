@@ -1,7 +1,7 @@
-import TeamMembersPrimary from "#/components/TeamMembersPrimary";
-import TeamMembersSecondary from "#/components/TeamMembersSecondary";
 import SubHeader from "#/components/SubHeader";
 import TeamIntro from "#/components/TeamIntro";
+import TeamMembersPrimary from "#/components/TeamMembersPrimary";
+import TeamMembersSecondary from "#/components/TeamMembersSecondary";
 import { craftPreviewSearchSchema } from "#/lib/craftPreview";
 import { routeCacheHeaders } from "#/lib/routeCacheHeaders";
 import { seoToHead } from "#/lib/seo";
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/team")({
 });
 
 function TeamPage() {
-  const { heroImage, title, teamMembers } = Route.useLoaderData();
+  const { heroImage, title, headline, teamMembers } = Route.useLoaderData();
   const [primaryMembers, secondaryMembers] = partition(
     teamMembers ?? [],
     ({ teamMemberPrimary }) => teamMemberPrimary,
@@ -38,7 +38,7 @@ function TeamPage() {
       <SubHeader heroImage={heroImage} />
 
       <div className="bg-ci-light py-30 768:py-38 1024:pb-50">
-        <TeamIntro title={title ?? ""} />
+        <TeamIntro title={headline || title || ""} />
         <TeamMembersPrimary
           members={primaryMembers}
           className="mt-14 768:mt-15 1024:mt-18"

@@ -21,11 +21,11 @@ export const Route = createFileRoute("/impressum")({
 });
 
 function ImpressumPage() {
-  const { title, textPrimary, textSecondary } = Route.useLoaderData();
+  const { title, headline, textPrimary, textSecondary } = Route.useLoaderData();
 
   return (
     <Plainpage
-      title={title ?? ""}
+      title={headline || title || ""}
       textPrimary={textPrimary}
       textSecondary={textSecondary}
     />

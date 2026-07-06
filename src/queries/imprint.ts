@@ -10,6 +10,7 @@ const IMPRINT_QUERY = /* GraphQL */ `
       title
       uri
       ... on plainpage_Entry {
+        headline
         textPrimary {
           ...TextFields
         }
@@ -29,6 +30,7 @@ const ImprintQuerySchema = z
           id: z.string(),
           title: z.string(),
           uri: z.string(),
+          headline: z.string().apply(nullToUndefined),
           textPrimary: TextSchema.apply(nullToUndefined),
           textSecondary: TextSchema.apply(nullToUndefined),
         })

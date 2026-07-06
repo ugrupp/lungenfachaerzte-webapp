@@ -21,11 +21,11 @@ export const Route = createFileRoute("/datenschutz")({
 });
 
 function DatenschutzPage() {
-  const { title, textPrimary, textSecondary } = Route.useLoaderData();
+  const { title, headline, textPrimary, textSecondary } = Route.useLoaderData();
 
   return (
     <Plainpage
-      title={title ?? ""}
+      title={headline || title || ""}
       textPrimary={textPrimary}
       textSecondary={textSecondary}
     />

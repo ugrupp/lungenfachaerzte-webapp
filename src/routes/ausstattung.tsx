@@ -26,6 +26,7 @@ function AusstattungPage() {
   const {
     title,
     heroImage,
+    headline,
     introText,
     image,
     image2,
@@ -42,7 +43,7 @@ function AusstattungPage() {
         heroImage,
       }}
       subpageIntroProps={{
-        title: title ?? "",
+        title: headline || title || "",
         introText,
       }}
       subpageContentProps={{
