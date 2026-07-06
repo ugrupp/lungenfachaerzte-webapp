@@ -13,7 +13,7 @@ export function HomeIntro() {
   return (
     <motion.section
       id="start"
-      className="bg-ci-light pt-30 768:pt-50 container-grid relative"
+      className="bg-ci-light pt-22 768:pt-33 container-grid relative"
       {...scrollReveal.containerProps}
     >
       {/* Scroll indicator */}
