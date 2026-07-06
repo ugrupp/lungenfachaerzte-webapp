@@ -1,0 +1,19 @@
+
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="plus" transform="translate(-8.000000, -8.000000)" fill="currentColor" fill-rule="nonzero">
+            <g id="Group" transform="translate(8.700000, 8.700000)">
+                <g id="Gruppe_38" transform="translate(0.000000, 5.250000)">
+                    <circle id="Ellipse_10" cx="1.05" cy="1.05" r="1.05"></circle>
+                    <circle id="Ellipse_11" cx="11.55" cy="1.05" r="1.05"></circle>
+                    <circle id="Ellipse_12" cx="6.3" cy="1.05" r="1.05"></circle>
+                </g>
+                <g id="Gruppe_38-2" transform="translate(5.250000, 0.000000)">
+                    <circle id="Ellipse_10-2" cx="1.05" cy="11.55" r="1.05"></circle>
+                    <circle id="Ellipse_11-2" cx="1.05" cy="1.05" r="1.05"></circle>
+                    <circle id="Ellipse_12-2" cx="1.05" cy="6.3" r="1.05"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

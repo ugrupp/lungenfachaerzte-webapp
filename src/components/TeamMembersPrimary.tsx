@@ -2,7 +2,8 @@ import { Image as ImageCmp } from "#/components/Image";
 import { nl2br } from "#/lib/nl2br";
 import { createScrollRevealVariants } from "#/lib/scrollReveal";
 import type { TeamMember } from "#/queries/team";
-import Ellipsis from "#/svg/ellipsis.svg?react";
+import Minus from "#/svg/minus.svg?react";
+import Plus from "#/svg/plus.svg?react";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
@@ -40,19 +41,18 @@ function VitaToggle({ vita }: { vita: TeamMember["vita"] }) {
         className="list-none [&::-webkit-details-marker]:hidden cursor-pointer inline-flex gap-x-1 whitespace-nowrap group"
       >
         {/* Icon */}
-        <span className="flex items-center justify-center rounded-full bg-white group-hover:bg-ci-dark size-7.5 transition-colors duration-250">
-          <motion.span
-            aria-hidden="true"
-            animate={{ rotate: open ? 90 : 0 }}
-            transition={{ type: "spring", stiffness: 380, damping: 40 }}
-            className="flex items-center justify-center"
-          >
-            <Ellipsis className="size-3.5 text-ci-light" />
-          </motion.span>
+        <span className="flex items-center justify-center rounded-full bg-ci-dark group-hover:bg-white size-7.5 transition-colors duration-250">
+          <span className="flex items-center justify-center">
+            {open ? (
+              <Minus className="size-3.5 text-ci-light" />
+            ) : (
+              <Plus className="size-3.5 text-ci-light" />
+            )}
+          </span>
         </span>
 
         {/* Text */}
-        <span className="px-4 h-7.5 text-16 tracking-wide uppercase text-ci-light bg-white group-hover:bg-ci-dark rounded-full flex items-center transition-colors duration-250">
+        <span className="px-4 h-7.5 text-16 tracking-wide uppercase text-ci-light bg-ci-dark group-hover:bg-white rounded-full flex items-center transition-colors duration-250">
           <span className="translate-y-[0.05em]">Vita</span>
         </span>
       </summary>
