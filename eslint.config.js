@@ -110,6 +110,7 @@ export default defineConfig(
           cases: {
             camelCase: true,
             pascalCase: true,
+            kebabCase: true,
           },
         },
       ],

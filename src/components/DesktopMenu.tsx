@@ -49,7 +49,7 @@ export default function DesktopMenu({ className, onCiDark, ...props }: Props) {
                 }
                 aria-current={isActive ? "page" : undefined}
                 className={clsx(
-                  "block px-5 pt-3 pb-1.5 text-16 leading-snug tracking-wide text-ci-dark uppercase group-last-of-type:pr-8 group-first-of-type:pl-8 border-b-3 hover:border-ci-light focus-visible:border-ci-light focus-visible:outline-none transition-colors duration-250",
+                  "block px-5 pt-3 pb-1.5 text-16 leading-snug tracking-wide text-ci-dark uppercase whitespace-nowrap group-last-of-type:pr-8 group-first-of-type:pl-8 border-b-3 hover:border-ci-light focus-visible:border-ci-light focus-visible:outline-none transition-colors duration-250",
                   isActive ? "border-ci-light" : "border-transparent",
                 )}
               >

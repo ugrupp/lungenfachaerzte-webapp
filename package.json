@@ -17,6 +17,7 @@
     "lint:inspect": "eslint --inspect-config"
   },
   "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.16",
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0",
     "@tailwindcss/vite": "^4.1.18",

@@ -92,6 +92,7 @@
 
   & a {
     @apply transition-colors duration-250;
+
     &:hover,
     &:focus-visible {
       @apply text-white no-underline;
@@ -102,5 +103,16 @@
 .richtext--on-ci-dark-light {
   mark {
     @apply text-white;
+  }
+}
+
+.richtext--link-colored {
+  & a {
+    @apply text-ci-light transition-colors duration-250;
+
+    &:hover,
+    &:focus-visible {
+      @apply text-inherit no-underline;
+    }
   }
 }

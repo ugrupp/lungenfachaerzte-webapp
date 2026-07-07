@@ -14,6 +14,7 @@ import { Route as SchwerpunkteRouteImport } from './routes/schwerpunkte'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as ImpressumRouteImport } from './routes/impressum'
+import { Route as FuerPatientinnenRouteImport } from './routes/fuer-patientinnen'
 import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as AusstattungRouteImport } from './routes/ausstattung'
 import { Route as IndexRouteImport } from './routes/index'
@@ -43,6 +44,11 @@ const ImpressumRoute = ImpressumRouteImport.update({
   path: '/impressum',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FuerPatientinnenRoute = FuerPatientinnenRouteImport.update({
+  id: '/fuer-patientinnen',
+  path: '/fuer-patientinnen',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DatenschutzRoute = DatenschutzRouteImport.update({
   id: '/datenschutz',
   path: '/datenschutz',
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ausstattung': typeof AusstattungRoute
   '/datenschutz': typeof DatenschutzRoute
+  '/fuer-patientinnen': typeof FuerPatientinnenRoute
   '/impressum': typeof ImpressumRoute
   '/kontakt': typeof KontaktRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ausstattung': typeof AusstattungRoute
   '/datenschutz': typeof DatenschutzRoute
+  '/fuer-patientinnen': typeof FuerPatientinnenRoute
   '/impressum': typeof ImpressumRoute
   '/kontakt': typeof KontaktRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/ausstattung': typeof AusstattungRoute
   '/datenschutz': typeof DatenschutzRoute
+  '/fuer-patientinnen': typeof FuerPatientinnenRoute
   '/impressum': typeof ImpressumRoute
   '/kontakt': typeof KontaktRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ausstattung'
     | '/datenschutz'
+    | '/fuer-patientinnen'
     | '/impressum'
     | '/kontakt'
     | '/robots.txt'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ausstattung'
     | '/datenschutz'
+    | '/fuer-patientinnen'
     | '/impressum'
     | '/kontakt'
     | '/robots.txt'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ausstattung'
     | '/datenschutz'
+    | '/fuer-patientinnen'
     | '/impressum'
     | '/kontakt'
     | '/robots.txt'
@@ -127,6 +139,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AusstattungRoute: typeof AusstattungRoute
   DatenschutzRoute: typeof DatenschutzRoute
+  FuerPatientinnenRoute: typeof FuerPatientinnenRoute
   ImpressumRoute: typeof ImpressumRoute
   KontaktRoute: typeof KontaktRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
@@ -171,6 +184,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ImpressumRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fuer-patientinnen': {
+      id: '/fuer-patientinnen'
+      path: '/fuer-patientinnen'
+      fullPath: '/fuer-patientinnen'
+      preLoaderRoute: typeof FuerPatientinnenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/datenschutz': {
       id: '/datenschutz'
       path: '/datenschutz'
@@ -199,6 +219,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AusstattungRoute: AusstattungRoute,
   DatenschutzRoute: DatenschutzRoute,
+  FuerPatientinnenRoute: FuerPatientinnenRoute,
   ImpressumRoute: ImpressumRoute,
   KontaktRoute: KontaktRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
