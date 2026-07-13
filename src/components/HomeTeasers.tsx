@@ -28,7 +28,7 @@ function Teaser({ teaser, className }: TeaserProps) {
       >
         <h2 className="w-fit headline--1 text-ci-light bg-ci-dark rounded-full overflow-hidden">
           <a className="px-7 py-2.75 block" href={teaser.url}>
-            {teaser.title}
+            {teaser.headline || teaser.title}
           </a>
         </h2>
       </motion.div>

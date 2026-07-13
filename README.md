@@ -73,7 +73,6 @@ src/
     index.tsx         # Home (/)
     kontakt.tsx       # Contact page (/kontakt)
     schwerpunkte.tsx  # Specialties (/schwerpunkte)
-    ausstattung.tsx   # Equipment (/ausstattung)
     team.tsx          # Team (/team)
   serverFunctions/  # createServerFn wrappers — all Craft API calls live here
   queries/          # GraphQL query strings

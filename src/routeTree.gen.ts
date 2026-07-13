@@ -16,7 +16,6 @@ import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as FuerPatientinnenRouteImport } from './routes/fuer-patientinnen'
 import { Route as DatenschutzRouteImport } from './routes/datenschutz'
-import { Route as AusstattungRouteImport } from './routes/ausstattung'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TeamRoute = TeamRouteImport.update({
@@ -54,11 +53,6 @@ const DatenschutzRoute = DatenschutzRouteImport.update({
   path: '/datenschutz',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AusstattungRoute = AusstattungRouteImport.update({
-  id: '/ausstattung',
-  path: '/ausstattung',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -67,7 +61,6 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/ausstattung': typeof AusstattungRoute
   '/datenschutz': typeof DatenschutzRoute
   '/fuer-patientinnen': typeof FuerPatientinnenRoute
   '/impressum': typeof ImpressumRoute
@@ -78,7 +71,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/ausstattung': typeof AusstattungRoute
   '/datenschutz': typeof DatenschutzRoute
   '/fuer-patientinnen': typeof FuerPatientinnenRoute
   '/impressum': typeof ImpressumRoute
@@ -90,7 +82,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/ausstattung': typeof AusstattungRoute
   '/datenschutz': typeof DatenschutzRoute
   '/fuer-patientinnen': typeof FuerPatientinnenRoute
   '/impressum': typeof ImpressumRoute
@@ -103,7 +94,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/ausstattung'
     | '/datenschutz'
     | '/fuer-patientinnen'
     | '/impressum'
@@ -114,7 +104,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/ausstattung'
     | '/datenschutz'
     | '/fuer-patientinnen'
     | '/impressum'
@@ -125,7 +114,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/ausstattung'
     | '/datenschutz'
     | '/fuer-patientinnen'
     | '/impressum'
@@ -137,7 +125,6 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AusstattungRoute: typeof AusstattungRoute
   DatenschutzRoute: typeof DatenschutzRoute
   FuerPatientinnenRoute: typeof FuerPatientinnenRoute
   ImpressumRoute: typeof ImpressumRoute
@@ -198,13 +185,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DatenschutzRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/ausstattung': {
-      id: '/ausstattung'
-      path: '/ausstattung'
-      fullPath: '/ausstattung'
-      preLoaderRoute: typeof AusstattungRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -217,7 +197,6 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AusstattungRoute: AusstattungRoute,
   DatenschutzRoute: DatenschutzRoute,
   FuerPatientinnenRoute: FuerPatientinnenRoute,
   ImpressumRoute: ImpressumRoute,

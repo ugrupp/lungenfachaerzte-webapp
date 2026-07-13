@@ -2,6 +2,7 @@ import { nullToUndefined } from "#/lib/helpers";
 import { imageFragment, imageSchema } from "#/lib/image";
 import { SEO_FRAGMENT, SeoSchema } from "#/lib/seo";
 import { TEXT_FRAGMENT, TextSchema } from "#/lib/text";
+import { kebabCase } from "es-toolkit";
 import { z } from "zod";
 
 const HERO_IMAGE_WIDTHS = [400, 800, 1200, 1600] as const;
@@ -36,9 +37,10 @@ const HOME_QUERY = /* GraphQL */ `
       }
     }
     teaserSchwerpunkte: entry(section: "schwerpunkte") {
-      ... on subpage_Entry {
+      ... on schwerpunkte_Entry {
         url
         title
+        headline
         teaserImage {
           ...TeaserImage
         }
@@ -47,14 +49,15 @@ const HOME_QUERY = /* GraphQL */ `
         }
       }
     }
-    teaserAusstattung: entry(section: "ausstattung") {
-      ... on subpage_Entry {
+    teaserAusstattung: entry(section: "schwerpunkte") {
+      ... on schwerpunkte_Entry {
         url
         title
-        teaserImage {
+        headline: headline2
+        teaserImage: teaserImage2 {
           ...TeaserImage
         }
-        introText {
+        introText: introText2 {
           html
         }
       }
@@ -85,6 +88,7 @@ const TeaserImageSchema = z
 const TeaserSchema = z.object({
   url: z.string(),
   title: z.string(),
+  headline: z.string().apply(nullToUndefined),
   teaserImage: TeaserImageSchema,
   introText: TextSchema.apply(nullToUndefined),
 });
@@ -122,7 +126,10 @@ const HomeQuerySchema = z
     ({
       data: { teaserAusstattung, teaserSchwerpunkte, teaserTeam, entry },
     }) => ({
-      teaserAusstattung,
+      teaserAusstattung: {
+        ...teaserAusstattung,
+        url: `${teaserAusstattung.url}#${kebabCase(teaserAusstattung.headline || "") || undefined}`,
+      },
       teaserSchwerpunkte,
       teaserTeam,
       ...entry,
