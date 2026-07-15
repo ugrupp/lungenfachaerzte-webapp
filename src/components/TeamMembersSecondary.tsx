@@ -29,8 +29,8 @@ export default function TeamMembersSecondary({ members, className }: Props) {
           variants={scrollReveal.itemVariants}
         >
           {/* Image */}
-          {member.image && (
-            <div className="aspect-285/235">
+          <div className="aspect-285/235 bg-off-white">
+            {member.image && (
               <ImageCmp
                 src={member.image.url}
                 srcSet={member.image.srcset}
@@ -39,8 +39,8 @@ export default function TeamMembersSecondary({ members, className }: Props) {
                 sizes="100vw"
                 className="size-full object-cover"
               />
-            </div>
-          )}
+            )}
+          </div>
 
           {/* Name */}
           <h2 className="headline--3 mt-8">{member.title ?? ""}</h2>
